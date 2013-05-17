@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="WEB-INF/layouts/template.xhtml">
+
+    <ui:define name="title">#{i18n.updateYourAccount}</ui:define>
+
+    <ui:define name="body">
+
+        <h2>#{i18n.updateYourAccount}</h2>
+
+        <h:form>
+
+            <legend>#{i18n.createAccount_personalInformation}</legend>
+            <h:panelGrid columns="3">
+                <h:outputText value="#{i18n.customer_login} :"/>
+                <h:inputText value="#{accountController.loggedinCustomer.login}" readonly="true"/>
+                <h:outputText value=""/>
+
+                <h:outputText value="*#{i18n.customer_firstname}  :"/>
+                <h:inputText id="firstname" value="#{accountController.loggedinCustomer.firstname}"/>
+                <h:message for="firstname" style="color: red;"/>
+
+                <h:outputText value="*#{i18n.customer_lastname}  :"/>
+                <h:inputText id="lastname" value="#{accountController.loggedinCustomer.lastname}"/>
+                <h:message for="lastname" style="color: red;"/>
+
+                <h:outputText value="#{i18n.customer_email}  :"/>
+                <h:inputText id="email" value="#{accountController.loggedinCustomer.email}"/>
+                <h:message for="email" style="color: red;"/>
+
+                <h:outputText value="#{i18n.customer_telephone}  :"/>
+                <h:inputText id="telephone" value="#{accountController.loggedinCustomer.telephone}"/>
+                <h:message for="telephone" style="color: red;"/>
+
+                <h:outputText value="#{i18n.customer_dateOfBirth}  (dd.MM.yyyy):"/>
+                <h:inputText id="dateOfBirth" value="#{accountController.loggedinCustomer.dateOfBirth}">
+                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                </h:inputText>
+                <h:message for="dateOfBirth" style="color: red;"/>
+
+            </h:panelGrid>
+
+            <legend>#{i18n.address}</legend>
+            <h:panelGrid columns="3">
+                <h:outputText value="*#{i18n.address_street1}  :"/>
+                <h:inputText id="street1" value="#{accountController.loggedinCustomer.homeAddress.street1}"/>
+                <h:message for="street1" style="color: red;"/>
+
+                <h:outputText value="#{i18n.address_street2}  :"/>
+                <h:inputText id="street2" value="#{accountController.loggedinCustomer.homeAddress.street2}"/>
+                <h:message for="street2" style="color: red;"/>
+
+                <h:outputText value="*#{i18n.address_city}  :"/>
+                <h:inputText id="city" value="#{accountController.loggedinCustomer.homeAddress.city}"/>
+                <h:message for="city" style="color: red;"/>
+
+                <h:outputText value="#{i18n.address_state}  :"/>
+                <h:inputText id="state" value="#{accountController.loggedinCustomer.homeAddress.state}"/>
+                <h:message for="state" style="color: red;"/>
+
+                <h:outputText value="*#{i18n.address_zipcode}  :"/>
+                <h:inputText id="zipcode" value="#{accountController.loggedinCustomer.homeAddress.zipcode}"/>
+                <h:message for="zipcode" style="color: red;"/>
+
+                <h:outputText value="*#{i18n.address_country}  :"/>
+                <h:inputText id="country" value="#{accountController.loggedinCustomer.homeAddress.country}"/>
+                <h:message for="country" style="color: red;"/>
+
+            </h:panelGrid>
+
+            <div>
+                <h:commandButton value="#{i18n.submit}" action="#{accountController.doUpdateAccount}" type="submit"/>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

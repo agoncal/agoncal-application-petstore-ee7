@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="WEB-INF/layouts/template.xhtml">
+
+    <ui:define name="title">#{i18n.orderConfirmed_yourOrderIsComplete}</ui:define>
+
+    <ui:define name="body">
+
+        <h2>#{i18n.orderConfirmed_yourOrderIsComplete}</h2>
+
+        <h:form>
+            <h:dataTable value="#{shoppingCartController.order.orderLines}" var="orderLine" styleClass="table">
+                <h:column>
+                    <strong><h:outputText value="#{orderLine.item.product.name}"/></strong>
+                    <br/>
+                    <h:outputText value="#{orderLine.item.name}"/>
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{orderLine.quantity}"/>
+                </h:column>
+                <h:column>
+                    x
+                    <h:outputText value="#{orderLine.item.unitCost}"/>
+                    $
+                </h:column>
+                <h:column>
+                    =
+                    <h:outputText value="#{orderLine.subTotal}"/>
+                    $
+                </h:column>
+            </h:dataTable>
+            <br/>
+
+            <div style="margin-top: 20px; font-weight: bold;">
+                Total $ #{shoppingCartController.order.total}
+            </div>
+        </h:form>
+
+        <legend>#{i18n.orderConfirmed_yourOrderIdIs} : #{shoppingCartController.order.id}</legend>
+
+        <p style="margin-top: 15px">#{i18n.orderConfirmed_msg1}</p>
+
+        <p style="margin-top: 15px">#{i18n.orderConfirmed_msg2}</p>
+
+    </ui:define>
+</ui:composition>

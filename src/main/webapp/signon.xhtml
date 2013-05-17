@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="WEB-INF/layouts/template.xhtml">
+
+    <ui:define name="title">#{i18n.signon_signIn}</ui:define>
+
+    <ui:define name="body">
+
+        <h2>#{i18n.signon_signIn}</h2>
+
+        <h3>#{i18n.signon_returningCustomer}</h3>
+
+        <div class="row-fluid">
+
+            <div class="span5">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <f:facet name="header">
+                            <h:outputText value="#{i18n.yes}"/>
+                        </f:facet>
+                        <h:outputLabel value="#{i18n.customer_login}" for="login"/>
+                        <h:inputText id="login" value="#{credentials.login}" maxlength="10" size="12"/>
+                        <h:outputLabel value="#{i18n.customer_password}" for="password"/>
+                        <h:inputSecret id="password" value="#{credentials.password}" maxlength="10" size="12"/>
+                        <f:facet name="footer">
+                            <h:commandButton value="#{i18n.signon_signIn}" action="#{accountController.doLogin}"
+                                             type="submit"/>
+                            <h:outputLabel value="user/user - admin/admin"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </h:form>
+            </div>
+
+            <div class="span5">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <f:facet name="header">
+                            <h:outputText value="#{i18n.signon_signup}"/>
+                        </f:facet>
+                        <h:outputLabel value="#{i18n.customer_login}" for="newlogin"/>
+                        <h:inputText id="newlogin" value="#{credentials.login}" maxlength="10" size="12"/>
+                        <h:outputLabel value="#{i18n.customer_password}" for="newpassword"/>
+                        <h:inputSecret id="newpassword" value="#{credentials.password}" maxlength="10" size="12"/>
+                        <h:outputLabel value="#{i18n.customer_password} (#{i18n.again}):" for="newpasswordagain"/>
+                        <h:inputSecret id="newpasswordagain" value="#{credentials.password2}" maxlength="10" size="12"/>
+                        <f:facet name="footer">
+                            <h:commandButton value="#{i18n.signon_new}" action="#{accountController.doCreateNewAccount}"
+                                             type="submit"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>

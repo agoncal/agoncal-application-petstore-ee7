@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="WEB-INF/layouts/template.xhtml">
+
+    <ui:define name="title">YAPS PetStore</ui:define>
+
+    <ui:define name="body">
+        <div style="text-align: center; margin-top:20px">
+            <map name="pestoremap">
+                <area alt="Birds" coords="72,2,280,250" shape="RECT" href="showproducts.xhtml?categoryName=Birds"/>
+                <area alt="Fish" coords="2,180,72,250" shape="RECT" href="showproducts.xhtml?categoryName=Fish"/>
+                <area alt="Dogs" coords="60,250,130,320" shape="RECT" href="showproducts.xhtml?categoryName=Dogs"/>
+                <area alt="Reptiles" coords="140,270,210,340" shape="RECT"
+                      href="showproducts.xhtml?categoryName=Reptiles"/>
+                <area alt="Cats" coords="225,240,295,310" shape="RECT" href="showproducts.xhtml?categoryName=Cats"/>
+                <area alt="Birds" coords="280,180,350,250" shape="RECT" href="showproducts.xhtml?categoryName=Birds"/>
+            </map>
+            <img src="#{resource['splash.gif']}" border="0" width="350" height="355" align="middle" usemap="#pestoremap"
+                 alt="Welcome to YAPS PetStore"/>
+        </div>
+    </ui:define>
+</ui:composition>

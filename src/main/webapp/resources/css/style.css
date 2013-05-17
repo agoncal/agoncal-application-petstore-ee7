@@ -1,0 +1,38 @@
+.centered-text {
+    text-align: center
+}
+
+.menu-fr {
+    background: transparent url("#{resource['icons/fr.gif']}") no-repeat center left;
+    padding: 5px 5px 5px 20px;
+}
+
+.menu-en {
+    background: transparent url("#{resource['icons/us.gif']}") no-repeat center left;
+    padding: 5px 5px 5px 20px;
+}
+
+.add-to-cart {
+    background: transparent url("#{resource['icons/cart_add.png']}") no-repeat center left;
+    padding: 5px 5px 5px 20px;
+}
+
+.remove-from-cart {
+    background: transparent url("#{resource['icons/cart_delete.png']}") no-repeat center left;
+    padding: 5px 5px 5px 20px;
+}
+
+.checkout-cart {
+    background: transparent url("#{resource['icons/cart_go.png']}") no-repeat center left;
+    padding: 5px 5px 5px 20px;
+}
+
+.user-edit {
+    background: transparent url("#{resource['icons/user_edit.png']}") no-repeat center left;
+    padding: 5px 5px 5px 20px;
+}
+
+.arrow_refresh {
+    background: transparent url("#{resource['icons/arrow_refresh.png']}") no-repeat center left;
+    padding: 5px 5px 5px 20px;
+}

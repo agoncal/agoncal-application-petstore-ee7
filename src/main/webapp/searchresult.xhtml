@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="WEB-INF/layouts/template.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="keyword" value="#{catalogController.keyword}"/>
+        <f:event type="preRenderView" listener="#{catalogController.doSearch}"/>
+    </f:metadata>
+
+    <ui:define name="title">#{i18n.searchResult_searchFor} #{catalogController.keyword}</ui:define>
+
+    <ui:define name="body">
+
+        <h2>#{i18n.searchResult_searchFor} : #{catalogController.keyword}</h2>
+
+        <h:outputText value="#{i18n.noItemsFound}"
+                      rendered="#{catalogController.items == null || catalogController.items.size() ==0}"/>
+        <h:dataTable value="#{catalogController.items}" var="oneItem" rendered="#{catalogController.items.size() > 0}"
+                     styleClass="table">
+            <h:column>
+                <h:graphicImage url="resources/images/#{oneItem.imagePath}" alt="Item"/>
+            </h:column>
+
+            <h:column>
+                <h:link outcome="showitem" includeViewParams="true" value="#{oneItem.name}">
+                    <f:param name="itemId" value="#{oneItem.id}"/>
+                    <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
+                </h:link>
+            </h:column>
+
+            <h:column>
+                <em>(
+                    <h:outputText value="#{oneItem.product.category.name}"/>
+                    -
+                    <h:outputText value="#{oneItem.product.name}"/>
+                    )</em>
+            </h:column>
+            <h:column>
+                <h:outputText value="#{oneItem.unitCost}"/> $
+            </h:column>
+
+            <h:column>
+                <h:form>
+                    <h:commandLink action="#{shoppingCartController.addItemToCart}" styleClass="add-to-cart"
+                                   rendered="#{accountController.loggedIn}">
+                        <h:outputText value="#{i18n.searchResult_addToCart}"/>
+                        <f:param name="itemId" value="#{oneItem.id}"/>
+                    </h:commandLink>
+                </h:form>
+            </h:column>
+        </h:dataTable>
+
+    </ui:define>
+</ui:composition>

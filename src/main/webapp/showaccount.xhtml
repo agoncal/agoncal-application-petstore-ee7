@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="WEB-INF/layouts/template.xhtml">
+
+    <ui:define name="title">#{i18n.accounts}</ui:define>
+
+    <ui:define name="body">
+
+        <h2>#{i18n.accounts}</h2>
+
+        <h:form>
+
+            <legend>#{i18n.confirmorder_personalInformation}</legend>
+            <h:panelGrid columns="2">
+                <h:outputText value="#{i18n.customer_login} :"/>
+                <h:outputText value="#{accountController.loggedinCustomer.login}"/>
+
+                <h:outputText value="#{i18n.customer_firstname} :"/>
+                <h:outputText value="#{accountController.loggedinCustomer.firstname}"/>
+
+                <h:outputText value="#{i18n.customer_lastname} :"/>
+                <h:outputText value="#{accountController.loggedinCustomer.lastname}"/>
+
+                <h:outputText value="#{i18n.customer_email} :"/>
+                <h:outputText value="#{accountController.loggedinCustomer.email}"/>
+
+                <h:outputText value="#{i18n.customer_telephone} :"/>
+                <h:outputText value="#{accountController.loggedinCustomer.telephone}"/>
+
+                <h:outputText value="#{i18n.customer_dateOfBirth} (dd.MM.yyyy):"/>
+                <h:outputText value="#{accountController.loggedinCustomer.dateOfBirth}">
+                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                </h:outputText>
+
+                <h:outputText value="#{i18n.customer_age} :"/>
+                <h:outputText value="#{accountController.loggedinCustomer.age}"/>
+
+            </h:panelGrid>
+
+            <legend>#{i18n.address}</legend>
+            <h:panelGrid columns="2">
+                <h:outputText value="#{i18n.address_street1} :"/>
+                <h:outputText value="#{accountController.loggedinCustomer.homeAddress.street1}"/>
+
+                <h:outputText value="#{i18n.address_street2} :"/>
+                <h:outputText value="#{accountController.loggedinCustomer.homeAddress.street2}"/>
+
+                <h:outputText value="#{i18n.address_city} :"/>
+                <h:outputText value="#{accountController.loggedinCustomer.homeAddress.city}"/>
+
+                <h:outputText value="#{i18n.address_state} :"/>
+                <h:outputText value="#{accountController.loggedinCustomer.homeAddress.state}"/>
+
+                <h:outputText value="#{i18n.address_zipcode} :"/>
+                <h:outputText value="#{accountController.loggedinCustomer.homeAddress.zipcode}"/>
+
+                <h:outputText value="#{i18n.address_country} :"/>
+                <h:outputText value="#{accountController.loggedinCustomer.homeAddress.country}"/>
+            </h:panelGrid>
+
+            <div style="margin-top: 20px">
+                <h:commandLink action="updateaccount" styleClass="user-edit">
+                    <h:outputText value="#{i18n.showAccount_edit}"/>
+                </h:commandLink>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+

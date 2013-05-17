@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="WEB-INF/layouts/template.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="itemId" value="#{catalogController.itemId}" required="true"/>
+        <f:event type="preRenderView" listener="#{catalogController.doFindItem()}"/>
+    </f:metadata>
+
+    <ui:define name="title">#{catalogController.item.product.name} - #{catalogController.item.name}</ui:define>
+
+    <ui:define name="body">
+
+        <h2>#{catalogController.item.product.name} - #{catalogController.item.name}</h2>
+
+        <h:outputText value="#{i18n.noItemsFound}" rendered="#{catalogController.item == null}"/>
+
+        <h:form>
+            <h:panelGrid columns="3" rendered="#{catalogController.item != null}" styleClass="table">
+                <h:column>
+                    <h:graphicImage url="resources/images/#{catalogController.item.imagePath}"
+                                    alt="#{catalogController.item.name}"/>
+                </h:column>
+
+                <h:column>
+                    <h:outputText value="#{i18n.item_unitCost}:"/>
+                    <h:outputText value="#{catalogController.item.unitCost}"/> $
+                </h:column>
+
+                <h:column>
+                    <h:commandLink action="#{shoppingCartController.addItemToCart}" styleClass="add-to-cart"
+                                   rendered="#{accountController.loggedIn}">
+                        <h:outputText value="#{i18n.searchResult_addToCart}"/>
+                        <f:param name="itemId" value="#{catalogController.item.id}"/>
+                    </h:commandLink>
+                </h:column>
+            </h:panelGrid>
+
+            <h:panelGrid columns="1" rendered="#{catalogController.item != null}">
+                <h:column>
+                    <h:outputText value="#{catalogController.item.description}"/>
+                </h:column>
+            </h:panelGrid>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
