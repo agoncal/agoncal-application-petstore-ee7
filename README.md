@@ -41,7 +41,7 @@ Launching tests under [Glassfish](http://glassfish.java.net/public/downloadsinde
 
     mvn clean install -Pglassfish4-embedded
 
-Galssfish will launch during the build and tests will be executed in it. Other profiles will run the integration tests using other application servers or management modes :
+Glassfish will launch during the build and tests will be executed in it. Other profiles will run the integration tests using other application servers or management modes :
 
     mvn clean install -Pglassfish4-embedded
     mvn clean install -Pglassfish4-managed
