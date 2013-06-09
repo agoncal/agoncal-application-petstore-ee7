@@ -25,7 +25,7 @@
         <version.tomee>1.1.0-SNAPSHOT</version.tomee>
         <version.myfaces>2.1.7</version.myfaces>
         <!--GlassFish-->
-        <version.glassfish>4.0-b72</version.glassfish>
+        <version.glassfish>4.0-b86</version.glassfish>
         <version.maven.embedded.glassfish.plugin>4.0-SNAPSHOT</version.maven.embedded.glassfish.plugin>
         <!--Maven Plugins & co-->
         <version.maven.war.plugin>2.3</version.maven.war.plugin>
