@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 @DependsOn("DBPopulator")
 public class CloudBeesAuthRealmConfigurer {
     private final Logger logger = Logger.getLogger(getClass().getName());
-    @Resource(lookup = "jdbc/petstoreDS")
+    @Resource(lookup = "jdbc/petstore")
     private DataSource dataSource;
 
     @PostConstruct
