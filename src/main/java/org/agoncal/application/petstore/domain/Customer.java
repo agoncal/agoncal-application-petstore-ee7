@@ -3,6 +3,7 @@ package org.agoncal.application.petstore.domain;
 import org.agoncal.application.petstore.constraint.Login;
 import org.agoncal.application.petstore.exception.ValidationException;
 import org.hibernate.validator.constraints.Email;
+import sun.misc.BASE64Encoder;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.security.MessageDigest;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -40,9 +42,9 @@ public class Customer implements Serializable {
     @Login
     @NotNull
     private String login;
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 256)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 256)
     private String password;
     @Column(nullable = false)
     @NotNull
@@ -79,11 +81,11 @@ public class Customer implements Serializable {
     public Customer() {
     }
 
-    public Customer(String firstname, String lastname, String login, String password, String email, Address address) {
+    public Customer(String firstname, String lastname, String login, String plainTextPassword, String email, Address address) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.login = login;
-        this.password = password;
+        this.password = digestPassword(plainTextPassword);
         this.email = email;
         this.homeAddress = address;
         this.dateOfBirth = new Date();
@@ -121,6 +123,23 @@ public class Customer implements Serializable {
     // ======================================
 
     /**
+     * Digest password with <code>SHA-256</code> then encode it with Base64.
+     *
+     * @param plainTextPassword the password to digest and encode
+     *
+     * @return digested password
+     */
+    public String digestPassword(String plainTextPassword) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(plainTextPassword.getBytes("UTF-8"));
+            byte[] passwordDigest = md.digest();
+            return new BASE64Encoder().encode(passwordDigest);
+        } catch (Exception e) {
+            throw new RuntimeException("Exception encoding password", e);
+        }
+    }
+    /**
      * Given a password, this method then checks if it matches the user
      *
      * @param pwd Password
@@ -130,9 +149,10 @@ public class Customer implements Serializable {
     public void matchPassword(String pwd) {
         if (pwd == null || "".equals(pwd))
             throw new ValidationException("Invalid password");
+        String digestedPwd = digestPassword(pwd);
 
         // The password entered by the customer is not the same stored in database
-        if (!pwd.equals(password))
+        if (!digestedPwd.equals(password))
             throw new ValidationException("Passwords don't match");
     }
 
