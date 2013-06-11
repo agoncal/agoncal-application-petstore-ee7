@@ -7,7 +7,7 @@
     "icon" : "https://d3ko533tu1ozfq.cloudfront.net/clickstart/glassfish_icon.png",
     "disabled" : true,
     "supported-by" : "community",
-    "app-package" : "https://cyrille-leclerc.ci.cloudbees.com/job/petstore-ee7/job/agoncal-application-petstore-ee7-glassfish4-embedded-clc/lastSuccessfulBuild/artifact/target/applicationPetstore.war",
+    "app-package" : "https://cyrille-leclerc.ci.cloudbees.com/job/agoncal-petstore-ee7/job/agoncal-application-petstore-ee7-glassfish4-embedded-clc/lastSuccessfulBuild/artifact/target/applicationPetstore.war",
     "order" : 3,
    
     "runtime": {
