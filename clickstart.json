@@ -13,8 +13,7 @@
     "runtime": {
         "type": "glassfish4",
         "app-parameters" : {
-            "runtime.glassfish4.auth-realm.database": "petstore",
-            "runtime.PLUGIN.SRC.glassfish4": "https://s3.amazonaws.com/cleclerc/clickstack/glassfish4-clickstack/glassfish4-plugin-1.0.0.zip"
+            "runtime.glassfish4.auth-realm.database": "petstore"
         }
     },
     "databases": [
