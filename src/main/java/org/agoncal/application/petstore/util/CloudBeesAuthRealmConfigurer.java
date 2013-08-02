@@ -75,7 +75,9 @@ public class CloudBeesAuthRealmConfigurer {
         try {
             executeStatement("select 1", cnn);
         } catch (RuntimeException e) {
-            throw new RuntimeException("Database connectivity failure", e);
+            throw new RuntimeException("Database connectivity failure. " +
+                    "Please ensure that the 'jdbc/petstore' JNDI DataSource has been configured in GlassFish. " +
+                    "On CloudBees platform, please use 'bees app:bind -a myapp -db mydb -as petstore' to link your DB", e);
         }
     }
 

@@ -7,14 +7,13 @@
     "icon" : "https://d3ko533tu1ozfq.cloudfront.net/clickstart/glassfish_icon.png",
     "disabled" : true,
     "supported-by" : "community",
-    "app-package" : "https://cyrille-leclerc.ci.cloudbees.com/job/petstore-ee7/job/agoncal-application-petstore-ee7-glassfish4-embedded-clc/lastSuccessfulBuild/artifact/target/applicationPetstore.war",
+    "app-package" : "https://cyrille-leclerc.ci.cloudbees.com/job/agoncal-petstore-ee7/job/agoncal-application-petstore-ee7-glassfish4-embedded-clc/lastSuccessfulBuild/artifact/target/applicationPetstore.war",
     "order" : 3,
    
     "runtime": {
         "type": "glassfish4",
         "app-parameters" : {
-            "runtime.glassfish4.auth-realm.database": "petstore",
-            "runtime.PLUGIN.SRC.glassfish4": "https://community.ci.cloudbees.com/job/glassfish4-clickstack/lastSuccessfulBuild/artifact/glassfish4-plugin.zip"
+            "runtime.glassfish4.auth-realm.database": "petstore"
         }
     },
     "databases": [
