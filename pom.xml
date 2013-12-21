@@ -12,10 +12,11 @@
     <properties>
         <version.java>1.7</version.java>
         <version.javaee>7.0</version.javaee>
+        <!-- Test -->
         <version.derby>10.10.1.1</version.derby>
         <version.junit>4.11</version.junit>
         <version.mockito>1.9.5</version.mockito>
-        <version.arquillian>1.0.3.Final</version.arquillian>
+        <version.arquillian>1.1.2.Final</version.arquillian>
         <version.arquillian.glassfish>1.0.0.CR4</version.arquillian.glassfish>
         <version.arquillian.jboss>7.2.0.Final</version.arquillian.jboss>
         <version.jacoco>0.5.7.201204190339</version.jacoco>
@@ -25,14 +26,17 @@
         <version.tomee>1.1.0-SNAPSHOT</version.tomee>
         <version.myfaces>2.1.7</version.myfaces>
         <!--GlassFish-->
-        <version.glassfish>4.0-b86</version.glassfish>
+        <version.glassfish>4.0</version.glassfish>
         <version.maven.embedded.glassfish.plugin>4.0-SNAPSHOT</version.maven.embedded.glassfish.plugin>
+        <!-- UI (WebJar, Bootstrap, JQuery...) -->
+        <version.bootstrap>3.0.3</version.bootstrap>
+        <version.jquery>2.0.3</version.jquery>
         <!--Maven Plugins & co-->
-        <version.maven.war.plugin>2.3</version.maven.war.plugin>
+        <version.maven.war.plugin>2.4</version.maven.war.plugin>
         <version.maven.compiler.plugin>3.1</version.maven.compiler.plugin>
-        <version.maven.surefire.plugin>2.14.1</version.maven.surefire.plugin>
-        <version.maven.failsafe.plugin>2.14.1</version.maven.failsafe.plugin>
-        <version.jrebel>1.1.3</version.jrebel>
+        <version.maven.surefire.plugin>2.16</version.maven.surefire.plugin>
+        <version.maven.failsafe.plugin>2.16</version.maven.failsafe.plugin>
+        <version.jrebel>1.1.5</version.jrebel>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -50,6 +54,25 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <!-- Java EE -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>${version.javaee}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- UI (WebJar, Primefaces...) -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${version.bootstrap}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${version.jquery}</version>
+        </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
@@ -164,25 +187,19 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>javax</groupId>
-                    <artifactId>javaee-api</artifactId>
-                    <version>${version.javaee}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.derby</groupId>
-                    <artifactId>derby</artifactId>
-                    <version>${version.derby}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.jboss.as</groupId>
-                    <artifactId>jboss-as-arquillian-container-managed</artifactId>
-                    <version>${version.arquillian.jboss}</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
+            <!--<dependencies>-->
+                <!--<dependency>-->
+                    <!--<groupId>org.apache.derby</groupId>-->
+                    <!--<artifactId>derby</artifactId>-->
+                    <!--<version>${version.derby}</version>-->
+                <!--</dependency>-->
+                <!--<dependency>-->
+                    <!--<groupId>org.jboss.as</groupId>-->
+                    <!--<artifactId>jboss-as-arquillian-container-managed</artifactId>-->
+                    <!--<version>${version.arquillian.jboss}</version>-->
+                    <!--<scope>test</scope>-->
+                <!--</dependency>-->
+            <!--</dependencies>-->
         </profile>
 
         <profile>
@@ -303,6 +320,19 @@
                 <configuration>
                     <tomeeClassifier>jaxrs</tomeeClassifier>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.0.0.Beta1</version>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
