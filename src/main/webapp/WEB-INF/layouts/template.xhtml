@@ -175,7 +175,9 @@
                 </div>
                 <div class="col-md-8"/>
                 <div class="col-md-2 centered-text">
-                    Debug
+                    <h:link outcome="debug" value="Debug">
+                        <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
+                    </h:link>
                     <br/>
                     <h:outputText value="Conversation [#{shoppingCartController.conversation.id}]"/>
                 </div>
