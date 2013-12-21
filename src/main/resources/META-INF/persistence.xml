@@ -5,7 +5,8 @@
              version="2.1">
 
     <persistence-unit name="applicationPetstorePU" transaction-type="JTA">
-        <jta-data-source>jdbc/petstore</jta-data-source>
+        <jta-data-source>java:global/jdbc/applicationPetstoreDS</jta-data-source>
+        <!--<jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>-->
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
 
@@ -13,6 +14,7 @@
             <property name="eclipselink.logging.level" value="INFO"/>
 
             <!-- Properties for Hibernate -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
 

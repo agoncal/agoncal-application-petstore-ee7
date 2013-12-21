@@ -285,17 +285,17 @@
             </plugin>
             <!-- Run mvn clean package embedded-glassfish:run -->
             <!-- and go to http://localhost:8080/applicationPetstore/ -->
-            <plugin>
-                <groupId>org.glassfish</groupId>
-                <artifactId>maven-embedded-glassfish-plugin</artifactId>
-                <version>${version.maven.embedded.glassfish.plugin}</version>
-                <configuration>
-                    <app>${project.build.directory}/${project.build.finalName}.war</app>
-                    <port>8080</port>
-                    <contextRoot>${project.build.finalName}</contextRoot>
-                    <name>${project.build.finalName}</name>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.glassfish</groupId>-->
+                <!--<artifactId>maven-embedded-glassfish-plugin</artifactId>-->
+                <!--<version>${version.maven.embedded.glassfish.plugin}</version>-->
+                <!--<configuration>-->
+                    <!--<app>${project.build.directory}/${project.build.finalName}.war</app>-->
+                    <!--<port>8080</port>-->
+                    <!--<contextRoot>${project.build.finalName}</contextRoot>-->
+                    <!--<name>${project.build.finalName}</name>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.openejb.maven</groupId>
                 <artifactId>tomee-maven-plugin</artifactId>

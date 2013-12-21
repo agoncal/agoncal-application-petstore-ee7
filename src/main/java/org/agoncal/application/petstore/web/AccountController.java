@@ -9,13 +9,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.security.auth.login.CredentialException;
+import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Antonio Goncalves
@@ -28,8 +24,6 @@ import java.util.logging.Logger;
 @Loggable
 @CatchException
 public class AccountController extends Controller implements Serializable {
-
-    private final Logger logger = Logger.getLogger(getClass().getName());
 
     // ======================================
     // =             Attributes             =
@@ -44,11 +38,13 @@ public class AccountController extends Controller implements Serializable {
     @Inject
     private Conversation conversation;
 
+    @Produces
+    @LoggedIn
     private Customer loggedinCustomer;
 
     @Inject
-    private HttpServletRequest servletRequest;
-
+    @SessionScoped
+    private transient LoginContext loginContext;
 
     // ======================================
     // =              Public Methods        =
@@ -63,16 +59,9 @@ public class AccountController extends Controller implements Serializable {
             addWarningMessage("pwd_filled");
             return null;
         }
-        try {
-            servletRequest.login(credentials.getLogin(), credentials.getPassword());
-        } catch (Exception e) {
-            String msg = "Authentication failure for login '" + credentials.getLogin() + "'";
-            logger.log(Level.WARNING, msg, e);
-            CredentialException ce = new CredentialException(msg);
-            ce.initCause(e);
-            throw ce;
-        }
 
+        loginContext.login();
+        loggedinCustomer = customerService.findCustomer(credentials.getLogin());
         return "main.faces";
     }
 
@@ -108,11 +97,6 @@ public class AccountController extends Controller implements Serializable {
 
 
     public String doLogout() {
-        try {
-            servletRequest.logout();
-        } catch (ServletException e) {
-            logger.log(Level.WARNING, "Exception logging out", e);
-        }
         loggedinCustomer = null;
         // Stop conversation
         if (!conversation.isTransient()) {
@@ -129,22 +113,12 @@ public class AccountController extends Controller implements Serializable {
     }
 
     public boolean isLoggedIn() {
-        return servletRequest.getUserPrincipal() != null;
+        return loggedinCustomer != null;
     }
 
-    @Produces
-    @LoggedIn
     public Customer getLoggedinCustomer() {
-        if (loggedinCustomer == null) {
-            String login = servletRequest.getRemoteUser();
-            if (login == null) {
-                return null;
-            }
-            return customerService.findCustomer(login);
-        } else {
             return loggedinCustomer;
         }
-    }
 
     public void setLoggedinCustomer(Customer loggedinCustomer) {
         this.loggedinCustomer = loggedinCustomer;

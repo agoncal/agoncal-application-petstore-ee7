@@ -2,8 +2,8 @@
 
 * *Author* : [Antonio Goncalves](http://www.antoniogoncalves.org)
 * *Level* : Intermediate
-* *Technologies* : Java EE 7 (JPA 2.1, CDI 1.1, Bean Validation 1.1, EJB Lite 3.2, JSF 2.2, JAX-RS 2.0), Twitter Bootstrap (Bootstrap 2.3.1, JQuery 1.9.1)
-* *Application Servers* : GlassFish 4.x
+* *Technologies* : Java EE 7 (JPA 2.1, CDI 1.1, Bean Validation 1.1, EJB Lite 3.2, JSF 2.2, JAX-RS 2.0), Twitter Bootstrap (Bootstrap 3.x, JQuery 2.x)
+* *Application Servers* : GlassFish 4.x, WildFly 8
 * *Summary* : A Petstore-like application using Java EE 7
 
 [Download the code from GitHub](https://github.com/agoncal/agoncal-application-petstore-ee7)
