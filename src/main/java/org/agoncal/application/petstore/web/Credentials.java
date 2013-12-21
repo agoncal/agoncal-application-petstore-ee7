@@ -1,6 +1,6 @@
 package org.agoncal.application.petstore.web;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 
@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 
 @Named
-@RequestScoped
+@SessionScoped
 public class Credentials implements Serializable {
 
     // ======================================
