@@ -51,16 +51,16 @@ public class AccountController extends Controller implements Serializable {
     // ======================================
 
     public String doLogin() throws LoginException {
-        if ("".equals(credentials.getLogin())) {
+        if (credentials.getLogin() == null || "".equals(credentials.getLogin())) {
             addWarningMessage("id_filled");
             return null;
         }
-        if ("".equals(credentials.getPassword())) {
+        if (credentials.getPassword() == null || "".equals(credentials.getPassword())) {
             addWarningMessage("pwd_filled");
             return null;
         }
 
-        loginContext.login();
+// TODO       loginContext.login();
         loggedinCustomer = customerService.findCustomer(credentials.getLogin());
         return "main.faces";
     }
@@ -117,8 +117,8 @@ public class AccountController extends Controller implements Serializable {
     }
 
     public Customer getLoggedinCustomer() {
-            return loggedinCustomer;
-        }
+        return loggedinCustomer;
+    }
 
     public void setLoggedinCustomer(Customer loggedinCustomer) {
         this.loggedinCustomer = loggedinCustomer;
