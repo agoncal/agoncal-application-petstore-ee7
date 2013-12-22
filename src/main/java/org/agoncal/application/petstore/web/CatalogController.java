@@ -61,9 +61,14 @@ public class CatalogController extends Controller implements Serializable {
         return "showitem.faces";
     }
 
+    /**
+     * Can also be invoked in a RESTful way :
+     * http://localhost:8080/applicationPetstore/searchresult.xhtml?keyword=tail
+     */
     public String doSearch() {
         items = catalogService.searchItems(keyword);
-        return "searchresult.faces?keyword=" + keyword + "&faces-redirect=true";
+        return "searchresult";
+//        return "searchresult.faces?keyword=" + keyword + "&faces-redirect=true";
     }
 
     // ======================================

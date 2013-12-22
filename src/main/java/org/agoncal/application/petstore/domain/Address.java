@@ -35,7 +35,7 @@ public class Address {
     @Column(nullable = false, length = 50)
     @NotNull
     @Size(min = 2, max = 50)
-    private String country; // TODO use an enum
+    private String country; // TODO use the country entity
 
     // ======================================
     // =            Constructors            =
