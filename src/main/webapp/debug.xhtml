@@ -12,64 +12,62 @@
 
     <ui:define name="body">
 
-        <h3>Request information</h3>
+        <h2>Request information</h2>
 
         <h:panelGrid columns="2">
             <h:outputLabel value="Protocol"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getProtocol()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getProtocol()}"/>
             <h:outputLabel value="ContentType"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getContentType()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getContentType()}"/>
             <h:outputLabel value="RemoteAddr"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getRemoteAddr()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getRemoteAddr()}"/>
             <h:outputLabel value="RemoteHost"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getRemoteHost()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getRemoteHost()}"/>
             <h:outputLabel value="Scheme"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getScheme()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getScheme()}"/>
             <h:outputLabel value="ServerName"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getServerName()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getServerName()}"/>
             <h:outputLabel value="ServerPort"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getServerPort()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getServerPort()}"/>
             <h:outputLabel value="AuthType"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getAuthType()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getAuthType()}"/>
             <h:outputLabel value="ContextPath"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getContextPath()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getContextPath()}"/>
             <h:outputLabel value="Method"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getMethod()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getMethod()}"/>
             <h:outputLabel value="PathInfo"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getPathInfo()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getPathInfo()}"/>
             <h:outputLabel value="PathTranslated"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getPathTranslated()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getPathTranslated()}"/>
             <h:outputLabel value="QueryString"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getQueryString()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getQueryString()}"/>
             <h:outputLabel value="RemoteUser"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getRemoteUser()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getRemoteUser()}"/>
             <h:outputLabel value="RequestedSessionId"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getRequestedSessionId()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getRequestedSessionId()}"/>
             <h:outputLabel value="RequestURI"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getRequestURI()}" size="60"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getRequestURI()}" size="60"/>
             <h:outputLabel value="RequestURL"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getRequestURL()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getRequestURL()}"/>
             <h:outputLabel value="ServletPath"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getServletPath()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getServletPath()}"/>
             <h:outputLabel value="ServerName"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getServerName()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getServerName()}"/>
             <h:outputLabel value="ServerPort"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getServerPort()}"/>
-            <h:outputLabel value="ServletPath"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.getServletPath()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.getServerPort()}"/>
             <h:outputLabel value="isRequestedSessionIdFromCookie"/>
-            <h:inputText class="form-control" pt:disabled="disabled"
-                         value="#{request.isRequestedSessionIdFromCookie()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled"
+                          value="#{request.isRequestedSessionIdFromCookie()}"/>
             <h:outputLabel value="isRequestedSessionIdFromURL"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.isRequestedSessionIdFromURL()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.isRequestedSessionIdFromURL()}"/>
             <h:outputLabel value="isRequestedSessionIdValid"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.isRequestedSessionIdValid()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.isRequestedSessionIdValid()}"/>
             <h:outputLabel value="isSecure"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{request.isSecure()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{request.isSecure()}"/>
         </h:panelGrid>
         <br/>
 
-        <h3>Request headers</h3>
+        <h2>Request headers</h2>
         <h:panelGrid columns="2">
             <c:forEach items="#{headerValues}" var="entry">
                 <h:outputLabel value="#{entry.key}"/>
@@ -79,84 +77,91 @@
             </c:forEach>
         </h:panelGrid>
 
-        <h3>Request cookies</h3>
+        <h2>Request cookies</h2>
+        <h:panelGrid columns="2">
+            <c:forEach items="#{cookie}" var="entry">
+                <h:outputLabel value="#{entry.key}"/>
+                <h:outputText class="form-control" pt:disabled="disabled" value="#{entry.value.value}" size="82"/>
+            </c:forEach>
+        </h:panelGrid>
 
-        <h3>Request attributes</h3>
+        <h2>Request attributes</h2>
+        <h:panelGrid columns="2">
+            <c:forEach items="#{requestScope}" var="entry">
+                <h:outputLabel value="#{entry.key}" />
+                <h:inputText class="form-control" pt:disabled="disabled" value="#{entry.value}" />
+            </c:forEach>
+        </h:panelGrid>
 
-        <h3>Thread stack</h3>
-
-        <h3>Session information</h3>
+        <h2>Session information</h2>
         <h:panelGrid columns="2">
             <h:outputLabel value="MaxInactiveInterval (min)"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{session.getMaxInactiveInterval() / 60}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{session.getMaxInactiveInterval() / 60}"/>
             <h:outputLabel value="Id"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{session.getId()}" size="72"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{session.getId()}" size="72"/>
             <h:outputLabel value="LastAccessedTime"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{session.getLastAccessedTime()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{session.getLastAccessedTime()}"/>
         </h:panelGrid>
 
-        <h3>Attributes</h3>
-        <table border="1">
-            <tr>
-                <th>Name</th>
-                <th>Value</th>
-            </tr>
-        </table>
+        <h2>Session attributes</h2>
+        <h:panelGrid columns="2">
+            <c:forEach items="#{sessionScope}" var="entry">
+                <h:outputLabel value="#{entry.key}" />
+                <h:inputText class="form-control" pt:disabled="disabled" value="#{entry.value}" />
+            </c:forEach>
+        </h:panelGrid>
 
-        <h3>Application information</h3>
+        <h2>Application information</h2>
         <h:panelGrid columns="2">
             <h:outputLabel value="ServletContextPath"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{application.getContextPath()}" size="76"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{application.getContextPath()}"
+                          size="76"/>
             <h:outputLabel value="ServletContextName"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{application.getServletContextName()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{application.getServletContextName()}"/>
             <h:outputLabel value="MajorVersion"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{application.getMajorVersion()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{application.getMajorVersion()}"/>
             <h:outputLabel value="MinorVersion"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{application.getMinorVersion()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{application.getMinorVersion()}"/>
             <h:outputLabel value="ServerInfo"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{application.getServerInfo()}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{application.getServerInfo()}"/>
             <h:outputLabel value="ResourceUrlForSlash"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{application.getResource('/')}"/>
+            <h:inputText class="form-control" pt:disabled="disabled" value="#{application.getResource('/')}" size="80"/>
         </h:panelGrid>
 
-        <h3>Application attributes</h3>
-        <table border="1">
-        </table>
-        <br/>
+        <h2>Application attributes</h2>
+        <h:panelGrid columns="2">
+            <c:forEach items="#{applicationScope}" var="entry">
+                <h:outputLabel value="#{entry.key}" />
+                <h:inputText class="form-control" pt:disabled="disabled" value="#{entry.value}" />
+            </c:forEach>
+        </h:panelGrid>
 
-        <h3>Application init parameters</h3>
-        <table border="1">
-            <tr>
-                <th>Name</th>
-                <th>Value</th>
-            </tr>
-        </table>
-        <br/>
-
-        <h3>InitialContext</h3>
-        <table border="1">
-        </table>
-
-        <br/>
-
-        <h3>System information</h3>
+        <h2>System information</h2>
         <h:panelGrid columns="2">
             <h:outputLabel value="Working directory"/>
             <h:inputText class="form-control" pt:disabled="disabled" value="#{debugController.workingDirectory}"
-                         size="64"/>
+                          size="64"/>
             <h:outputLabel value="InetAddress.getLocalHost()"/>
             <h:inputText class="form-control" pt:disabled="disabled" value="#{debugController.workingDirectory}"/>
             <h:outputLabel value="InetAddress.getAllByName(null)"/>
             <h:inputText class="form-control" pt:disabled="disabled" value="#{debugController.workingDirectory}"/>
         </h:panelGrid>
 
-        <h3>Memory</h3>
+        <h2>Memory</h2>
         <h:panelGrid columns="2">
             <h:outputLabel value="Total Memory"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{debugController.totalMemory}" size="64"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{debugController.totalMemory}" size="64"/>
             <h:outputLabel value="Free Memory"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{debugController.freeMemory}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{debugController.freeMemory}"/>
         </h:panelGrid>
+
+        <h2>Thread stack</h2>
+        <h:panelGrid columns="1">
+            <c:forEach items="#{debugController.threadStack}" var="entry">
+                <h:outputLabel value="#{entry}" />
+            </c:forEach>
+        </h:panelGrid>
+
 
     </ui:define>
 </ui:composition>
