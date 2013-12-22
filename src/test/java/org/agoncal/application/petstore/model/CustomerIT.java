@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.domain;
+package org.agoncal.application.petstore.model;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
  * @author Antonio Goncalves
  */
 @RunWith(Arquillian.class)
-public class AddressIT {
+public class CustomerIT {
 
     // ======================================
     // =             Attributes             =
@@ -33,7 +33,7 @@ public class AddressIT {
     @Deployment
     public static JavaArchive jar() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addClass(Address.class)
+                .addClasses(Category.class, Address.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
@@ -42,12 +42,13 @@ public class AddressIT {
     // ======================================
 
     @Test
-    public void shouldCreateAValidAddress() {
+    public void shouldCreateAValidCustomer() {
 
         // Creates an object
-        Address address = new Address("Street1", "City", "Zipcode", "Country");
+        Address address = new Address("Abbey road", "Liverpool", "SW17", "UK");
+        Customer customer = new Customer("Paul", "Mc Cartney", "pmac", "pmac", "paul@beales.com", address);
 
         // Checks the object is valid
-        assertEquals("Should have not constraint violation", 0, validator.validate(address).size());
+        assertEquals("Should have not constraint violation", 0, validator.validate(customer).size());
     }
 }

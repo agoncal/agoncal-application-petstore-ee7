@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.domain;
+package org.agoncal.application.petstore.model;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;

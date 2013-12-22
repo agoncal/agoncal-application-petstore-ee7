@@ -1,7 +1,7 @@
 package org.agoncal.application.petstore.web;
 
-import org.agoncal.application.petstore.domain.Item;
-import org.agoncal.application.petstore.domain.Product;
+import org.agoncal.application.petstore.model.Item;
+import org.agoncal.application.petstore.model.Product;
 import org.agoncal.application.petstore.service.CatalogService;
 import org.agoncal.application.petstore.util.Loggable;
 

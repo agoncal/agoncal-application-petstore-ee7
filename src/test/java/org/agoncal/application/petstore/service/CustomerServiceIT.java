@@ -1,7 +1,7 @@
 package org.agoncal.application.petstore.service;
 
-import org.agoncal.application.petstore.domain.Address;
-import org.agoncal.application.petstore.domain.Customer;
+import org.agoncal.application.petstore.model.Address;
+import org.agoncal.application.petstore.model.Customer;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
 import org.junit.runner.RunWith;

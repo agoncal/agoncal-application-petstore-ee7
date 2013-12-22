@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.domain;
+package org.agoncal.application.petstore.model;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
  * @author Antonio Goncalves
  */
 @RunWith(Arquillian.class)
-public class ItemIT {
+public class CategoryIT {
 
     // ======================================
     // =             Attributes             =
@@ -36,7 +36,7 @@ public class ItemIT {
     @Deployment
     public static JavaArchive jar() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addClasses(Category.class, Product.class, Item.class)
+                .addClass(Category.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
@@ -45,15 +45,13 @@ public class ItemIT {
     // ======================================
 
     @Test
-    public void shouldCreateAValidItem() {
+    public void shouldCreateAValidCategory() {
 
         // Creates an object
         Category category = new Category("Fish", "Any of numerous cold-blooded aquatic vertebrates characteristically having fins, gills, and a streamlined body");
-        Product product = new Product("Bulldog", "Friendly dog from England", category);
-        Item item = new Item("Thootless fish", 10f, "fish1.gif", product, "desc");
 
         // Checks the object is valid
-        assertEquals("Should have not constraint violation", 0, validator.validate(item).size());
+        assertEquals("Should have not constraint violation", 0, validator.validate(category).size());
     }
 
     @Test
@@ -61,13 +59,11 @@ public class ItemIT {
 
         // Creates an object
         Category category = new Category("Fish", "Any of numerous cold-blooded aquatic vertebrates characteristically having fins, gills, and a streamlined body");
-        Product product = new Product("Bulldog", "Friendly dog from England", category);
-        Item item = new Item("Thootless fish", 10f, "fish1.gif", product, "desc");
 
         // Marshalls it to XML
         StringWriter writer = new StringWriter();
-        JAXBContext context = JAXBContext.newInstance(Item.class);
+        JAXBContext context = JAXBContext.newInstance(Category.class);
         Marshaller m = context.createMarshaller();
-        m.marshal(item, writer);
+        m.marshal(category, writer);
     }
 }

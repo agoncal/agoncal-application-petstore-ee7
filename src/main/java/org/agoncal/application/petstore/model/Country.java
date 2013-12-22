@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.domain;
+package org.agoncal.application.petstore.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,7 +1,6 @@
-package org.agoncal.application.petstore.domain;
+package org.agoncal.application.petstore.model;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 
 /**
  * @author Antonio Goncalves
@@ -9,25 +8,32 @@ import javax.validation.constraints.NotNull;
  *         --
  */
 
-public class CartItem {
+@Entity
+public class OrderLine {
 
     // ======================================
     // =             Attributes             =
     // ======================================
 
-    @NotNull
-    private Item item;
-    @NotNull
-    @Min(1)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(nullable = false)
     private Integer quantity;
+    @OneToOne
+    @JoinColumn(name = "item_fk", nullable = false)
+    private Item item;
 
     // ======================================
     // =            Constructors            =
     // ======================================
 
-    public CartItem(Item item, Integer quantity) {
-        this.item = item;
+    public OrderLine() {
+    }
+
+    public OrderLine(Integer quantity, Item item) {
         this.quantity = quantity;
+        this.item = item;
     }
 
     // ======================================
@@ -42,12 +48,8 @@ public class CartItem {
     // =         Getters & setters          =
     // ======================================
 
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
+    public Long getId() {
+        return id;
     }
 
     public Integer getQuantity() {
@@ -58,37 +60,47 @@ public class CartItem {
         this.quantity = quantity;
     }
 
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
     // ======================================
     // =   Methods hash, equals, toString   =
     // ======================================
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof OrderLine)) return false;
 
-        CartItem cartItem = (CartItem) o;
+        OrderLine orderLine = (OrderLine) o;
 
-        if (!item.equals(cartItem.item)) return false;
-        if (!quantity.equals(cartItem.quantity)) return false;
+        if (id != null ? !id.equals(orderLine.id) : orderLine.id != null) return false;
+        if (item != null ? !item.equals(orderLine.item) : orderLine.item != null) return false;
+        if (!quantity.equals(orderLine.quantity)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = item.hashCode();
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + quantity.hashCode();
+        result = 31 * result + (item != null ? item.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        sb.append("CartItem");
-        sb.append("{item='").append(item).append('\'');
-        sb.append(", quantity='").append(quantity).append('\'');
+        sb.append("OrderLine");
+        sb.append("{id=").append(id);
+        sb.append(", quantity=").append(quantity);
+        sb.append(", item=").append(item);
         sb.append('}');
         return sb.toString();
     }

@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.domain;
+package org.agoncal.application.petstore.model;
 
 import org.agoncal.application.petstore.constraint.NotEmpty;
 import org.agoncal.application.petstore.constraint.Price;

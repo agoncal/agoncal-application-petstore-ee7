@@ -1,13 +1,12 @@
 package org.agoncal.application.petstore.rest;
 
-import org.agoncal.application.petstore.domain.Category;
-import org.agoncal.application.petstore.domain.Item;
-import org.agoncal.application.petstore.domain.Product;
+import org.agoncal.application.petstore.model.Category;
+import org.agoncal.application.petstore.model.Item;
+import org.agoncal.application.petstore.model.Product;
 import org.agoncal.application.petstore.service.CatalogService;
 import org.agoncal.application.petstore.util.Loggable;
 
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;

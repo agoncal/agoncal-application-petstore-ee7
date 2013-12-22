@@ -1,6 +1,6 @@
 package org.agoncal.application.petstore.service;
 
-import org.agoncal.application.petstore.domain.*;
+import org.agoncal.application.petstore.model.*;
 import org.agoncal.application.petstore.util.Loggable;
 
 import javax.annotation.PostConstruct;

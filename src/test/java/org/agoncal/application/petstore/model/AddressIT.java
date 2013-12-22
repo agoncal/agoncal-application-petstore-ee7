@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.domain;
+package org.agoncal.application.petstore.model;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
  * @author Antonio Goncalves
  */
 @RunWith(Arquillian.class)
-public class OrderIT {
+public class AddressIT {
 
     // ======================================
     // =             Attributes             =
@@ -33,7 +33,7 @@ public class OrderIT {
     @Deployment
     public static JavaArchive jar() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addClasses(Address.class, Customer.class, CreditCard.class, Order.class)
+                .addClass(Address.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
@@ -42,15 +42,12 @@ public class OrderIT {
     // ======================================
 
     @Test
-    public void shouldCreateAValidOrder() {
+    public void shouldCreateAValidAddress() {
 
         // Creates an object
-        Address address = new Address("Abbey road", "Liverpool", "SW17", "UK");
-        Customer customer = new Customer("Paul", "Mc Cartney", "pmac", "pmac", "paul@beales.com", address);
-        CreditCard creditCard = new CreditCard("123456789", CreditCardType.VISA, "12/45");
-        Order order = new Order(customer, creditCard, address);
+        Address address = new Address("Street1", "City", "Zipcode", "Country");
 
         // Checks the object is valid
-        assertEquals("Should have not constraint violation", 0, validator.validate(order).size());
+        assertEquals("Should have not constraint violation", 0, validator.validate(address).size());
     }
 }

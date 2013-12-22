@@ -1,8 +1,8 @@
 package org.agoncal.application.petstore.service;
 
-import org.agoncal.application.petstore.domain.Category;
-import org.agoncal.application.petstore.domain.Item;
-import org.agoncal.application.petstore.domain.Product;
+import org.agoncal.application.petstore.model.Category;
+import org.agoncal.application.petstore.model.Item;
+import org.agoncal.application.petstore.model.Product;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
 import org.junit.runner.RunWith;
