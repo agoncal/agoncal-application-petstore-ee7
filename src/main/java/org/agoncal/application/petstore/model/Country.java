@@ -1,9 +1,6 @@
 package org.agoncal.application.petstore.model;
 
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -21,7 +18,8 @@ public class Country {
     // =             Attributes             =
     // ======================================
 
-    @Id
+    @Id @GeneratedValue
+    private Long id;
     @NotNull
     @Size(min = 2, max = 2)
     private String isoCode;
@@ -57,7 +55,16 @@ public class Country {
     // =         Getters & setters          =
     // ======================================
 
-    public String getIsoCode() {
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getIsoCode() {
         return isoCode;
     }
 
