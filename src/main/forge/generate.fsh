@@ -114,7 +114,6 @@ constraint Size --min 1 --max 30 --onProperty name ;
 entity --named Item ;
 field string --named name --length 30 ;
 field string --named description --length 3000 ;
-field manyToOne --named category --fieldType org.agoncal.application.petstore.model.Category ;
 field custom --named unitCost --type java.lang.Float ;
 field string --named imagePath ;
 field manyToOne --named product --fieldType org.agoncal.application.petstore.model.Product ;
@@ -125,23 +124,18 @@ constraint Size --min 1 --max 3000 --onProperty description ;
 constraint NotNull --onProperty unitCost ;
 constraint NotNull --onProperty imagePath ;
 
-@/* Category, Product & Item relation */;
-cd ../Category.java ;
-field oneToMany --named products --fieldType org.agoncal.application.petstore.model.Product ;
-cd ../Product.java ;
-field oneToMany --named items --fieldType org.agoncal.application.petstore.model.Item ;
-
-
-@/* OrderLine */;
-entity --named OrderLine ;
-field int --named quantity ;
-field oneToOne --named item --fieldType org.agoncal.application.petstore.model.Item.java ;
 
 @/* CreditCardType */;
 java new-enum-type --named CreditCardType --package org.agoncal.application.petstore.model ;
 java new-enum-const VISA ;
 java new-enum-const AMERICAN_EXPRESS ;
 java new-enum-const MASTER_CARD ;
+
+
+@/* OrderLine */;
+entity --named OrderLine ;
+field int --named quantity ;
+field oneToOne --named item --fieldType org.agoncal.application.petstore.model.Item.java ;
 
 
 @/* PurchaseOrder */;

@@ -40,7 +40,7 @@ public class ShoppingCartController extends Controller implements Serializable {
     @Inject
     private Conversation conversation;
 
-    private List<CartItem> cartItems;
+    private List<ShoppingCartItem> cartItems;
     private CreditCard creditCard = new CreditCard();
     private PurchaseOrder order;
 
@@ -58,7 +58,7 @@ public class ShoppingCartController extends Controller implements Serializable {
         }
 
         boolean itemFound = false;
-        for (CartItem cartItem : cartItems) {
+        for (ShoppingCartItem cartItem : cartItems) {
             // If item already exists in the shopping cart we just change the quantity
             if (cartItem.getItem().equals(item)) {
                 cartItem.setQuantity(cartItem.getQuantity() + 1);
@@ -67,7 +67,7 @@ public class ShoppingCartController extends Controller implements Serializable {
         }
         if (!itemFound)
             // Otherwise it's added to the shopping cart
-            cartItems.add(new CartItem(item, 1));
+            cartItems.add(new ShoppingCartItem(item, 1));
 
         return "showcart.faces";
     }
@@ -75,7 +75,7 @@ public class ShoppingCartController extends Controller implements Serializable {
     public String removeItemFromCart() {
         Item item = catalogBean.findItem(getParamId("itemId"));
 
-        for (CartItem cartItem : cartItems) {
+        for (ShoppingCartItem cartItem : cartItems) {
             if (cartItem.getItem().equals(item)) {
                 cartItems.remove(cartItem);
                 return null;
@@ -105,7 +105,7 @@ public class ShoppingCartController extends Controller implements Serializable {
         return "orderconfirmed.faces";
     }
 
-    public List<CartItem> getCartItems() {
+    public List<ShoppingCartItem> getCartItems() {
         return cartItems;
     }
 
@@ -122,7 +122,7 @@ public class ShoppingCartController extends Controller implements Serializable {
         Float total = 0f;
 
         // Sum up the quantities
-        for (CartItem cartItem : cartItems) {
+        for (ShoppingCartItem cartItem : cartItems) {
             total += (cartItem.getSubTotal());
         }
         return total;

@@ -34,7 +34,7 @@ public class PurchaseOrderService implements Serializable {
     // =              Public Methods        =
     // ======================================
 
-    public PurchaseOrder createOrder(@NotNull Customer customer, @NotNull CreditCard creditCard, final List<CartItem> cartItems) {
+    public PurchaseOrder createOrder(@NotNull Customer customer, @NotNull CreditCard creditCard, final List<ShoppingCartItem> cartItems) {
 
         // OMake sure the object is valid
         if (cartItems == null || cartItems.size() == 0)
@@ -46,7 +46,7 @@ public class PurchaseOrderService implements Serializable {
         // From the shopping cart we create the order lines
         List<OrderLine> orderLines = new ArrayList<>();
 
-        for (CartItem cartItem : cartItems) {
+        for (ShoppingCartItem cartItem : cartItems) {
             orderLines.add(new OrderLine(cartItem.getQuantity(), em.merge(cartItem.getItem())));
         }
         order.setOrderLines(orderLines);

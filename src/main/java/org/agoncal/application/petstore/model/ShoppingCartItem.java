@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
  *         --
  */
 
-public class CartItem {
+public class ShoppingCartItem {
 
     // ======================================
     // =             Attributes             =
@@ -25,7 +25,7 @@ public class CartItem {
     // =            Constructors            =
     // ======================================
 
-    public CartItem(Item item, Integer quantity) {
+    public ShoppingCartItem(Item item, Integer quantity) {
         this.item = item;
         this.quantity = quantity;
     }
@@ -68,7 +68,7 @@ public class CartItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CartItem cartItem = (CartItem) o;
+        ShoppingCartItem cartItem = (ShoppingCartItem) o;
 
         if (!item.equals(cartItem.item)) return false;
         if (!quantity.equals(cartItem.quantity)) return false;

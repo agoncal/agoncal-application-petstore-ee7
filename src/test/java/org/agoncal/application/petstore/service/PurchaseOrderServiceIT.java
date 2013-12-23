@@ -44,7 +44,7 @@ public class PurchaseOrderServiceIT extends AbstractServiceIT {
         Address address = new Address("78 Gnu Rd", "Texas", "666", "WWW");
         Customer customer = new Customer("Richard", "Stallman", "rich", "rich", "rich@gnu.org", address);
         CreditCard creditCard = new CreditCard("1234", CreditCardType.MASTER_CARD, "10/12");
-        List<CartItem> cartItems = new ArrayList<>();
+        List<ShoppingCartItem> cartItems = new ArrayList<>();
 
         // Persists the object
         customer = customerService.createCustomer(customer);
@@ -75,7 +75,7 @@ public class PurchaseOrderServiceIT extends AbstractServiceIT {
         Address address = new Address("78 Gnu Rd", "Texas", "666", "WWW");
         Customer customer = new Customer("Richard", "Stallman", "rich", "rich", "rich@gnu.org", address);
         CreditCard creditCard = new CreditCard("1234", CreditCardType.MASTER_CARD, "10/12");
-        List<CartItem> cartItems = new ArrayList<>();
+        List<ShoppingCartItem> cartItems = new ArrayList<>();
 
         // Persists the object
         purchaseOrderService.createOrder(customer, creditCard, cartItems);
