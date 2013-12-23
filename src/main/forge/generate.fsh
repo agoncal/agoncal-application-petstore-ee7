@@ -73,7 +73,8 @@ field string --named street2 ;
 field string --named city --length 50 ;
 field string --named state ;
 field string --named zipcode --length 10 ;
-field oneToOne --named country --fieldType org.agoncal.application.petstore.model.Country.java ;
+field manyToOne --named country --fieldType org.agoncal.application.petstore.model.Country.java ;
+
 
 constraint NotNull --onProperty login ;
 constraint NotNull --onProperty password ;
@@ -189,7 +190,7 @@ rest endpoint-from-entity ~.model.* ;
 scaffold setup --scaffoldType faces ;
 
 @/* Generate the UI for all the @Entities */ ;
-scaffold from-entity ~.model.* ;
+scaffold from-entity ~.model.* --targetDir admin;
 
 
 @/* ========================== */;
