@@ -17,6 +17,7 @@ import java.util.List;
  */
 
 @Entity
+@Cacheable
 @NamedQueries({
         // TODO fetch doesn't work with GlassFIsh
 //        @NamedQuery(name = Category.FIND_BY_NAME, query = "SELECT c FROM Category c LEFT JOIN FETCH c.products WHERE c.name = :pname"),

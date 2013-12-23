@@ -1,5 +1,6 @@
 package org.agoncal.application.petstore.model;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ import javax.validation.constraints.Size;
  */
 
 @Entity
+@Cacheable
 public class Country {
 
     // ======================================
