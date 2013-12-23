@@ -2,7 +2,7 @@ package org.agoncal.application.petstore.web;
 
 import org.agoncal.application.petstore.model.*;
 import org.agoncal.application.petstore.service.CatalogService;
-import org.agoncal.application.petstore.service.OrderService;
+import org.agoncal.application.petstore.service.PurchaseOrderService;
 import org.agoncal.application.petstore.util.Loggable;
 
 import javax.enterprise.context.Conversation;
@@ -36,13 +36,13 @@ public class ShoppingCartController extends Controller implements Serializable {
     @Inject
     private CatalogService catalogBean;
     @Inject
-    private OrderService orderBean;
+    private PurchaseOrderService orderBean;
     @Inject
     private Conversation conversation;
 
     private List<CartItem> cartItems;
     private CreditCard creditCard = new CreditCard();
-    private Order order;
+    private PurchaseOrder order;
 
     // ======================================
     // =              Public Methods        =
@@ -145,11 +145,11 @@ public class ShoppingCartController extends Controller implements Serializable {
         this.creditCard = creditCard;
     }
 
-    public Order getOrder() {
+    public PurchaseOrder getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(PurchaseOrder order) {
         this.order = order;
     }
 

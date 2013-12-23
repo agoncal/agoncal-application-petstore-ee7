@@ -144,8 +144,8 @@ java new-enum-const AMERICAN_EXPRESS ;
 java new-enum-const MASTER_CARD ;
 
 
-@/* Order */;
-entity --named Order ;
+@/* PurchaseOrder */;
+entity --named PurchaseOrder ;
 field temporal --type DATE --named orderDate ;
 field manyToOne --named customer --fieldType org.agoncal.application.petstore.model.Customer.java ;
 field oneToMany --named orderLines --fieldType org.agoncal.application.petstore.model.OrderLine.java ;

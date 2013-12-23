@@ -18,14 +18,14 @@ import static org.junit.Assert.*;
  *         http://www.antoniogoncalves.org
  */
 @RunWith(Arquillian.class)
-public class OrderServiceIT extends AbstractServiceIT {
+public class PurchaseOrderServiceIT extends AbstractServiceIT {
 
     // ======================================
     // =             Attributes             =
     // ======================================
 
     @Inject
-    private OrderService orderService;
+    private PurchaseOrderService purchaseOrderService;
     @Inject
     private CustomerService customerService;
 
@@ -38,7 +38,7 @@ public class OrderServiceIT extends AbstractServiceIT {
     public void shouldCRUDanOrder() {
 
         // Finds all the objects
-        int initialNumber = orderService.findAllOrders().size();
+        int initialNumber = purchaseOrderService.findAllOrders().size();
 
         // Creates an object
         Address address = new Address("78 Gnu Rd", "Texas", "666", "WWW");
@@ -48,24 +48,24 @@ public class OrderServiceIT extends AbstractServiceIT {
 
         // Persists the object
         customer = customerService.createCustomer(customer);
-        Order order = orderService.createOrder(customer, creditCard, cartItems);
+        PurchaseOrder order = purchaseOrderService.createOrder(customer, creditCard, cartItems);
         Long id = order.getId();
 
         // Finds all the objects and checks there's an extra one
-        assertEquals("Should have an extra object", initialNumber + 1, orderService.findAllOrders().size());
+        assertEquals("Should have an extra object", initialNumber + 1, purchaseOrderService.findAllOrders().size());
 
         // Finds the object by id
-        order = orderService.findOrder(id);
+        order = purchaseOrderService.findOrder(id);
         assertNotNull(order.getOrderDate());
 
         // Deletes the object
-        orderService.removeOrder(order);
+        purchaseOrderService.removeOrder(order);
 
         // Checks the object has been deleted
-        assertNull("Should has been deleted", orderService.findOrder(id));
+        assertNull("Should has been deleted", purchaseOrderService.findOrder(id));
 
         // Finds all the objects and checks there's one less
-        assertEquals("Should have an extra object", initialNumber, orderService.findAllOrders().size());
+        assertEquals("Should have an extra object", initialNumber, purchaseOrderService.findAllOrders().size());
     }
 
     @Test(expected = ValidationException.class)
@@ -78,6 +78,6 @@ public class OrderServiceIT extends AbstractServiceIT {
         List<CartItem> cartItems = new ArrayList<>();
 
         // Persists the object
-        orderService.createOrder(customer, creditCard, cartItems);
+        purchaseOrderService.createOrder(customer, creditCard, cartItems);
     }
 }

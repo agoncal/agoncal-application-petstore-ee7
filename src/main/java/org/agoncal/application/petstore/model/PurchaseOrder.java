@@ -15,9 +15,9 @@ import java.util.List;
 @Table(name = "t_order")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = Order.FIND_ALL, query = "SELECT o FROM Order o")
+        @NamedQuery(name = PurchaseOrder.FIND_ALL, query = "SELECT o FROM PurchaseOrder o")
 })
-public class Order {
+public class PurchaseOrder {
 
     // ======================================
     // =             Attributes             =
@@ -52,10 +52,10 @@ public class Order {
     // =            Constructors            =
     // ======================================
 
-    public Order() {
+    public PurchaseOrder() {
     }
 
-    public Order(Customer customer, CreditCard creditCard, Address deliveryAddress) {
+    public PurchaseOrder(Customer customer, CreditCard creditCard, Address deliveryAddress) {
         this.customer = customer;
         this.creditCard = creditCard;
         this.deliveryAddress = deliveryAddress;
@@ -163,9 +163,9 @@ public class Order {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Order)) return false;
+        if (!(o instanceof PurchaseOrder)) return false;
 
-        Order order = (Order) o;
+        PurchaseOrder order = (PurchaseOrder) o;
 
         if (!customer.equals(order.customer)) return false;
         if (orderDate != null && !orderDate.equals(order.orderDate)) return false;

@@ -21,7 +21,7 @@ import java.util.List;
 
 @Stateless
 @Loggable
-public class OrderService implements Serializable {
+public class PurchaseOrderService implements Serializable {
 
     // ======================================
     // =             Attributes             =
@@ -34,14 +34,14 @@ public class OrderService implements Serializable {
     // =              Public Methods        =
     // ======================================
 
-    public Order createOrder(@NotNull Customer customer, @NotNull CreditCard creditCard, final List<CartItem> cartItems) {
+    public PurchaseOrder createOrder(@NotNull Customer customer, @NotNull CreditCard creditCard, final List<CartItem> cartItems) {
 
         // OMake sure the object is valid
         if (cartItems == null || cartItems.size() == 0)
             throw new ValidationException("Shopping cart is empty"); // TODO exception bean validation
 
         // Creating the order
-        Order order = new Order(em.merge(customer), creditCard, customer.getHomeAddress());
+        PurchaseOrder order = new PurchaseOrder(em.merge(customer), creditCard, customer.getHomeAddress());
 
         // From the shopping cart we create the order lines
         List<OrderLine> orderLines = new ArrayList<>();
@@ -57,16 +57,16 @@ public class OrderService implements Serializable {
         return order;
     }
 
-    public Order findOrder(@NotNull Long orderId) {
-        return em.find(Order.class, orderId);
+    public PurchaseOrder findOrder(@NotNull Long orderId) {
+        return em.find(PurchaseOrder.class, orderId);
     }
 
-    public List<Order> findAllOrders() {
-        TypedQuery<Order> typedQuery = em.createNamedQuery(Order.FIND_ALL, Order.class);
+    public List<PurchaseOrder> findAllOrders() {
+        TypedQuery<PurchaseOrder> typedQuery = em.createNamedQuery(PurchaseOrder.FIND_ALL, PurchaseOrder.class);
         return typedQuery.getResultList();
     }
 
-    public void removeOrder(@NotNull Order order) {
+    public void removeOrder(@NotNull PurchaseOrder order) {
         em.remove(em.merge(order));
     }
 }
