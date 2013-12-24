@@ -1,6 +1,7 @@
 package org.agoncal.application.petstore.service;
 
 import org.agoncal.application.petstore.model.Address;
+import org.agoncal.application.petstore.model.Country;
 import org.agoncal.application.petstore.model.Customer;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
@@ -36,7 +37,8 @@ public class CustomerServiceIT extends AbstractServiceIT {
         int initialNumber = customerService.findAllCustomers().size();
 
         // Creates an object
-        Customer customer = new Customer("Richard", "Stallman", "rich", "rich", "rich@gnu.org", new Address("78 Gnu Rd", "Texas", "666", "WWW"));
+        Country country = new Country("33", "France", "France");
+        Customer customer = new Customer("Richard", "Stallman", "rich", "rich", "rich@gnu.org", new Address("78 Gnu Rd", "Texas", "666", country));
 
         // Persists the object
         customer = customerService.createCustomer(customer);

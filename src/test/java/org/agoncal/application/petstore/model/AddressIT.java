@@ -45,7 +45,8 @@ public class AddressIT {
     public void shouldCreateAValidAddress() {
 
         // Creates an object
-        Address address = new Address("Street1", "City", "Zipcode", "Country");
+        Country country = new Country("33", "France", "France");
+        Address address = new Address("Street1", "City", "Zipcode", country);
 
         // Checks the object is valid
         assertEquals("Should have not constraint violation", 0, validator.validate(address).size());

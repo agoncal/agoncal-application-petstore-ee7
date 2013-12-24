@@ -2,6 +2,7 @@ package org.agoncal.application.petstore.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -32,10 +33,8 @@ public class Address {
     @NotNull
     @Size(min = 1, max = 10)
     private String zipcode;
-    @Column(nullable = false, length = 50)
-    @NotNull
-    @Size(min = 2, max = 50)
-    private String country; // TODO use the country entity
+    @ManyToOne
+    private Country country; // TODO use the country entity
 
     // ======================================
     // =            Constructors            =
@@ -44,7 +43,7 @@ public class Address {
     public Address() {
     }
 
-    public Address(String street1, String city, String zipcode, String country) {
+    public Address(String street1, String city, String zipcode, Country country) {
         this.street1 = street1;
         this.city = city;
         this.zipcode = zipcode;
@@ -95,11 +94,11 @@ public class Address {
         this.zipcode = zipcode;
     }
 
-    public String getCountry() {
+    public Country getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 
@@ -115,7 +114,6 @@ public class Address {
         Address address = (Address) o;
 
         if (!city.equals(address.city)) return false;
-        if (!country.equals(address.country)) return false;
         if (state != null ? !state.equals(address.state) : address.state != null) return false;
         if (!street1.equals(address.street1)) return false;
         if (street2 != null ? !street2.equals(address.street2) : address.street2 != null) return false;
@@ -131,7 +129,6 @@ public class Address {
         result = 31 * result + city.hashCode();
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + zipcode.hashCode();
-        result = 31 * result + country.hashCode();
         return result;
     }
 
@@ -144,7 +141,6 @@ public class Address {
         sb.append(", city='").append(city).append('\'');
         sb.append(", state='").append(state).append('\'');
         sb.append(", zipcode='").append(zipcode).append('\'');
-        sb.append(", country='").append(country).append('\'');
         sb.append('}');
         return sb.toString();
     }

@@ -74,9 +74,6 @@ public class CatalogService implements Serializable {
 
     public Product findProduct(@NotNull Long productId) {
         Product product = em.find(Product.class, productId);
-        if (product != null) {
-            product.getItems(); // TODO check lazy loading
-        }
         return product;
     }
 

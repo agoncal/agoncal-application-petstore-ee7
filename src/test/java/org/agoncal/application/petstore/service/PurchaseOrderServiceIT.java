@@ -1,7 +1,7 @@
 package org.agoncal.application.petstore.service;
 
-import org.agoncal.application.petstore.model.*;
 import org.agoncal.application.petstore.exception.ValidationException;
+import org.agoncal.application.petstore.model.*;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -41,7 +41,8 @@ public class PurchaseOrderServiceIT extends AbstractServiceIT {
         int initialNumber = purchaseOrderService.findAllOrders().size();
 
         // Creates an object
-        Address address = new Address("78 Gnu Rd", "Texas", "666", "WWW");
+        Country country = new Country("33", "France", "France");
+        Address address = new Address("78 Gnu Rd", "Texas", "666", country);
         Customer customer = new Customer("Richard", "Stallman", "rich", "rich", "rich@gnu.org", address);
         CreditCard creditCard = new CreditCard("1234", CreditCardType.MASTER_CARD, "10/12");
         List<ShoppingCartItem> cartItems = new ArrayList<>();
@@ -72,7 +73,8 @@ public class PurchaseOrderServiceIT extends AbstractServiceIT {
     public void shouldNotCreateAnOrderWithAnEmptyCart() {
 
         // Creates an object
-        Address address = new Address("78 Gnu Rd", "Texas", "666", "WWW");
+        Country country = new Country("33", "France", "France");
+        Address address = new Address("78 Gnu Rd", "Texas", "666", country);
         Customer customer = new Customer("Richard", "Stallman", "rich", "rich", "rich@gnu.org", address);
         CreditCard creditCard = new CreditCard("1234", CreditCardType.MASTER_CARD, "10/12");
         List<ShoppingCartItem> cartItems = new ArrayList<>();

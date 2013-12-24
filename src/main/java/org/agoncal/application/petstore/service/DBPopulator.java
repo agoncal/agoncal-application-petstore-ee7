@@ -1,6 +1,7 @@
 package org.agoncal.application.petstore.service;
 
 import org.agoncal.application.petstore.model.Address;
+import org.agoncal.application.petstore.model.Country;
 import org.agoncal.application.petstore.model.Customer;
 import org.agoncal.application.petstore.util.Loggable;
 
@@ -40,11 +41,12 @@ public class DBPopulator {
 
     @PostConstruct
     private void populateDB() {
-        marc = new Customer("Marc", "Fleury", "marc", "marc", "marc@jboss.org", new Address("65 Ritherdon Road", "Los Angeles", "56421", "USA"));
-        bill = new Customer("Bill", "Gates", "bill", "bill", "bill.gates@microsoft.com", new Address("27 West Side", "Alhabama", "8401", "USA"));
-        steve = new Customer("Steve", "Jobs", "jobs", "jobs", "steve.jobs@apple.com", new Address("154 Star Boulevard", "San Francisco", "5455", "USA"));
-        user = new Customer("User", "User", "user", "user", "user@petstore.org", new Address("Petstore", "Land", "666", "Nowhere"));
-        admin = new Customer("Admin", "Admin", "admin", "admin", "admin@petstore.org", new Address("Petstore", "Land", "666", "Nowhere"));
+        Country usa = customerService.findCountry(1225L);
+        marc = new Customer("Marc", "Fleury", "marc", "marc", "marc@jboss.org", new Address("65 Ritherdon Road", "Los Angeles", "56421", usa));
+        bill = new Customer("Bill", "Gates", "bill", "bill", "bill.gates@microsoft.com", new Address("27 West Side", "Alhabama", "8401", usa));
+        steve = new Customer("Steve", "Jobs", "jobs", "jobs", "steve.jobs@apple.com", new Address("154 Star Boulevard", "San Francisco", "5455", usa));
+        user = new Customer("User", "User", "user", "user", "user@petstore.org", new Address("Petstore", "Land", "666", usa));
+        admin = new Customer("Admin", "Admin", "admin", "admin", "admin@petstore.org", new Address("Petstore", "Land", "666", usa));
 
         customerService.createCustomer(marc);
         customerService.createCustomer(bill);

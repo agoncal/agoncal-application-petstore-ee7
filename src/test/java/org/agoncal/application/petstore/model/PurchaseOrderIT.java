@@ -45,7 +45,8 @@ public class PurchaseOrderIT {
     public void shouldCreateAValidOrder() {
 
         // Creates an object
-        Address address = new Address("Abbey road", "Liverpool", "SW17", "UK");
+        Country country = new Country("33", "France", "France");
+        Address address = new Address("78 Gnu Rd", "Texas", "666", country);
         Customer customer = new Customer("Paul", "Mc Cartney", "pmac", "pmac", "paul@beales.com", address);
         CreditCard creditCard = new CreditCard("123456789", CreditCardType.VISA, "12/45");
         PurchaseOrder order = new PurchaseOrder(customer, creditCard, address);

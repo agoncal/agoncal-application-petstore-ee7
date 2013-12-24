@@ -5,8 +5,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Antonio Goncalves
@@ -44,10 +42,6 @@ public class Product {
     @JoinColumn(name = "category_fk", nullable = false)
     @XmlTransient
     private Category category;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    @OrderBy("name ASC")
-    @XmlTransient
-    private List<Item> items;
 
     // ======================================
     // =             Constants              =
@@ -103,20 +97,6 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public void addItem(Item item) {
-        if (items == null)
-            items = new ArrayList<>();
-        items.add(item);
-    }
-
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
     }
 
     // ======================================

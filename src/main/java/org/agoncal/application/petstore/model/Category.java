@@ -43,10 +43,6 @@ public class Category {
     @Column(nullable = false)
     @NotEmpty
     private String description;
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    @OrderBy("name ASC")
-    @XmlTransient
-    private List<Product> products;
 
     // ======================================
     // =             Constants              =
@@ -93,20 +89,6 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void addProduct(Product product) {
-        if (products == null)
-            products = new ArrayList<>();
-        products.add(product);
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
     }
 
     // ======================================
