@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/layouts/template_admin.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{categoryBean.id}"/>
+		<f:event type="preRenderView" listener="#{categoryBean.retrieve}"/>
+	</f:metadata>
+
+	<ui:param name="title" value="View Category"/>
+
+	<ui:define name="header">
+		Category
+	</ui:define>
+
+	<ui:define name="subheader">
+		View existing Category
+	</ui:define>
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="categoryBeanCategoryName" value="Name:"/>
+			<h:outputText id="categoryBeanCategoryName" value="#{categoryBean.category.name}"/>
+			<h:outputText/>
+			<h:outputLabel for="categoryBeanCategoryDescription" value="Description:"/>
+			<h:outputText id="categoryBeanCategoryDescription" value="#{categoryBean.category.description}"/>
+			<h:outputText/>
+		</h:panelGrid>
+
+		<div class="buttons">
+			<h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
+			<h:link value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
+			<h:link value="Create New" outcome="create" styleClass="btn btn-primary"/>
+		</div>
+	</ui:define>
+
+</ui:composition>

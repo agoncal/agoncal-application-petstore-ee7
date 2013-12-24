@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/layouts/template_admin.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{itemBean.id}"/>
+		<f:event type="preRenderView" listener="#{itemBean.retrieve}"/>
+	</f:metadata>
+
+	<ui:param name="title" value="View Item"/>
+
+	<ui:define name="header">
+		Item
+	</ui:define>
+
+	<ui:define name="subheader">
+		View existing Item
+	</ui:define>
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="itemBeanItemName" value="Name:"/>
+			<h:outputText id="itemBeanItemName" value="#{itemBean.item.name}"/>
+			<h:outputText/>
+			<h:outputLabel for="itemBeanItemDescription" value="Description:"/>
+			<h:outputText id="itemBeanItemDescription" value="#{itemBean.item.description}"/>
+			<h:outputText/>
+			<h:outputLabel for="itemBeanItemUnitCost" value="Unit Cost:"/>
+			<h:outputText id="itemBeanItemUnitCost" value="#{itemBean.item.unitCost}"/>
+			<h:outputText/>
+			<h:outputLabel for="itemBeanItemImagePath" value="Image Path:"/>
+			<h:outputText id="itemBeanItemImagePath" value="#{itemBean.item.imagePath}"/>
+			<h:outputText/>
+			<h:outputLabel for="itemBeanItemProduct" value="Product:"/>
+			<h:link id="itemBeanItemProduct" outcome="/admin/product/view" value="#{itemBean.item.product}">
+				<f:param name="id" value="#{itemBean.item.product.id}"/>
+			</h:link>
+			<h:outputText/>
+		</h:panelGrid>
+
+		<div class="buttons">
+			<h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
+			<h:link value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
+			<h:link value="Create New" outcome="create" styleClass="btn btn-primary"/>
+		</div>
+	</ui:define>
+
+</ui:composition>

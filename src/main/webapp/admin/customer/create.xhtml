@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:forgeview="http://jboss.org/forge/view"	
+	template="/WEB-INF/layouts/template_admin.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{customerBean.id}"/>
+		<f:event type="preRenderView" listener="#{customerBean.retrieve}"/>
+	</f:metadata>
+
+	<ui:param name="title" value="Create Customer"/>
+
+	<ui:define name="header">
+		Customer
+	</ui:define>
+
+	<ui:define name="subheader">
+		<c:choose>
+			<c:when test="#{!empty customerBean.id}">
+				Edit existing Customer
+			</c:when>
+			<c:otherwise>
+				Create a new Customer
+			</c:otherwise>
+		</c:choose>
+	</ui:define>
+
+	<ui:define name="main">
+		<h:form id="create">
+			<h:messages globalOnly="true" styleClass="error"/>
+
+			<h:panelGrid columnClasses="label,component,required" columns="3">
+				<h:outputLabel for="customerBeanCustomerLogin" value="Login:"/>
+				<h:panelGroup>
+					<h:inputText id="customerBeanCustomerLogin" maxLength="10" required="true" value="#{customerBean.customer.login}"/>
+					<h:message for="customerBeanCustomerLogin" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+				<h:outputLabel for="customerBeanCustomerPassword" value="Password:"/>
+				<h:panelGroup>
+					<h:inputText id="customerBeanCustomerPassword" maxLength="256" required="true" value="#{customerBean.customer.password}"/>
+					<h:message for="customerBeanCustomerPassword" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+				<h:outputLabel for="customerBeanCustomerFirstname" value="Firstname:"/>
+				<h:panelGroup>
+					<h:inputText id="customerBeanCustomerFirstname" maxLength="50" required="true" value="#{customerBean.customer.firstname}"/>
+					<h:message for="customerBeanCustomerFirstname" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+				<h:outputLabel for="customerBeanCustomerLastname" value="Lastname:"/>
+				<h:panelGroup>
+					<h:inputText id="customerBeanCustomerLastname" maxLength="50" required="true" value="#{customerBean.customer.lastname}"/>
+					<h:message for="customerBeanCustomerLastname" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+				<h:outputLabel for="customerBeanCustomerTelephone" value="Telephone:"/>
+				<h:panelGroup>
+					<h:inputText id="customerBeanCustomerTelephone" value="#{customerBean.customer.telephone}"/>
+					<h:message for="customerBeanCustomerTelephone" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="customerBeanCustomerEmail" value="Email:"/>
+				<h:panelGroup>
+					<h:inputText id="customerBeanCustomerEmail" value="#{customerBean.customer.email}"/>
+					<h:message for="customerBeanCustomerEmail" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="customerBeanCustomerDateOfBirth" value="Date Of Birth:"/>
+				<h:panelGroup>
+					<h:inputText id="customerBeanCustomerDateOfBirth" value="#{customerBean.customer.dateOfBirth}">
+						<f:convertDateTime type="date"/>
+					</h:inputText>
+					<h:message for="customerBeanCustomerDateOfBirth" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="customerBeanCustomerStreet1" value="Street 1:"/>
+				<h:panelGroup>
+					<h:inputText id="customerBeanCustomerStreet1" maxLength="50" required="true" value="#{customerBean.customer.street1}"/>
+					<h:message for="customerBeanCustomerStreet1" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+				<h:outputLabel for="customerBeanCustomerStreet2" value="Street 2:"/>
+				<h:panelGroup>
+					<h:inputText id="customerBeanCustomerStreet2" value="#{customerBean.customer.street2}"/>
+					<h:message for="customerBeanCustomerStreet2" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="customerBeanCustomerCity" value="City:"/>
+				<h:panelGroup>
+					<h:inputText id="customerBeanCustomerCity" maxLength="50" required="true" value="#{customerBean.customer.city}"/>
+					<h:message for="customerBeanCustomerCity" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+				<h:outputLabel for="customerBeanCustomerState" value="State:"/>
+				<h:panelGroup>
+					<h:inputText id="customerBeanCustomerState" value="#{customerBean.customer.state}"/>
+					<h:message for="customerBeanCustomerState" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="customerBeanCustomerZipcode" value="Zipcode:"/>
+				<h:panelGroup>
+					<h:inputText id="customerBeanCustomerZipcode" maxLength="10" required="true" value="#{customerBean.customer.zipcode}"/>
+					<h:message for="customerBeanCustomerZipcode" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+				<h:outputLabel for="customerBeanCustomerCountry" value="Country:"/>
+				<h:panelGroup>
+					<h:selectOneMenu converter="#{countryBean.converter}" id="customerBeanCustomerCountry" value="#{customerBean.customer.country}">
+						<f:selectItem/>
+						<f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{countryBean.all}" var="_item"/>
+					</h:selectOneMenu>
+					<h:message for="customerBeanCustomerCountry" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+			</h:panelGrid>
+
+			<div class="buttons">
+				<h:commandLink value="Save" action="#{customerBean.update}" styleClass="btn btn-primary"/>
+				<c:choose>
+					<c:when test="#{!empty customerBean.id}">
+						<h:link value="Cancel" outcome="view" styleClass="btn btn-primary">
+							<f:param name="id" value="#{customerBean.id}"/>
+						</h:link>
+						<h:commandLink value="Delete" action="#{customerBean.delete}" styleClass="btn btn-primary"/>
+					</c:when>
+					<c:otherwise>
+						<h:link value="Cancel" outcome="search" styleClass="btn btn-primary"/>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

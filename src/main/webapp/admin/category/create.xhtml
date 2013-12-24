@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	template="/WEB-INF/layouts/template_admin.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{categoryBean.id}"/>
+		<f:event type="preRenderView" listener="#{categoryBean.retrieve}"/>
+	</f:metadata>
+
+	<ui:param name="title" value="Create Category"/>
+
+	<ui:define name="header">
+		Category
+	</ui:define>
+
+	<ui:define name="subheader">
+		<c:choose>
+			<c:when test="#{!empty categoryBean.id}">
+				Edit existing Category
+			</c:when>
+			<c:otherwise>
+				Create a new Category
+			</c:otherwise>
+		</c:choose>
+	</ui:define>
+
+	<ui:define name="main">
+		<h:form id="create">
+			<h:messages globalOnly="true" styleClass="error"/>
+
+			<h:panelGrid columnClasses="label,component,required" columns="3">
+				<h:outputLabel for="categoryBeanCategoryName" value="Name:"/>
+				<h:panelGroup>
+					<h:inputText id="categoryBeanCategoryName" maxLength="30" required="true" value="#{categoryBean.category.name}"/>
+					<h:message for="categoryBeanCategoryName" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+				<h:outputLabel for="categoryBeanCategoryDescription" value="Description:"/>
+				<h:panelGroup>
+					<h:inputText id="categoryBeanCategoryDescription" required="true" value="#{categoryBean.category.description}"/>
+					<h:message for="categoryBeanCategoryDescription" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="*"/>
+			</h:panelGrid>
+
+			<div class="buttons">
+				<h:commandLink value="Save" action="#{categoryBean.update}" styleClass="btn btn-primary"/>
+				<c:choose>
+					<c:when test="#{!empty categoryBean.id}">
+						<h:link value="Cancel" outcome="view" styleClass="btn btn-primary">
+							<f:param name="id" value="#{categoryBean.id}"/>
+						</h:link>
+						<h:commandLink value="Delete" action="#{categoryBean.delete}" styleClass="btn btn-primary"/>
+					</c:when>
+					<c:otherwise>
+						<h:link value="Cancel" outcome="search" styleClass="btn btn-primary"/>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

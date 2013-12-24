@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/WEB-INF/layouts/template_admin.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{purchaseOrderBean.page}"/>
+		<f:event type="preRenderView" listener="#{purchaseOrderBean.paginate}"/>
+	</f:metadata>
+
+	<ui:param name="title" value="Search Purchase Order entities"/>
+
+	<ui:define name="header">
+		Purchase Order
+	</ui:define>
+
+	<ui:define name="subheader">
+		Search Purchase Order entities
+	</ui:define>
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="purchaseOrderBeanExampleCustomer" value="Customer:"/>
+						<h:panelGroup>
+							<h:selectOneMenu converter="#{customerBean.converter}" id="purchaseOrderBeanExampleCustomer" value="#{purchaseOrderBean.example.customer}">
+								<f:selectItem/>
+								<f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{customerBean.all}" var="_item"/>
+							</h:selectOneMenu>
+							<h:message for="purchaseOrderBeanExampleCustomer" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="purchaseOrderBeanExampleStreet1" value="Street 1:"/>
+						<h:panelGroup>
+							<h:inputText id="purchaseOrderBeanExampleStreet1" maxLength="50" value="#{purchaseOrderBean.example.street1}"/>
+							<h:message for="purchaseOrderBeanExampleStreet1" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="purchaseOrderBeanExampleStreet2" value="Street 2:"/>
+						<h:panelGroup>
+							<h:inputText id="purchaseOrderBeanExampleStreet2" value="#{purchaseOrderBean.example.street2}"/>
+							<h:message for="purchaseOrderBeanExampleStreet2" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="purchaseOrderBeanExampleCity" value="City:"/>
+						<h:panelGroup>
+							<h:inputText id="purchaseOrderBeanExampleCity" maxLength="50" value="#{purchaseOrderBean.example.city}"/>
+							<h:message for="purchaseOrderBeanExampleCity" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="purchaseOrderBeanExampleState" value="State:"/>
+						<h:panelGroup>
+							<h:inputText id="purchaseOrderBeanExampleState" value="#{purchaseOrderBean.example.state}"/>
+							<h:message for="purchaseOrderBeanExampleState" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Search" action="#{purchaseOrderBean.search}" styleClass="btn btn-primary"/>
+						<h:commandLink value="Create New" action="#{purchaseOrderBean.create}" styleClass="btn btn-primary"/>
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			
+			<h:dataTable id="purchaseOrderBeanPageItems" styleClass="data-table" value="#{purchaseOrderBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Street 1"/>
+					</f:facet>
+					<h:link outcome="/admin/purchaseOrder/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemStreet1" value="#{_item.street1}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="City"/>
+					</f:facet>
+					<h:link outcome="/admin/purchaseOrder/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemCity" value="#{_item.city}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Zipcode"/>
+					</f:facet>
+					<h:link outcome="/admin/purchaseOrder/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemZipcode" value="#{_item.zipcode}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Credit Card Number"/>
+					</f:facet>
+					<h:link outcome="/admin/purchaseOrder/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemCreditCardNumber" value="#{_item.creditCardNumber}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Credit Card Type"/>
+					</f:facet>
+					<h:link outcome="/admin/purchaseOrder/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemCreditCardType" value="#{_item.creditCardType}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value="#{purchaseOrderBean}"/>
+			</ui:include>
+		</h:form>
+			
+	</ui:define>
+
+</ui:composition>

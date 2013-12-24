@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/layouts/template_admin.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{countryBean.id}"/>
+		<f:event type="preRenderView" listener="#{countryBean.retrieve}"/>
+	</f:metadata>
+
+	<ui:param name="title" value="View Country"/>
+
+	<ui:define name="header">
+		Country
+	</ui:define>
+
+	<ui:define name="subheader">
+		View existing Country
+	</ui:define>
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="countryBeanCountryIsoCode" value="Iso Code:"/>
+			<h:outputText id="countryBeanCountryIsoCode" value="#{countryBean.country.isoCode}"/>
+			<h:outputText/>
+			<h:outputLabel for="countryBeanCountryName" value="Name:"/>
+			<h:outputText id="countryBeanCountryName" value="#{countryBean.country.name}"/>
+			<h:outputText/>
+			<h:outputLabel for="countryBeanCountryPrintableName" value="Printable Name:"/>
+			<h:outputText id="countryBeanCountryPrintableName" value="#{countryBean.country.printableName}"/>
+			<h:outputText/>
+			<h:outputLabel for="countryBeanCountryIso3" value="Iso 3:"/>
+			<h:outputText id="countryBeanCountryIso3" value="#{countryBean.country.iso3}"/>
+			<h:outputText/>
+			<h:outputLabel for="countryBeanCountryNumcode" value="Numcode:"/>
+			<h:outputText id="countryBeanCountryNumcode" value="#{countryBean.country.numcode}"/>
+			<h:outputText/>
+		</h:panelGrid>
+
+		<div class="buttons">
+			<h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
+			<h:link value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
+			<h:link value="Create New" outcome="create" styleClass="btn btn-primary"/>
+		</div>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<h:panelGroup styleClass="paginator" rendered="#{paginatorBean.count gt paginatorBean.pageSize}">
+		<!-- Use commandLink, not outputLink, so that search criteria is not lost -->
+		<h:commandLink styleClass="btn btn-primary" rendered="#{paginatorBean.page gt 0}">
+			<f:param name="page" value="#{paginatorBean.page - 1}"/>
+			&lt; Previous 
+		</h:commandLink>
+		<h:outputText styleClass="paginator-content" value="#{paginatorBean.page * paginatorBean.pageSize + 1} to #{paginatorBean.page * paginatorBean.pageSize + fn:length(paginatorBean.pageItems)} (of #{paginatorBean.count})"/>
+		<h:commandLink styleClass="btn btn-primary" rendered="#{(paginatorBean.page + 1) * paginatorBean.pageSize lt paginatorBean.count}">
+			<f:param name="page" value="#{paginatorBean.page + 1}"/>
+			Next &gt;
+		</h:commandLink>
+	</h:panelGroup>
+
+</ui:composition>

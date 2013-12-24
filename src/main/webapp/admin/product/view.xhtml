@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/layouts/template_admin.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{productBean.id}"/>
+		<f:event type="preRenderView" listener="#{productBean.retrieve}"/>
+	</f:metadata>
+
+	<ui:param name="title" value="View Product"/>
+
+	<ui:define name="header">
+		Product
+	</ui:define>
+
+	<ui:define name="subheader">
+		View existing Product
+	</ui:define>
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="productBeanProductName" value="Name:"/>
+			<h:outputText id="productBeanProductName" value="#{productBean.product.name}"/>
+			<h:outputText/>
+			<h:outputLabel for="productBeanProductDescription" value="Description:"/>
+			<h:outputText id="productBeanProductDescription" value="#{productBean.product.description}"/>
+			<h:outputText/>
+			<h:outputLabel for="productBeanProductCategory" value="Category:"/>
+			<h:link id="productBeanProductCategory" outcome="/admin/category/view" value="#{productBean.product.category}">
+				<f:param name="id" value="#{productBean.product.category.id}"/>
+			</h:link>
+			<h:outputText/>
+		</h:panelGrid>
+
+		<div class="buttons">
+			<h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
+			<h:link value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
+			<h:link value="Create New" outcome="create" styleClass="btn btn-primary"/>
+		</div>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/WEB-INF/layouts/template_admin.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{itemBean.page}"/>
+		<f:event type="preRenderView" listener="#{itemBean.paginate}"/>
+	</f:metadata>
+
+	<ui:param name="title" value="Search Item entities"/>
+
+	<ui:define name="header">
+		Item
+	</ui:define>
+
+	<ui:define name="subheader">
+		Search Item entities
+	</ui:define>
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="itemBeanExampleName" value="Name:"/>
+						<h:panelGroup>
+							<h:inputText id="itemBeanExampleName" maxLength="30" value="#{itemBean.example.name}"/>
+							<h:message for="itemBeanExampleName" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="itemBeanExampleDescription" value="Description:"/>
+						<h:panelGroup>
+							<h:inputText id="itemBeanExampleDescription" maxLength="3000" value="#{itemBean.example.description}"/>
+							<h:message for="itemBeanExampleDescription" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="itemBeanExampleImagePath" value="Image Path:"/>
+						<h:panelGroup>
+							<h:inputText id="itemBeanExampleImagePath" value="#{itemBean.example.imagePath}"/>
+							<h:message for="itemBeanExampleImagePath" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="itemBeanExampleProduct" value="Product:"/>
+						<h:panelGroup>
+							<h:selectOneMenu converter="#{productBean.converter}" id="itemBeanExampleProduct" value="#{itemBean.example.product}">
+								<f:selectItem/>
+								<f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{productBean.all}" var="_item"/>
+							</h:selectOneMenu>
+							<h:message for="itemBeanExampleProduct" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Search" action="#{itemBean.search}" styleClass="btn btn-primary"/>
+						<h:commandLink value="Create New" action="#{itemBean.create}" styleClass="btn btn-primary"/>
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			
+			<h:dataTable id="itemBeanPageItems" styleClass="data-table" value="#{itemBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Name"/>
+					</f:facet>
+					<h:link outcome="/admin/item/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemName" value="#{_item.name}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Unit Cost"/>
+					</f:facet>
+					<h:link outcome="/admin/item/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemUnitCost" value="#{_item.unitCost}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Image Path"/>
+					</f:facet>
+					<h:link outcome="/admin/item/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemImagePath" value="#{_item.imagePath}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value="#{itemBean}"/>
+			</ui:include>
+		</h:form>
+			
+	</ui:define>
+
+</ui:composition>

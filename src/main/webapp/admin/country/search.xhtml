@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/layouts/template_admin.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{countryBean.page}"/>
+		<f:event type="preRenderView" listener="#{countryBean.paginate}"/>
+	</f:metadata>
+
+	<ui:param name="title" value="Search Country entities"/>
+
+	<ui:define name="header">
+		Country
+	</ui:define>
+
+	<ui:define name="subheader">
+		Search Country entities
+	</ui:define>
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="countryBeanExampleIsoCode" value="Iso Code:"/>
+						<h:panelGroup>
+							<h:inputText id="countryBeanExampleIsoCode" maxLength="2" value="#{countryBean.example.isoCode}"/>
+							<h:message for="countryBeanExampleIsoCode" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="countryBeanExampleName" value="Name:"/>
+						<h:panelGroup>
+							<h:inputText id="countryBeanExampleName" maxLength="80" value="#{countryBean.example.name}"/>
+							<h:message for="countryBeanExampleName" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="countryBeanExamplePrintableName" value="Printable Name:"/>
+						<h:panelGroup>
+							<h:inputText id="countryBeanExamplePrintableName" maxLength="80" value="#{countryBean.example.printableName}"/>
+							<h:message for="countryBeanExamplePrintableName" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="countryBeanExampleIso3" value="Iso 3:"/>
+						<h:panelGroup>
+							<h:inputText id="countryBeanExampleIso3" maxLength="3" value="#{countryBean.example.iso3}"/>
+							<h:message for="countryBeanExampleIso3" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="countryBeanExampleNumcode" value="Numcode:"/>
+						<h:panelGroup>
+							<h:inputText id="countryBeanExampleNumcode" maxLength="3" value="#{countryBean.example.numcode}"/>
+							<h:message for="countryBeanExampleNumcode" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Search" action="#{countryBean.search}" styleClass="btn btn-primary"/>
+						<h:commandLink value="Create New" action="#{countryBean.create}" styleClass="btn btn-primary"/>
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			
+			<h:dataTable id="countryBeanPageItems" styleClass="data-table" value="#{countryBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Iso Code"/>
+					</f:facet>
+					<h:link outcome="/admin/country/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemIsoCode" value="#{_item.isoCode}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Name"/>
+					</f:facet>
+					<h:link outcome="/admin/country/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemName" value="#{_item.name}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Printable Name"/>
+					</f:facet>
+					<h:link outcome="/admin/country/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemPrintableName" value="#{_item.printableName}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Iso 3"/>
+					</f:facet>
+					<h:link outcome="/admin/country/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemIso3" value="#{_item.iso3}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Numcode"/>
+					</f:facet>
+					<h:link outcome="/admin/country/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemNumcode" value="#{_item.numcode}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value="#{countryBean}"/>
+			</ui:include>
+		</h:form>
+			
+	</ui:define>
+
+</ui:composition>

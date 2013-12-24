@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/layouts/template_admin.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{customerBean.id}"/>
+		<f:event type="preRenderView" listener="#{customerBean.retrieve}"/>
+	</f:metadata>
+
+	<ui:param name="title" value="View Customer"/>
+
+	<ui:define name="header">
+		Customer
+	</ui:define>
+
+	<ui:define name="subheader">
+		View existing Customer
+	</ui:define>
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="customerBeanCustomerLogin" value="Login:"/>
+			<h:outputText id="customerBeanCustomerLogin" value="#{customerBean.customer.login}"/>
+			<h:outputText/>
+			<h:outputLabel for="customerBeanCustomerPassword" value="Password:"/>
+			<h:outputText id="customerBeanCustomerPassword" value="#{customerBean.customer.password}"/>
+			<h:outputText/>
+			<h:outputLabel for="customerBeanCustomerFirstname" value="Firstname:"/>
+			<h:outputText id="customerBeanCustomerFirstname" value="#{customerBean.customer.firstname}"/>
+			<h:outputText/>
+			<h:outputLabel for="customerBeanCustomerLastname" value="Lastname:"/>
+			<h:outputText id="customerBeanCustomerLastname" value="#{customerBean.customer.lastname}"/>
+			<h:outputText/>
+			<h:outputLabel for="customerBeanCustomerTelephone" value="Telephone:"/>
+			<h:outputText id="customerBeanCustomerTelephone" value="#{customerBean.customer.telephone}"/>
+			<h:outputText/>
+			<h:outputLabel for="customerBeanCustomerEmail" value="Email:"/>
+			<h:outputText id="customerBeanCustomerEmail" value="#{customerBean.customer.email}"/>
+			<h:outputText/>
+			<h:outputLabel for="customerBeanCustomerDateOfBirth" value="Date Of Birth:"/>
+			<h:outputText id="customerBeanCustomerDateOfBirth" value="#{customerBean.customer.dateOfBirth}">
+				<f:convertDateTime type="date"/>
+			</h:outputText>
+			<h:outputText/>
+			<h:outputLabel for="customerBeanCustomerStreet1" value="Street 1:"/>
+			<h:outputText id="customerBeanCustomerStreet1" value="#{customerBean.customer.street1}"/>
+			<h:outputText/>
+			<h:outputLabel for="customerBeanCustomerStreet2" value="Street 2:"/>
+			<h:outputText id="customerBeanCustomerStreet2" value="#{customerBean.customer.street2}"/>
+			<h:outputText/>
+			<h:outputLabel for="customerBeanCustomerCity" value="City:"/>
+			<h:outputText id="customerBeanCustomerCity" value="#{customerBean.customer.city}"/>
+			<h:outputText/>
+			<h:outputLabel for="customerBeanCustomerState" value="State:"/>
+			<h:outputText id="customerBeanCustomerState" value="#{customerBean.customer.state}"/>
+			<h:outputText/>
+			<h:outputLabel for="customerBeanCustomerZipcode" value="Zipcode:"/>
+			<h:outputText id="customerBeanCustomerZipcode" value="#{customerBean.customer.zipcode}"/>
+			<h:outputText/>
+			<h:outputLabel for="customerBeanCustomerCountry" value="Country:"/>
+			<h:link id="customerBeanCustomerCountry" outcome="/admin/country/view" value="#{customerBean.customer.country}">
+				<f:param name="id" value="#{customerBean.customer.country.id}"/>
+			</h:link>
+			<h:outputText/>
+		</h:panelGrid>
+
+		<div class="buttons">
+			<h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
+			<h:link value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
+			<h:link value="Create New" outcome="create" styleClass="btn btn-primary"/>
+		</div>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/WEB-INF/layouts/template_admin.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{purchaseOrderBean.id}"/>
+		<f:event type="preRenderView" listener="#{purchaseOrderBean.retrieve}"/>
+	</f:metadata>
+
+	<ui:param name="title" value="View Purchase Order"/>
+
+	<ui:define name="header">
+		Purchase Order
+	</ui:define>
+
+	<ui:define name="subheader">
+		View existing Purchase Order
+	</ui:define>
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="purchaseOrderBeanPurchaseOrderOrderDate" value="Order Date:"/>
+			<h:outputText id="purchaseOrderBeanPurchaseOrderOrderDate" value="#{purchaseOrderBean.purchaseOrder.orderDate}">
+				<f:convertDateTime type="date"/>
+			</h:outputText>
+			<h:outputText/>
+			<h:outputLabel for="purchaseOrderBeanPurchaseOrderCustomer" value="Customer:"/>
+			<h:link id="purchaseOrderBeanPurchaseOrderCustomer" outcome="/admin/customer/view" value="#{purchaseOrderBean.purchaseOrder.customer}">
+				<f:param name="id" value="#{purchaseOrderBean.purchaseOrder.customer.id}"/>
+			</h:link>
+			<h:outputText/>
+			<h:outputLabel for="purchaseOrderBeanPurchaseOrderOrderLines" value="Order Lines:"/>
+			<h:dataTable id="purchaseOrderBeanPurchaseOrderOrderLines" styleClass="data-table" value="#{forgeview:asList(purchaseOrderBean.purchaseOrder.orderLines)}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Quantity"/>
+					</f:facet>
+					<h:link outcome="/admin/orderLine/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemQuantity" value="#{_item.quantity}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Name"/>
+					</f:facet>
+					<h:link outcome="/admin/orderLine/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemItemName" value="#{_item.item.name}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Unit Cost"/>
+					</f:facet>
+					<h:link outcome="/admin/orderLine/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemItemUnitCost" value="#{_item.item.unitCost}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Image Path"/>
+					</f:facet>
+					<h:link outcome="/admin/orderLine/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemItemImagePath" value="#{_item.item.imagePath}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<h:outputText/>
+			<h:outputLabel for="purchaseOrderBeanPurchaseOrderStreet1" value="Street 1:"/>
+			<h:outputText id="purchaseOrderBeanPurchaseOrderStreet1" value="#{purchaseOrderBean.purchaseOrder.street1}"/>
+			<h:outputText/>
+			<h:outputLabel for="purchaseOrderBeanPurchaseOrderStreet2" value="Street 2:"/>
+			<h:outputText id="purchaseOrderBeanPurchaseOrderStreet2" value="#{purchaseOrderBean.purchaseOrder.street2}"/>
+			<h:outputText/>
+			<h:outputLabel for="purchaseOrderBeanPurchaseOrderCity" value="City:"/>
+			<h:outputText id="purchaseOrderBeanPurchaseOrderCity" value="#{purchaseOrderBean.purchaseOrder.city}"/>
+			<h:outputText/>
+			<h:outputLabel for="purchaseOrderBeanPurchaseOrderState" value="State:"/>
+			<h:outputText id="purchaseOrderBeanPurchaseOrderState" value="#{purchaseOrderBean.purchaseOrder.state}"/>
+			<h:outputText/>
+			<h:outputLabel for="purchaseOrderBeanPurchaseOrderZipcode" value="Zipcode:"/>
+			<h:outputText id="purchaseOrderBeanPurchaseOrderZipcode" value="#{purchaseOrderBean.purchaseOrder.zipcode}"/>
+			<h:outputText/>
+			<h:outputLabel for="purchaseOrderBeanPurchaseOrderCreditCardNumber" value="Credit Card Number:"/>
+			<h:outputText id="purchaseOrderBeanPurchaseOrderCreditCardNumber" value="#{purchaseOrderBean.purchaseOrder.creditCardNumber}"/>
+			<h:outputText/>
+			<h:outputLabel for="purchaseOrderBeanPurchaseOrderCreditCardType" value="Credit Card Type:"/>
+			<h:outputText id="purchaseOrderBeanPurchaseOrderCreditCardType" value="#{purchaseOrderBean.purchaseOrder.creditCardType}"/>
+			<h:outputText/>
+			<h:outputLabel for="purchaseOrderBeanPurchaseOrderCreditCardExpDate" value="Credit Card Exp Date:"/>
+			<h:outputText id="purchaseOrderBeanPurchaseOrderCreditCardExpDate" value="#{purchaseOrderBean.purchaseOrder.creditCardExpDate}"/>
+			<h:outputText/>
+		</h:panelGrid>
+
+		<div class="buttons">
+			<h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
+			<h:link value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
+			<h:link value="Create New" outcome="create" styleClass="btn btn-primary"/>
+		</div>
+	</ui:define>
+
+</ui:composition>

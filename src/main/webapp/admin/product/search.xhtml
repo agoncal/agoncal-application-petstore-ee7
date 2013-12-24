@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/WEB-INF/layouts/template_admin.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{productBean.page}"/>
+		<f:event type="preRenderView" listener="#{productBean.paginate}"/>
+	</f:metadata>
+
+	<ui:param name="title" value="Search Product entities"/>
+
+	<ui:define name="header">
+		Product
+	</ui:define>
+
+	<ui:define name="subheader">
+		Search Product entities
+	</ui:define>
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="productBeanExampleName" value="Name:"/>
+						<h:panelGroup>
+							<h:inputText id="productBeanExampleName" maxLength="30" value="#{productBean.example.name}"/>
+							<h:message for="productBeanExampleName" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="productBeanExampleDescription" value="Description:"/>
+						<h:panelGroup>
+							<h:inputText id="productBeanExampleDescription" value="#{productBean.example.description}"/>
+							<h:message for="productBeanExampleDescription" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="productBeanExampleCategory" value="Category:"/>
+						<h:panelGroup>
+							<h:selectOneMenu converter="#{categoryBean.converter}" id="productBeanExampleCategory" value="#{productBean.example.category}">
+								<f:selectItem/>
+								<f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{categoryBean.all}" var="_item"/>
+							</h:selectOneMenu>
+							<h:message for="productBeanExampleCategory" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Search" action="#{productBean.search}" styleClass="btn btn-primary"/>
+						<h:commandLink value="Create New" action="#{productBean.create}" styleClass="btn btn-primary"/>
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			
+			<h:dataTable id="productBeanPageItems" styleClass="data-table" value="#{productBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Name"/>
+					</f:facet>
+					<h:link outcome="/admin/product/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemName" value="#{_item.name}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value="#{productBean}"/>
+			</ui:include>
+		</h:form>
+			
+	</ui:define>
+
+</ui:composition>

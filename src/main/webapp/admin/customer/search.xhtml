@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/layouts/template_admin.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{customerBean.page}"/>
+		<f:event type="preRenderView" listener="#{customerBean.paginate}"/>
+	</f:metadata>
+
+	<ui:param name="title" value="Search Customer entities"/>
+
+	<ui:define name="header">
+		Customer
+	</ui:define>
+
+	<ui:define name="subheader">
+		Search Customer entities
+	</ui:define>
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="customerBeanExampleLogin" value="Login:"/>
+						<h:panelGroup>
+							<h:inputText id="customerBeanExampleLogin" maxLength="10" value="#{customerBean.example.login}"/>
+							<h:message for="customerBeanExampleLogin" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="customerBeanExamplePassword" value="Password:"/>
+						<h:panelGroup>
+							<h:inputText id="customerBeanExamplePassword" maxLength="256" value="#{customerBean.example.password}"/>
+							<h:message for="customerBeanExamplePassword" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="customerBeanExampleFirstname" value="Firstname:"/>
+						<h:panelGroup>
+							<h:inputText id="customerBeanExampleFirstname" maxLength="50" value="#{customerBean.example.firstname}"/>
+							<h:message for="customerBeanExampleFirstname" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="customerBeanExampleLastname" value="Lastname:"/>
+						<h:panelGroup>
+							<h:inputText id="customerBeanExampleLastname" maxLength="50" value="#{customerBean.example.lastname}"/>
+							<h:message for="customerBeanExampleLastname" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="customerBeanExampleTelephone" value="Telephone:"/>
+						<h:panelGroup>
+							<h:inputText id="customerBeanExampleTelephone" value="#{customerBean.example.telephone}"/>
+							<h:message for="customerBeanExampleTelephone" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Search" action="#{customerBean.search}" styleClass="btn btn-primary"/>
+						<h:commandLink value="Create New" action="#{customerBean.create}" styleClass="btn btn-primary"/>
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			
+			<h:dataTable id="customerBeanPageItems" styleClass="data-table" value="#{customerBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Login"/>
+					</f:facet>
+					<h:link outcome="/admin/customer/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemLogin" value="#{_item.login}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Password"/>
+					</f:facet>
+					<h:link outcome="/admin/customer/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemPassword" value="#{_item.password}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Firstname"/>
+					</f:facet>
+					<h:link outcome="/admin/customer/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemFirstname" value="#{_item.firstname}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Lastname"/>
+					</f:facet>
+					<h:link outcome="/admin/customer/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemLastname" value="#{_item.lastname}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Street 1"/>
+					</f:facet>
+					<h:link outcome="/admin/customer/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemStreet1" value="#{_item.street1}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value="#{customerBean}"/>
+			</ui:include>
+		</h:form>
+			
+	</ui:define>
+
+</ui:composition>
