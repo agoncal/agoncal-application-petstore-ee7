@@ -32,6 +32,8 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Version
+    private int version;
     @Column(nullable = false, length = 30)
     @NotNull
     @Size(min = 1, max = 30)
@@ -78,6 +80,10 @@ public class Item {
 
     public Long getId() {
         return id;
+    }
+
+    public int getVersion() {
+        return version;
     }
 
     public String getName() {
