@@ -14,7 +14,7 @@
 
     <ui:define name="title">#{catalogController.item.product.name} - #{catalogController.item.name}</ui:define>
 
-    <ui:define name="body">
+    <ui:define name="main">
 
         <h2>#{catalogController.item.product.name} - #{catalogController.item.name}</h2>
 
@@ -23,7 +23,7 @@
         <h:form>
             <h:panelGrid columns="3" rendered="#{catalogController.item != null}" styleClass="table">
                 <h:column>
-                    <h:graphicImage url="resources/images/#{catalogController.item.imagePath}"
+                    <h:graphicImage url="/resources/images/#{catalogController.item.imagePath}"
                                     alt="#{catalogController.item.name}"/>
                 </h:column>
 

@@ -14,7 +14,7 @@
 
     <ui:define name="title">#{i18n.showItems_itemForProduct} : #{catalogController.product.name}</ui:define>
 
-    <ui:define name="body">
+    <ui:define name="main">
 
         <h2>#{i18n.showItems_itemForProduct} : #{catalogController.product.name}</h2>
 
@@ -24,7 +24,7 @@
         <h:dataTable value="#{catalogController.items}" var="oneItem" rendered="#{catalogController.items.size() > 0}"
                      styleClass="table">
             <h:column>
-                <h:graphicImage url="resources/images/#{oneItem.imagePath}" alt="Item"/>
+                <h:graphicImage url="/resources/images/#{oneItem.imagePath}" alt="Item"/>
             </h:column>
 
             <h:column>

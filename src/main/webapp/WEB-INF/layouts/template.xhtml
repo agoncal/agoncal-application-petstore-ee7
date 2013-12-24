@@ -42,13 +42,16 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <h:link class="navbar-brand" outcome="main" value="Yaps Petstore EE 7">
+                            <h:link class="navbar-brand" outcome="/shopping/main" value="Yaps Petstore EE 7">
                                 <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
                             </h:link>
                         </div>
 
                         <div class="collapse navbar-collapse">
                             <ul class="nav navbar-nav">
+                                <li>
+                                    <h:link outcome="/admin/category/search" value="Admin"/>
+                                </li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Languages<b
                                             class="caret"></b></a>
@@ -73,7 +76,7 @@
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
                                     <!--<i class="icon-user icon-white"></i>-->
-                                    <h:link outcome="showaccount"
+                                    <h:link outcome="/shopping/showaccount"
                                             value="#{i18n.welcome} #{accountController.loggedinCustomer.firstname}"
                                             rendered="#{accountController.loggedIn}">
                                         <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
@@ -88,14 +91,14 @@
                                 </li>
                                 <li>
                                     <!--<i class="icon-eye-open icon-white"></i>-->
-                                    <h:link outcome="signon" value="#{i18n.logIn}"
+                                    <h:link outcome="/shopping/signon" value="#{i18n.logIn}"
                                             rendered="#{!accountController.loggedIn}">
                                         <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
                                     </h:link>
                                 </li>
                                 <li>
                                     <!--<i class="icon-shopping-cart icon-white"></i>-->
-                                    <h:link outcome="showcart" value="#{i18n.shoppingCart}"
+                                    <h:link outcome="/shopping/showcart" value="#{i18n.shoppingCart}"
                                             rendered="#{!shoppingCartController.shoppingCartIsEmpty()}">
                                         <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
                                     </h:link>
@@ -130,7 +133,7 @@
                 <!-- CONTENT -->
                 <div class="col-md-1"/>
                 <div class="col-md-9 well">
-                    <ui:insert name="body">Default content</ui:insert>
+                    <ui:insert name="main">Default content</ui:insert>
                 </div>
                 <!--/.CONTENT -->
 
@@ -146,7 +149,7 @@
                 </div>
                 <div class="col-md-8"/>
                 <div class="col-md-2 centered-text">
-                    <h:link outcome="debug" value="Debug">
+                    <h:link outcome="/debug" value="Debug">
                         <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
                     </h:link>
                     <br/>
