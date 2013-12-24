@@ -5,21 +5,22 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
-                template="WEB-INF/layouts/template.xhtml">
+                template="/WEB-INF/layouts/template.xhtml">
 
     <f:metadata>
-        <f:viewParam name="keyword" value="#{catalogController.keyword}"/>
-        <f:viewAction action="#{catalogController.doSearch}"/>
+        <f:viewParam name="productId" value="#{catalogController.productId}" required="true"/>
+        <f:viewAction action="#{catalogController.doFindItems}"/>
     </f:metadata>
 
-    <ui:define name="title">#{i18n.searchResult_searchFor} #{catalogController.keyword}</ui:define>
+    <ui:define name="title">#{i18n.showItems_itemForProduct} : #{catalogController.product.name}</ui:define>
 
     <ui:define name="body">
 
-        <h2>#{i18n.searchResult_searchFor} : #{catalogController.keyword}</h2>
+        <h2>#{i18n.showItems_itemForProduct} : #{catalogController.product.name}</h2>
 
         <h:outputText value="#{i18n.noItemsFound}"
                       rendered="#{catalogController.items == null || catalogController.items.size() ==0}"/>
+
         <h:dataTable value="#{catalogController.items}" var="oneItem" rendered="#{catalogController.items.size() > 0}"
                      styleClass="table">
             <h:column>
@@ -33,13 +34,6 @@
                 </h:link>
             </h:column>
 
-            <h:column>
-                <em>(
-                    <h:outputText value="#{oneItem.product.category.name}"/>
-                    -
-                    <h:outputText value="#{oneItem.product.name}"/>
-                    )</em>
-            </h:column>
             <h:column>
                 <h:outputText value="#{oneItem.unitCost}"/> $
             </h:column>
