@@ -38,9 +38,9 @@
                             <button type="button" class="navbar-toggle" data-toggle="collapse"
                                     data-target=".navbar-collapse">
                                 <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
                             </button>
                             <h:link class="navbar-brand" outcome="main" value="Yaps Petstore EE 7">
                                 <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
@@ -106,24 +106,24 @@
                                         <div class="form-group">
                                             <h:inputText class="form-control" value="#{catalogController.keyword}"/>
                                         </div>
-                                    <h:commandButton action="#{catalogController.doSearch}" value="#{i18n.search}"
+                                        <h:commandButton action="#{catalogController.doSearch}" value="#{i18n.search}"
                                                          class="btn btn-default"/>
-                                </div>
+                                    </div>
                                 </li>
                             </ul>
+                        </div>
+                        <!--/.nav-collapse -->
+                    </div>
                 </div>
-                <!--/.nav-collapse -->
-            </div>
-        </div>
             </h:form>
 
             <!-- Begin page content -->
             <div class="container">
-            <div class="page-header">
+                <div class="page-header">
                     <!-- Error messages-->
-                <h:messages globalOnly="true" errorClass="alert alert-error" warnClass="alert"
-                            infoClass="alert alert-info"/>&nbsp;
-            </div>
+                    <h:messages globalOnly="true" errorClass="alert alert-error" warnClass="alert"
+                                infoClass="alert alert-info"/>&nbsp;
+                </div>
 
                 <div class="col-md-2 well">
                     <ul class="nav nav-list">

@@ -67,7 +67,8 @@ public class CatalogController extends Controller implements Serializable {
      */
     public String doSearch() {
         items = catalogService.searchItems(keyword);
-        return "searchresult";
+//        return "searchresult";
+        return "searchresult.faces&faces-redirect=true";
 //        return "searchresult.faces?keyword=" + keyword + "&faces-redirect=true";
     }
 
