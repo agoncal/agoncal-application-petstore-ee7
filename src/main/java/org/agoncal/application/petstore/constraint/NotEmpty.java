@@ -21,10 +21,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @NotNull
 @Size(min = 1)
-@Target({METHOD, FIELD})
-@Retention(RUNTIME)
 @Constraint(validatedBy = {})
 @ReportAsSingleViolation
+@Target({METHOD, FIELD})
+@Retention(RUNTIME)
 @Documented
 public @interface NotEmpty {
 

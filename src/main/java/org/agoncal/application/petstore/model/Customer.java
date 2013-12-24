@@ -40,7 +40,6 @@ public class Customer implements Serializable {
     private Long id;
     @Column(unique = true, nullable = false, length = 10)
     @Login
-    @NotNull
     private String login;
     @Column(nullable = false, length = 256)
     @NotNull
