@@ -14,9 +14,11 @@
 
     <ui:param name="pageTitle" value="#{catalogController.item.product.name} - #{catalogController.item.name}"/>
 
-    <ui:define name="main">
+    <ui:define name="header">
+        #{catalogController.item.product.name} - #{catalogController.item.name}
+    </ui:define>
 
-        <h2>#{catalogController.item.product.name} - #{catalogController.item.name}</h2>
+    <ui:define name="main">
 
         <h:outputText value="#{i18n.noItemsFound}" rendered="#{catalogController.item == null}"/>
 
