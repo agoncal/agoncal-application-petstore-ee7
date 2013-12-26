@@ -1,6 +1,7 @@
-package org.agoncal.application.petstore.web.admin;
+package org.agoncal.application.petstore.view.admin;
 
-import org.agoncal.application.petstore.model.OrderLine;
+import org.agoncal.application.petstore.model.Item;
+import org.agoncal.application.petstore.model.Product;
 
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -26,9 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Backing bean for OrderLine entities.
+ * Backing bean for Item entities.
  * <p>
- * This class provides CRUD functionality for all OrderLine entities. It focuses
+ * This class provides CRUD functionality for all Item entities. It focuses
  * purely on Java EE 6 standards (e.g. <tt>&#64;ConversationScoped</tt> for
  * state management, <tt>PersistenceContext</tt> for persistence,
  * <tt>CriteriaBuilder</tt> for searches) rather than introducing a CRUD framework or
@@ -38,13 +39,13 @@ import java.util.List;
 @Named
 @Stateful
 @ConversationScoped
-public class OrderLineBean implements Serializable
+public class ItemBean implements Serializable
 {
 
    private static final long serialVersionUID = 1L;
 
    /*
-    * Support creating and retrieving OrderLine entities
+    * Support creating and retrieving Item entities
     */
 
    private Long id;
@@ -59,11 +60,11 @@ public class OrderLineBean implements Serializable
       this.id = id;
    }
 
-   private OrderLine orderLine;
+   private Item item;
 
-   public OrderLine getOrderLine()
+   public Item getItem()
    {
-      return this.orderLine;
+      return this.item;
    }
 
    @Inject
@@ -94,22 +95,22 @@ public class OrderLineBean implements Serializable
 
       if (this.id == null)
       {
-         this.orderLine = this.example;
+         this.item = this.example;
       }
       else
       {
-         this.orderLine = findById(getId());
+         this.item = findById(getId());
       }
    }
 
-   public OrderLine findById(Long id)
+   public Item findById(Long id)
    {
 
-      return this.entityManager.find(OrderLine.class, id);
+      return this.entityManager.find(Item.class, id);
    }
 
    /*
-    * Support updating and deleting OrderLine entities
+    * Support updating and deleting Item entities
     */
 
    public String update()
@@ -120,13 +121,13 @@ public class OrderLineBean implements Serializable
       {
          if (this.id == null)
          {
-            this.entityManager.persist(this.orderLine);
+            this.entityManager.persist(this.item);
             return "search?faces-redirect=true";
          }
          else
          {
-            this.entityManager.merge(this.orderLine);
-            return "view?faces-redirect=true&id=" + this.orderLine.getId();
+            this.entityManager.merge(this.item);
+            return "view?faces-redirect=true&id=" + this.item.getId();
          }
       }
       catch (Exception e)
@@ -142,7 +143,7 @@ public class OrderLineBean implements Serializable
 
       try
       {
-         OrderLine deletableEntity = findById(getId());
+         Item deletableEntity = findById(getId());
 
          this.entityManager.remove(deletableEntity);
          this.entityManager.flush();
@@ -156,14 +157,14 @@ public class OrderLineBean implements Serializable
    }
 
    /*
-    * Support searching OrderLine entities with pagination
+    * Support searching Item entities with pagination
     */
 
    private int page;
    private long count;
-   private List<OrderLine> pageItems;
+   private List<Item> pageItems;
 
-   private OrderLine example = new OrderLine();
+   private Item example = new Item();
 
    public int getPage()
    {
@@ -180,12 +181,12 @@ public class OrderLineBean implements Serializable
       return 10;
    }
 
-   public OrderLine getExample()
+   public Item getExample()
    {
       return this.example;
    }
 
-   public void setExample(OrderLine example)
+   public void setExample(Item example)
    {
       this.example = example;
    }
@@ -203,7 +204,7 @@ public class OrderLineBean implements Serializable
       // Populate this.count
 
       CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
-      Root<OrderLine> root = countCriteria.from(OrderLine.class);
+      Root<Item> root = countCriteria.from(Item.class);
       countCriteria = countCriteria.select(builder.count(root)).where(
             getSearchPredicates(root));
       this.count = this.entityManager.createQuery(countCriteria)
@@ -211,31 +212,46 @@ public class OrderLineBean implements Serializable
 
       // Populate this.pageItems
 
-      CriteriaQuery<OrderLine> criteria = builder.createQuery(OrderLine.class);
-      root = criteria.from(OrderLine.class);
-      TypedQuery<OrderLine> query = this.entityManager.createQuery(criteria
+      CriteriaQuery<Item> criteria = builder.createQuery(Item.class);
+      root = criteria.from(Item.class);
+      TypedQuery<Item> query = this.entityManager.createQuery(criteria
             .select(root).where(getSearchPredicates(root)));
       query.setFirstResult(this.page * getPageSize()).setMaxResults(
             getPageSize());
       this.pageItems = query.getResultList();
    }
 
-   private Predicate[] getSearchPredicates(Root<OrderLine> root)
+   private Predicate[] getSearchPredicates(Root<Item> root)
    {
 
       CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
       List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-      int quantity = this.example.getQuantity();
-      if (quantity != 0)
+      String name = this.example.getName();
+      if (name != null && !"".equals(name))
       {
-         predicatesList.add(builder.equal(root.get("quantity"), quantity));
+         predicatesList.add(builder.like(root.<String> get("name"), '%' + name + '%'));
+      }
+      String description = this.example.getDescription();
+      if (description != null && !"".equals(description))
+      {
+         predicatesList.add(builder.like(root.<String> get("description"), '%' + description + '%'));
+      }
+      String imagePath = this.example.getImagePath();
+      if (imagePath != null && !"".equals(imagePath))
+      {
+         predicatesList.add(builder.like(root.<String> get("imagePath"), '%' + imagePath + '%'));
+      }
+      Product product = this.example.getProduct();
+      if (product != null)
+      {
+         predicatesList.add(builder.equal(root.get("product"), product));
       }
 
       return predicatesList.toArray(new Predicate[predicatesList.size()]);
    }
 
-   public List<OrderLine> getPageItems()
+   public List<Item> getPageItems()
    {
       return this.pageItems;
    }
@@ -246,17 +262,17 @@ public class OrderLineBean implements Serializable
    }
 
    /*
-    * Support listing and POSTing back OrderLine entities (e.g. from inside an
+    * Support listing and POSTing back Item entities (e.g. from inside an
     * HtmlSelectOneMenu)
     */
 
-   public List<OrderLine> getAll()
+   public List<Item> getAll()
    {
 
-      CriteriaQuery<OrderLine> criteria = this.entityManager
-            .getCriteriaBuilder().createQuery(OrderLine.class);
+      CriteriaQuery<Item> criteria = this.entityManager
+            .getCriteriaBuilder().createQuery(Item.class);
       return this.entityManager.createQuery(
-            criteria.select(criteria.from(OrderLine.class))).getResultList();
+            criteria.select(criteria.from(Item.class))).getResultList();
    }
 
    @Resource
@@ -265,7 +281,7 @@ public class OrderLineBean implements Serializable
    public Converter getConverter()
    {
 
-      final OrderLineBean ejbProxy = this.sessionContext.getBusinessObject(OrderLineBean.class);
+      final ItemBean ejbProxy = this.sessionContext.getBusinessObject(ItemBean.class);
 
       return new Converter()
       {
@@ -288,7 +304,7 @@ public class OrderLineBean implements Serializable
                return "";
             }
 
-            return String.valueOf(((OrderLine) value).getId());
+            return String.valueOf(((Item) value).getId());
          }
       };
    }
@@ -297,17 +313,17 @@ public class OrderLineBean implements Serializable
     * Support adding children to bidirectional, one-to-many tables
     */
 
-   private OrderLine add = new OrderLine();
+   private Item add = new Item();
 
-   public OrderLine getAdd()
+   public Item getAdd()
    {
       return this.add;
    }
 
-   public OrderLine getAdded()
+   public Item getAdded()
    {
-      OrderLine added = this.add;
-      this.add = new OrderLine();
+      Item added = this.add;
+      this.add = new Item();
       return added;
    }
 }

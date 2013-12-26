@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.web;
+package org.agoncal.application.petstore.view;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;

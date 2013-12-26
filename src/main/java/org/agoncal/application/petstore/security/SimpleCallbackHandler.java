@@ -1,6 +1,6 @@
 package org.agoncal.application.petstore.security;
 
-import org.agoncal.application.petstore.web.Credentials;
+import org.agoncal.application.petstore.view.Credentials;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;

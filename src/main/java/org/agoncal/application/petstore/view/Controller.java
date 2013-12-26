@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.web;
+package org.agoncal.application.petstore.view;
 
 import org.agoncal.application.petstore.util.Loggable;
 

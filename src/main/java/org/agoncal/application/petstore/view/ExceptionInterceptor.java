@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.web;
+package org.agoncal.application.petstore.view;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;

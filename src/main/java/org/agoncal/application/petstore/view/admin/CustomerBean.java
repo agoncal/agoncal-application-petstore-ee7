@@ -1,6 +1,6 @@
-package org.agoncal.application.petstore.web.admin;
+package org.agoncal.application.petstore.view.admin;
 
-import org.agoncal.application.petstore.model.Category;
+import org.agoncal.application.petstore.model.Customer;
 
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -26,9 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Backing bean for Category entities.
+ * Backing bean for Customer entities.
  * <p>
- * This class provides CRUD functionality for all Category entities. It focuses
+ * This class provides CRUD functionality for all Customer entities. It focuses
  * purely on Java EE 6 standards (e.g. <tt>&#64;ConversationScoped</tt> for
  * state management, <tt>PersistenceContext</tt> for persistence,
  * <tt>CriteriaBuilder</tt> for searches) rather than introducing a CRUD framework or
@@ -38,13 +38,13 @@ import java.util.List;
 @Named
 @Stateful
 @ConversationScoped
-public class CategoryBean implements Serializable
+public class CustomerBean implements Serializable
 {
 
    private static final long serialVersionUID = 1L;
 
    /*
-    * Support creating and retrieving Category entities
+    * Support creating and retrieving Customer entities
     */
 
    private Long id;
@@ -59,11 +59,11 @@ public class CategoryBean implements Serializable
       this.id = id;
    }
 
-   private Category category;
+   private Customer customer;
 
-   public Category getCategory()
+   public Customer getCustomer()
    {
-      return this.category;
+      return this.customer;
    }
 
    @Inject
@@ -94,22 +94,22 @@ public class CategoryBean implements Serializable
 
       if (this.id == null)
       {
-         this.category = this.example;
+         this.customer = this.example;
       }
       else
       {
-         this.category = findById(getId());
+         this.customer = findById(getId());
       }
    }
 
-   public Category findById(Long id)
+   public Customer findById(Long id)
    {
 
-      return this.entityManager.find(Category.class, id);
+      return this.entityManager.find(Customer.class, id);
    }
 
    /*
-    * Support updating and deleting Category entities
+    * Support updating and deleting Customer entities
     */
 
    public String update()
@@ -120,13 +120,13 @@ public class CategoryBean implements Serializable
       {
          if (this.id == null)
          {
-            this.entityManager.persist(this.category);
+            this.entityManager.persist(this.customer);
             return "search?faces-redirect=true";
          }
          else
          {
-            this.entityManager.merge(this.category);
-            return "view?faces-redirect=true&id=" + this.category.getId();
+            this.entityManager.merge(this.customer);
+            return "view?faces-redirect=true&id=" + this.customer.getId();
          }
       }
       catch (Exception e)
@@ -142,7 +142,7 @@ public class CategoryBean implements Serializable
 
       try
       {
-         Category deletableEntity = findById(getId());
+         Customer deletableEntity = findById(getId());
 
          this.entityManager.remove(deletableEntity);
          this.entityManager.flush();
@@ -156,14 +156,14 @@ public class CategoryBean implements Serializable
    }
 
    /*
-    * Support searching Category entities with pagination
+    * Support searching Customer entities with pagination
     */
 
    private int page;
    private long count;
-   private List<Category> pageItems;
+   private List<Customer> pageItems;
 
-   private Category example = new Category();
+   private Customer example = new Customer();
 
    public int getPage()
    {
@@ -180,12 +180,12 @@ public class CategoryBean implements Serializable
       return 10;
    }
 
-   public Category getExample()
+   public Customer getExample()
    {
       return this.example;
    }
 
-   public void setExample(Category example)
+   public void setExample(Customer example)
    {
       this.example = example;
    }
@@ -203,7 +203,7 @@ public class CategoryBean implements Serializable
       // Populate this.count
 
       CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
-      Root<Category> root = countCriteria.from(Category.class);
+      Root<Customer> root = countCriteria.from(Customer.class);
       countCriteria = countCriteria.select(builder.count(root)).where(
             getSearchPredicates(root));
       this.count = this.entityManager.createQuery(countCriteria)
@@ -211,36 +211,51 @@ public class CategoryBean implements Serializable
 
       // Populate this.pageItems
 
-      CriteriaQuery<Category> criteria = builder.createQuery(Category.class);
-      root = criteria.from(Category.class);
-      TypedQuery<Category> query = this.entityManager.createQuery(criteria
+      CriteriaQuery<Customer> criteria = builder.createQuery(Customer.class);
+      root = criteria.from(Customer.class);
+      TypedQuery<Customer> query = this.entityManager.createQuery(criteria
             .select(root).where(getSearchPredicates(root)));
       query.setFirstResult(this.page * getPageSize()).setMaxResults(
             getPageSize());
       this.pageItems = query.getResultList();
    }
 
-   private Predicate[] getSearchPredicates(Root<Category> root)
+   private Predicate[] getSearchPredicates(Root<Customer> root)
    {
 
       CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
       List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-      String name = this.example.getName();
-      if (name != null && !"".equals(name))
+      String login = this.example.getLogin();
+      if (login != null && !"".equals(login))
       {
-         predicatesList.add(builder.like(root.<String> get("name"), '%' + name + '%'));
+         predicatesList.add(builder.like(root.<String> get("login"), '%' + login + '%'));
       }
-      String description = this.example.getDescription();
-      if (description != null && !"".equals(description))
+      String password = this.example.getPassword();
+      if (password != null && !"".equals(password))
       {
-         predicatesList.add(builder.like(root.<String> get("description"), '%' + description + '%'));
+         predicatesList.add(builder.like(root.<String> get("password"), '%' + password + '%'));
+      }
+      String firstname = this.example.getFirstname();
+      if (firstname != null && !"".equals(firstname))
+      {
+         predicatesList.add(builder.like(root.<String> get("firstname"), '%' + firstname + '%'));
+      }
+      String lastname = this.example.getLastname();
+      if (lastname != null && !"".equals(lastname))
+      {
+         predicatesList.add(builder.like(root.<String> get("lastname"), '%' + lastname + '%'));
+      }
+      String telephone = this.example.getTelephone();
+      if (telephone != null && !"".equals(telephone))
+      {
+         predicatesList.add(builder.like(root.<String> get("telephone"), '%' + telephone + '%'));
       }
 
       return predicatesList.toArray(new Predicate[predicatesList.size()]);
    }
 
-   public List<Category> getPageItems()
+   public List<Customer> getPageItems()
    {
       return this.pageItems;
    }
@@ -251,17 +266,17 @@ public class CategoryBean implements Serializable
    }
 
    /*
-    * Support listing and POSTing back Category entities (e.g. from inside an
+    * Support listing and POSTing back Customer entities (e.g. from inside an
     * HtmlSelectOneMenu)
     */
 
-   public List<Category> getAll()
+   public List<Customer> getAll()
    {
 
-      CriteriaQuery<Category> criteria = this.entityManager
-            .getCriteriaBuilder().createQuery(Category.class);
+      CriteriaQuery<Customer> criteria = this.entityManager
+            .getCriteriaBuilder().createQuery(Customer.class);
       return this.entityManager.createQuery(
-            criteria.select(criteria.from(Category.class))).getResultList();
+            criteria.select(criteria.from(Customer.class))).getResultList();
    }
 
    @Resource
@@ -270,7 +285,7 @@ public class CategoryBean implements Serializable
    public Converter getConverter()
    {
 
-      final CategoryBean ejbProxy = this.sessionContext.getBusinessObject(CategoryBean.class);
+      final CustomerBean ejbProxy = this.sessionContext.getBusinessObject(CustomerBean.class);
 
       return new Converter()
       {
@@ -293,7 +308,7 @@ public class CategoryBean implements Serializable
                return "";
             }
 
-            return String.valueOf(((Category) value).getId());
+            return String.valueOf(((Customer) value).getId());
          }
       };
    }
@@ -302,17 +317,17 @@ public class CategoryBean implements Serializable
     * Support adding children to bidirectional, one-to-many tables
     */
 
-   private Category add = new Category();
+   private Customer add = new Customer();
 
-   public Category getAdd()
+   public Customer getAdd()
    {
       return this.add;
    }
 
-   public Category getAdded()
+   public Customer getAdded()
    {
-      Category added = this.add;
-      this.add = new Category();
+      Customer added = this.add;
+      this.add = new Customer();
       return added;
    }
 }

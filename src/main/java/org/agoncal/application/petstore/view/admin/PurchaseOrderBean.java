@@ -1,7 +1,7 @@
-package org.agoncal.application.petstore.web.admin;
+package org.agoncal.application.petstore.view.admin;
 
-import org.agoncal.application.petstore.model.Category;
-import org.agoncal.application.petstore.model.Product;
+import org.agoncal.application.petstore.model.Customer;
+import org.agoncal.application.petstore.model.PurchaseOrder;
 
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -27,9 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Backing bean for Product entities.
+ * Backing bean for PurchaseOrder entities.
  * <p>
- * This class provides CRUD functionality for all Product entities. It focuses
+ * This class provides CRUD functionality for all PurchaseOrder entities. It focuses
  * purely on Java EE 6 standards (e.g. <tt>&#64;ConversationScoped</tt> for
  * state management, <tt>PersistenceContext</tt> for persistence,
  * <tt>CriteriaBuilder</tt> for searches) rather than introducing a CRUD framework or
@@ -39,13 +39,13 @@ import java.util.List;
 @Named
 @Stateful
 @ConversationScoped
-public class ProductBean implements Serializable
+public class PurchaseOrderBean implements Serializable
 {
 
    private static final long serialVersionUID = 1L;
 
    /*
-    * Support creating and retrieving Product entities
+    * Support creating and retrieving PurchaseOrder entities
     */
 
    private Long id;
@@ -60,11 +60,11 @@ public class ProductBean implements Serializable
       this.id = id;
    }
 
-   private Product product;
+   private PurchaseOrder purchaseOrder;
 
-   public Product getProduct()
+   public PurchaseOrder getPurchaseOrder()
    {
-      return this.product;
+      return this.purchaseOrder;
    }
 
    @Inject
@@ -95,22 +95,22 @@ public class ProductBean implements Serializable
 
       if (this.id == null)
       {
-         this.product = this.example;
+         this.purchaseOrder = this.example;
       }
       else
       {
-         this.product = findById(getId());
+         this.purchaseOrder = findById(getId());
       }
    }
 
-   public Product findById(Long id)
+   public PurchaseOrder findById(Long id)
    {
 
-      return this.entityManager.find(Product.class, id);
+      return this.entityManager.find(PurchaseOrder.class, id);
    }
 
    /*
-    * Support updating and deleting Product entities
+    * Support updating and deleting PurchaseOrder entities
     */
 
    public String update()
@@ -121,13 +121,13 @@ public class ProductBean implements Serializable
       {
          if (this.id == null)
          {
-            this.entityManager.persist(this.product);
+            this.entityManager.persist(this.purchaseOrder);
             return "search?faces-redirect=true";
          }
          else
          {
-            this.entityManager.merge(this.product);
-            return "view?faces-redirect=true&id=" + this.product.getId();
+            this.entityManager.merge(this.purchaseOrder);
+            return "view?faces-redirect=true&id=" + this.purchaseOrder.getId();
          }
       }
       catch (Exception e)
@@ -143,7 +143,7 @@ public class ProductBean implements Serializable
 
       try
       {
-         Product deletableEntity = findById(getId());
+         PurchaseOrder deletableEntity = findById(getId());
 
          this.entityManager.remove(deletableEntity);
          this.entityManager.flush();
@@ -157,14 +157,14 @@ public class ProductBean implements Serializable
    }
 
    /*
-    * Support searching Product entities with pagination
+    * Support searching PurchaseOrder entities with pagination
     */
 
    private int page;
    private long count;
-   private List<Product> pageItems;
+   private List<PurchaseOrder> pageItems;
 
-   private Product example = new Product();
+   private PurchaseOrder example = new PurchaseOrder();
 
    public int getPage()
    {
@@ -181,12 +181,12 @@ public class ProductBean implements Serializable
       return 10;
    }
 
-   public Product getExample()
+   public PurchaseOrder getExample()
    {
       return this.example;
    }
 
-   public void setExample(Product example)
+   public void setExample(PurchaseOrder example)
    {
       this.example = example;
    }
@@ -204,7 +204,7 @@ public class ProductBean implements Serializable
       // Populate this.count
 
       CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
-      Root<Product> root = countCriteria.from(Product.class);
+      Root<PurchaseOrder> root = countCriteria.from(PurchaseOrder.class);
       countCriteria = countCriteria.select(builder.count(root)).where(
             getSearchPredicates(root));
       this.count = this.entityManager.createQuery(countCriteria)
@@ -212,41 +212,51 @@ public class ProductBean implements Serializable
 
       // Populate this.pageItems
 
-      CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
-      root = criteria.from(Product.class);
-      TypedQuery<Product> query = this.entityManager.createQuery(criteria
+      CriteriaQuery<PurchaseOrder> criteria = builder.createQuery(PurchaseOrder.class);
+      root = criteria.from(PurchaseOrder.class);
+      TypedQuery<PurchaseOrder> query = this.entityManager.createQuery(criteria
             .select(root).where(getSearchPredicates(root)));
       query.setFirstResult(this.page * getPageSize()).setMaxResults(
             getPageSize());
       this.pageItems = query.getResultList();
    }
 
-   private Predicate[] getSearchPredicates(Root<Product> root)
+   private Predicate[] getSearchPredicates(Root<PurchaseOrder> root)
    {
 
       CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
       List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-      String name = this.example.getName();
-      if (name != null && !"".equals(name))
+      Customer customer = this.example.getCustomer();
+      if (customer != null)
       {
-         predicatesList.add(builder.like(root.<String> get("name"), '%' + name + '%'));
+         predicatesList.add(builder.equal(root.get("customer"), customer));
       }
-      String description = this.example.getDescription();
-      if (description != null && !"".equals(description))
-      {
-         predicatesList.add(builder.like(root.<String> get("description"), '%' + description + '%'));
-      }
-      Category category = this.example.getCategory();
-      if (category != null)
-      {
-         predicatesList.add(builder.equal(root.get("category"), category));
-      }
+//      String street1 = this.example.getStreet1();
+//      if (street1 != null && !"".equals(street1))
+//      {
+//         predicatesList.add(builder.like(root.<String> get("street1"), '%' + street1 + '%'));
+//      }
+//      String street2 = this.example.getStreet2();
+//      if (street2 != null && !"".equals(street2))
+//      {
+//         predicatesList.add(builder.like(root.<String> get("street2"), '%' + street2 + '%'));
+//      }
+//      String city = this.example.getCity();
+//      if (city != null && !"".equals(city))
+//      {
+//         predicatesList.add(builder.like(root.<String> get("city"), '%' + city + '%'));
+//      }
+//      String state = this.example.getState();
+//      if (state != null && !"".equals(state))
+//      {
+//         predicatesList.add(builder.like(root.<String> get("state"), '%' + state + '%'));
+//      }
 
       return predicatesList.toArray(new Predicate[predicatesList.size()]);
    }
 
-   public List<Product> getPageItems()
+   public List<PurchaseOrder> getPageItems()
    {
       return this.pageItems;
    }
@@ -257,17 +267,17 @@ public class ProductBean implements Serializable
    }
 
    /*
-    * Support listing and POSTing back Product entities (e.g. from inside an
+    * Support listing and POSTing back PurchaseOrder entities (e.g. from inside an
     * HtmlSelectOneMenu)
     */
 
-   public List<Product> getAll()
+   public List<PurchaseOrder> getAll()
    {
 
-      CriteriaQuery<Product> criteria = this.entityManager
-            .getCriteriaBuilder().createQuery(Product.class);
+      CriteriaQuery<PurchaseOrder> criteria = this.entityManager
+            .getCriteriaBuilder().createQuery(PurchaseOrder.class);
       return this.entityManager.createQuery(
-            criteria.select(criteria.from(Product.class))).getResultList();
+            criteria.select(criteria.from(PurchaseOrder.class))).getResultList();
    }
 
    @Resource
@@ -276,7 +286,7 @@ public class ProductBean implements Serializable
    public Converter getConverter()
    {
 
-      final ProductBean ejbProxy = this.sessionContext.getBusinessObject(ProductBean.class);
+      final PurchaseOrderBean ejbProxy = this.sessionContext.getBusinessObject(PurchaseOrderBean.class);
 
       return new Converter()
       {
@@ -299,7 +309,7 @@ public class ProductBean implements Serializable
                return "";
             }
 
-            return String.valueOf(((Product) value).getId());
+            return String.valueOf(((PurchaseOrder) value).getId());
          }
       };
    }
@@ -308,17 +318,17 @@ public class ProductBean implements Serializable
     * Support adding children to bidirectional, one-to-many tables
     */
 
-   private Product add = new Product();
+   private PurchaseOrder add = new PurchaseOrder();
 
-   public Product getAdd()
+   public PurchaseOrder getAdd()
    {
       return this.add;
    }
 
-   public Product getAdded()
+   public PurchaseOrder getAdded()
    {
-      Product added = this.add;
-      this.add = new Product();
+      PurchaseOrder added = this.add;
+      this.add = new PurchaseOrder();
       return added;
    }
 }

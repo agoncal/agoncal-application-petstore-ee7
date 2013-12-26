@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.web;
+package org.agoncal.application.petstore.view;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.Retention;

@@ -5,7 +5,7 @@
 
 	<function>
 		<function-name>asList</function-name>
-		<function-class>org.agoncal.application.petstore.web.ViewUtils</function-class>
+		<function-class>org.agoncal.application.petstore.view.ViewUtils</function-class>
 		<function-signature>
 			java.util.List asList(java.util.Collection)
 		</function-signature>
@@ -13,7 +13,7 @@
     
     <function>
         <function-name>display</function-name>
-        <function-class>org.agoncal.application.petstore.web.ViewUtils</function-class>
+        <function-class>org.agoncal.application.petstore.view.ViewUtils</function-class>
         <function-signature>
             java.lang.String display(java.lang.Object)
         </function-signature>

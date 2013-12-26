@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.web;
+package org.agoncal.application.petstore.view;
 
 import javax.persistence.Id;
 import java.beans.PropertyDescriptor;

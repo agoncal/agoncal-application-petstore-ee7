@@ -6,7 +6,7 @@
 
     <interceptors>
         <class>org.agoncal.application.petstore.util.LoggingInterceptor</class>
-        <class>org.agoncal.application.petstore.web.ExceptionInterceptor</class>
+        <class>org.agoncal.application.petstore.view.ExceptionInterceptor</class>
     </interceptors>
 
 </beans>

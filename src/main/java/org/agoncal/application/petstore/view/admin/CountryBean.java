@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.web.admin;
+package org.agoncal.application.petstore.view.admin;
 
 import org.agoncal.application.petstore.model.Country;
 

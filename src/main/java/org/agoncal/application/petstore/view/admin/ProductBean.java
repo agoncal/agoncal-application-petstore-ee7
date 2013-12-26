@@ -1,6 +1,7 @@
-package org.agoncal.application.petstore.web.admin;
+package org.agoncal.application.petstore.view.admin;
 
-import org.agoncal.application.petstore.model.Customer;
+import org.agoncal.application.petstore.model.Category;
+import org.agoncal.application.petstore.model.Product;
 
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -26,9 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Backing bean for Customer entities.
+ * Backing bean for Product entities.
  * <p>
- * This class provides CRUD functionality for all Customer entities. It focuses
+ * This class provides CRUD functionality for all Product entities. It focuses
  * purely on Java EE 6 standards (e.g. <tt>&#64;ConversationScoped</tt> for
  * state management, <tt>PersistenceContext</tt> for persistence,
  * <tt>CriteriaBuilder</tt> for searches) rather than introducing a CRUD framework or
@@ -38,13 +39,13 @@ import java.util.List;
 @Named
 @Stateful
 @ConversationScoped
-public class CustomerBean implements Serializable
+public class ProductBean implements Serializable
 {
 
    private static final long serialVersionUID = 1L;
 
    /*
-    * Support creating and retrieving Customer entities
+    * Support creating and retrieving Product entities
     */
 
    private Long id;
@@ -59,11 +60,11 @@ public class CustomerBean implements Serializable
       this.id = id;
    }
 
-   private Customer customer;
+   private Product product;
 
-   public Customer getCustomer()
+   public Product getProduct()
    {
-      return this.customer;
+      return this.product;
    }
 
    @Inject
@@ -94,22 +95,22 @@ public class CustomerBean implements Serializable
 
       if (this.id == null)
       {
-         this.customer = this.example;
+         this.product = this.example;
       }
       else
       {
-         this.customer = findById(getId());
+         this.product = findById(getId());
       }
    }
 
-   public Customer findById(Long id)
+   public Product findById(Long id)
    {
 
-      return this.entityManager.find(Customer.class, id);
+      return this.entityManager.find(Product.class, id);
    }
 
    /*
-    * Support updating and deleting Customer entities
+    * Support updating and deleting Product entities
     */
 
    public String update()
@@ -120,13 +121,13 @@ public class CustomerBean implements Serializable
       {
          if (this.id == null)
          {
-            this.entityManager.persist(this.customer);
+            this.entityManager.persist(this.product);
             return "search?faces-redirect=true";
          }
          else
          {
-            this.entityManager.merge(this.customer);
-            return "view?faces-redirect=true&id=" + this.customer.getId();
+            this.entityManager.merge(this.product);
+            return "view?faces-redirect=true&id=" + this.product.getId();
          }
       }
       catch (Exception e)
@@ -142,7 +143,7 @@ public class CustomerBean implements Serializable
 
       try
       {
-         Customer deletableEntity = findById(getId());
+         Product deletableEntity = findById(getId());
 
          this.entityManager.remove(deletableEntity);
          this.entityManager.flush();
@@ -156,14 +157,14 @@ public class CustomerBean implements Serializable
    }
 
    /*
-    * Support searching Customer entities with pagination
+    * Support searching Product entities with pagination
     */
 
    private int page;
    private long count;
-   private List<Customer> pageItems;
+   private List<Product> pageItems;
 
-   private Customer example = new Customer();
+   private Product example = new Product();
 
    public int getPage()
    {
@@ -180,12 +181,12 @@ public class CustomerBean implements Serializable
       return 10;
    }
 
-   public Customer getExample()
+   public Product getExample()
    {
       return this.example;
    }
 
-   public void setExample(Customer example)
+   public void setExample(Product example)
    {
       this.example = example;
    }
@@ -203,7 +204,7 @@ public class CustomerBean implements Serializable
       // Populate this.count
 
       CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
-      Root<Customer> root = countCriteria.from(Customer.class);
+      Root<Product> root = countCriteria.from(Product.class);
       countCriteria = countCriteria.select(builder.count(root)).where(
             getSearchPredicates(root));
       this.count = this.entityManager.createQuery(countCriteria)
@@ -211,51 +212,41 @@ public class CustomerBean implements Serializable
 
       // Populate this.pageItems
 
-      CriteriaQuery<Customer> criteria = builder.createQuery(Customer.class);
-      root = criteria.from(Customer.class);
-      TypedQuery<Customer> query = this.entityManager.createQuery(criteria
+      CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
+      root = criteria.from(Product.class);
+      TypedQuery<Product> query = this.entityManager.createQuery(criteria
             .select(root).where(getSearchPredicates(root)));
       query.setFirstResult(this.page * getPageSize()).setMaxResults(
             getPageSize());
       this.pageItems = query.getResultList();
    }
 
-   private Predicate[] getSearchPredicates(Root<Customer> root)
+   private Predicate[] getSearchPredicates(Root<Product> root)
    {
 
       CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
       List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-      String login = this.example.getLogin();
-      if (login != null && !"".equals(login))
+      String name = this.example.getName();
+      if (name != null && !"".equals(name))
       {
-         predicatesList.add(builder.like(root.<String> get("login"), '%' + login + '%'));
+         predicatesList.add(builder.like(root.<String> get("name"), '%' + name + '%'));
       }
-      String password = this.example.getPassword();
-      if (password != null && !"".equals(password))
+      String description = this.example.getDescription();
+      if (description != null && !"".equals(description))
       {
-         predicatesList.add(builder.like(root.<String> get("password"), '%' + password + '%'));
+         predicatesList.add(builder.like(root.<String> get("description"), '%' + description + '%'));
       }
-      String firstname = this.example.getFirstname();
-      if (firstname != null && !"".equals(firstname))
+      Category category = this.example.getCategory();
+      if (category != null)
       {
-         predicatesList.add(builder.like(root.<String> get("firstname"), '%' + firstname + '%'));
-      }
-      String lastname = this.example.getLastname();
-      if (lastname != null && !"".equals(lastname))
-      {
-         predicatesList.add(builder.like(root.<String> get("lastname"), '%' + lastname + '%'));
-      }
-      String telephone = this.example.getTelephone();
-      if (telephone != null && !"".equals(telephone))
-      {
-         predicatesList.add(builder.like(root.<String> get("telephone"), '%' + telephone + '%'));
+         predicatesList.add(builder.equal(root.get("category"), category));
       }
 
       return predicatesList.toArray(new Predicate[predicatesList.size()]);
    }
 
-   public List<Customer> getPageItems()
+   public List<Product> getPageItems()
    {
       return this.pageItems;
    }
@@ -266,17 +257,17 @@ public class CustomerBean implements Serializable
    }
 
    /*
-    * Support listing and POSTing back Customer entities (e.g. from inside an
+    * Support listing and POSTing back Product entities (e.g. from inside an
     * HtmlSelectOneMenu)
     */
 
-   public List<Customer> getAll()
+   public List<Product> getAll()
    {
 
-      CriteriaQuery<Customer> criteria = this.entityManager
-            .getCriteriaBuilder().createQuery(Customer.class);
+      CriteriaQuery<Product> criteria = this.entityManager
+            .getCriteriaBuilder().createQuery(Product.class);
       return this.entityManager.createQuery(
-            criteria.select(criteria.from(Customer.class))).getResultList();
+            criteria.select(criteria.from(Product.class))).getResultList();
    }
 
    @Resource
@@ -285,7 +276,7 @@ public class CustomerBean implements Serializable
    public Converter getConverter()
    {
 
-      final CustomerBean ejbProxy = this.sessionContext.getBusinessObject(CustomerBean.class);
+      final ProductBean ejbProxy = this.sessionContext.getBusinessObject(ProductBean.class);
 
       return new Converter()
       {
@@ -308,7 +299,7 @@ public class CustomerBean implements Serializable
                return "";
             }
 
-            return String.valueOf(((Customer) value).getId());
+            return String.valueOf(((Product) value).getId());
          }
       };
    }
@@ -317,17 +308,17 @@ public class CustomerBean implements Serializable
     * Support adding children to bidirectional, one-to-many tables
     */
 
-   private Customer add = new Customer();
+   private Product add = new Product();
 
-   public Customer getAdd()
+   public Product getAdd()
    {
       return this.add;
    }
 
-   public Customer getAdded()
+   public Product getAdded()
    {
-      Customer added = this.add;
-      this.add = new Customer();
+      Product added = this.add;
+      this.add = new Product();
       return added;
    }
 }
