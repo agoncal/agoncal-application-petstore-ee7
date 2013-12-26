@@ -10,7 +10,7 @@
 
 	<f:metadata>
 		<f:viewParam name="id" value="#{productBean.id}"/>
-		<f:event type="preRenderView" listener="#{productBean.retrieve}"/>
+		<f:viewAction action="#{productBean.retrieve}"/>
 	</f:metadata>
 
 	<ui:param name="pageTitle" value="Create Product"/>

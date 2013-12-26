@@ -9,7 +9,7 @@
 
 	<f:metadata>
 		<f:viewParam name="id" value="#{categoryBean.id}"/>
-		<f:event type="preRenderView" listener="#{categoryBean.retrieve}"/>
+		<f:viewAction action="#{categoryBean.retrieve}"/>
 	</f:metadata>
 
 	<ui:param name="pageTitle" value="Create Category"/>

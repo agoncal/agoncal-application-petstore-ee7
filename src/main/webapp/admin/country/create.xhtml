@@ -9,7 +9,7 @@
 
 	<f:metadata>
 		<f:viewParam name="id" value="#{countryBean.id}"/>
-		<f:event type="preRenderView" listener="#{countryBean.retrieve}"/>
+		<f:viewAction action="#{countryBean.retrieve}"/>
 	</f:metadata>
 
 	<ui:param name="pageTitle" value="Create Country"/>

@@ -8,7 +8,7 @@
 
 	<f:metadata>
 		<f:viewParam name="page" value="#{orderLineBean.page}"/>
-		<f:event type="preRenderView" listener="#{orderLineBean.paginate}"/>
+		<f:viewAction action="#{orderLineBean.paginate}"/>
 	</f:metadata>
 
 	<ui:param name="pageTitle" value="Search Order Line entities"/>

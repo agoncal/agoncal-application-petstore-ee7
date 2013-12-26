@@ -10,7 +10,7 @@
 
 	<f:metadata>
 		<f:viewParam name="id" value="#{orderLineBean.id}"/>
-		<f:event type="preRenderView" listener="#{orderLineBean.retrieve}"/>
+		<f:viewAction action="#{orderLineBean.retrieve}"/>
 	</f:metadata>
 
 	<ui:param name="pageTitle" value="Create Order Line"/>

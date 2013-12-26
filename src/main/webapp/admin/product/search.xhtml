@@ -9,7 +9,7 @@
 
 	<f:metadata>
 		<f:viewParam name="page" value="#{productBean.page}"/>
-		<f:event type="preRenderView" listener="#{productBean.paginate}"/>
+		<f:viewAction action="#{productBean.paginate}"/>
 	</f:metadata>
 
 	<ui:param name="pageTitle" value="Search Product entities"/>
