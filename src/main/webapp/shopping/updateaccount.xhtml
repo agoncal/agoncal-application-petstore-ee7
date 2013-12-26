@@ -17,7 +17,11 @@
 
         <h:form>
 
-            <legend>#{i18n.createAccount_personalInformation}</legend>
+            <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">#{i18n.createAccount_personalInformation}</h3>
+            </div>
+            <div class="panel-body">
             <h:panelGrid columns="3">
                 <h:outputText value="#{i18n.customer_login} :"/>
                 <h:inputText value="#{accountController.loggedinCustomer.login}" readonly="true"/>
@@ -46,8 +50,14 @@
                 <h:message for="dateOfBirth" style="color: red;"/>
 
             </h:panelGrid>
+            </div>
+            </div>
 
-            <legend>#{i18n.address}</legend>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">#{i18n.address}</h3>
+                </div>
+                <div class="panel-body">
             <h:panelGrid columns="3">
                 <h:outputText value="*#{i18n.address_street1}  :"/>
                 <h:inputText id="street1" value="#{accountController.loggedinCustomer.homeAddress.street1}"/>
@@ -70,13 +80,15 @@
                 <h:message for="zipcode" style="color: red;"/>
 
                 <h:outputText value="*#{i18n.address_country}  :"/>
-                <h:inputText id="country" value="#{accountController.loggedinCustomer.homeAddress.country}"/>
+                <h:inputText id="country" value="#{accountController.loggedinCustomer.homeAddress.country.printableName}"/>
                 <h:message for="country" style="color: red;"/>
 
             </h:panelGrid>
+                </div>
+            </div>
 
             <div>
-                <h:commandButton value="#{i18n.submit}" action="#{accountController.doUpdateAccount}" type="submit"/>
+                <h:commandButton value="#{i18n.submit}" action="#{accountController.doUpdateAccount}" type="submit" class="btn btn-primary"/>
             </div>
         </h:form>
 

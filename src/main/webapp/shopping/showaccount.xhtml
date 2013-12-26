@@ -17,7 +17,11 @@
 
         <h:form>
 
-            <legend>#{i18n.confirmorder_personalInformation}</legend>
+            <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">#{i18n.confirmorder_personalInformation}</h3>
+            </div>
+            <div class="panel-body">
             <h:panelGrid columns="2">
                 <h:outputText value="#{i18n.customer_login} :"/>
                 <h:outputText value="#{accountController.loggedinCustomer.login}"/>
@@ -43,8 +47,14 @@
                 <h:outputText value="#{accountController.loggedinCustomer.age}"/>
 
             </h:panelGrid>
+            </div>
+            </div>
 
-            <legend>#{i18n.address}</legend>
+            <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">#{i18n.address}</h3>
+            </div>
+            <div class="panel-body">
             <h:panelGrid columns="2">
                 <h:outputText value="#{i18n.address_street1} :"/>
                 <h:outputText value="#{accountController.loggedinCustomer.homeAddress.street1}"/>
@@ -62,11 +72,13 @@
                 <h:outputText value="#{accountController.loggedinCustomer.homeAddress.zipcode}"/>
 
                 <h:outputText value="#{i18n.address_country} :"/>
-                <h:outputText value="#{accountController.loggedinCustomer.homeAddress.country}"/>
+                <h:outputText value="#{accountController.loggedinCustomer.homeAddress.country.printableName}"/>
             </h:panelGrid>
+            </div>
+            </div>
 
-            <div style="margin-top: 20px">
-                <h:commandLink action="updateaccount" styleClass="user-edit">
+            <div>
+                <h:commandLink action="/shopping/updateaccount" class="btn btn-primary">
                     <h:outputText value="#{i18n.showAccount_edit}"/>
                 </h:commandLink>
             </div>
