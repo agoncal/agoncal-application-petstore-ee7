@@ -5,14 +5,14 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
-                template="/WEB-INF/layouts/template_shopping.xhtml">
+                template="/WEB-INF/layouts/templateShopping.xhtml">
 
     <f:metadata>
         <f:viewParam name="productId" value="#{catalogController.productId}" required="true"/>
         <f:viewAction action="#{catalogController.doFindItems}"/>
     </f:metadata>
 
-    <ui:define name="title">#{i18n.showItems_itemForProduct} : #{catalogController.product.name}</ui:define>
+    <ui:param name="pageTitle" value="#{i18n.showItems_itemForProduct} : #{catalogController.product.name}"/>
 
     <ui:define name="main">
 
