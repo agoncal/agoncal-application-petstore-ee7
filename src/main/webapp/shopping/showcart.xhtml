@@ -13,12 +13,12 @@
         #{i18n.shoppingCart}
     </ui:define>
 
+    <ui:define name="subheader">
+        <h:outputText value="#{i18n.shoppingCart_empty}" rendered="#{shoppingCartController.shoppingCartIsEmpty()}"/>
+    </ui:define>
+
     <ui:define name="main">
 
-        <!--Shopping Cart is empty-->
-        <h:outputText value="#{i18n.shoppingCart_empty}" rendered="#{shoppingCartController.shoppingCartIsEmpty()}"/>
-
-        <!--There are items in the Shopping Cart-->
         <h:form rendered="#{!shoppingCartController.shoppingCartIsEmpty()}">
             <h:dataTable value="#{shoppingCartController.cartItems}" var="oneItem" styleClass="table">
                 <h:column>

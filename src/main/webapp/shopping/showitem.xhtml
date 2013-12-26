@@ -18,9 +18,11 @@
         #{catalogController.item.product.name} - #{catalogController.item.name}
     </ui:define>
 
-    <ui:define name="main">
-
+    <ui:define name="subheader">
         <h:outputText value="#{i18n.noItemsFound}" rendered="#{catalogController.item == null}"/>
+    </ui:define>
+
+    <ui:define name="main">
 
         <h:form>
             <h:panelGrid columns="3" rendered="#{catalogController.item != null}" styleClass="table">

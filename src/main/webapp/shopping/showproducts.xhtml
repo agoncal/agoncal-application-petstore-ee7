@@ -18,10 +18,12 @@
         #{i18n.showProducts_productForCategory} : #{catalogController.categoryName}
     </ui:define>
 
-    <ui:define name="main">
-
+    <ui:define name="subheader">
         <h:outputText value="#{i18n.product_noProductFound}"
                       rendered="#{catalogController.products == null || catalogController.products.size() == 0}"/>
+    </ui:define>
+
+    <ui:define name="main">
 
         <h:dataTable value="#{catalogController.products}" var="oneProduct"
                      rendered="#{catalogController.products.size() > 0}" styleClass="table">
