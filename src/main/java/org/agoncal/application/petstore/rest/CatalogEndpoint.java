@@ -25,7 +25,7 @@ import java.util.List;
 
 @Loggable
 @Path("/catalog")
-public class CatalogRestService implements Serializable {
+public class CatalogEndpoint implements Serializable {
 
     // ======================================
     // =             Attributes             =
