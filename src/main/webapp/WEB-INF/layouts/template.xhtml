@@ -12,9 +12,8 @@
     <!--HEAD-->
     <h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/icon_dog.gif"/>
-
-        <title><ui:insert name="title"/></title>
+        <title>#{empty pageTitle ? 'Page Title' : pageTitle}</title>
+        <link rel="icon" href="#{resource['favicon.gif']}"/>
 
         <!-- Bootstrap core CSS -->
         <h:outputStylesheet library="webjars/bootstrap/3.0.3/css" name="bootstrap.css"/>
