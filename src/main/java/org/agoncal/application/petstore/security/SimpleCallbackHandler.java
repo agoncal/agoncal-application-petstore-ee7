@@ -1,6 +1,6 @@
 package org.agoncal.application.petstore.security;
 
-import org.agoncal.application.petstore.view.Credentials;
+import org.agoncal.application.petstore.view.shopping.CredentialsBean;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -23,7 +23,7 @@ public class SimpleCallbackHandler implements CallbackHandler {
 
     @Inject
     @RequestScoped
-    private Credentials credentials;
+    private CredentialsBean credentials;
 
     // ======================================
     // =          Business methods          =

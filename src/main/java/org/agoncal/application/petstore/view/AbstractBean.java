@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 
 @Loggable
-abstract class Controller {
+public abstract class AbstractBean {
 
     // ======================================
     // =             Attributes             =

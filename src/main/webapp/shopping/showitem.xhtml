@@ -8,46 +8,46 @@
                 template="/resources/templates/templateShopping.xhtml">
 
     <f:metadata>
-        <f:viewParam name="itemId" value="#{catalogController.itemId}" required="true"/>
-        <f:viewAction action="#{catalogController.doFindItem}"/>
+        <f:viewParam name="itemId" value="#{catalogBean.itemId}" required="true"/>
+        <f:viewAction action="#{catalogBean.doFindItem}"/>
     </f:metadata>
 
-    <ui:param name="pageTitle" value="#{catalogController.item.product.name} - #{catalogController.item.name}"/>
+    <ui:param name="pageTitle" value="#{catalogBean.item.product.name} - #{catalogBean.item.name}"/>
 
     <ui:define name="header">
-        #{catalogController.item.product.name} - #{catalogController.item.name}
+        #{catalogBean.item.product.name} - #{catalogBean.item.name}
     </ui:define>
 
     <ui:define name="subheader">
-        <h:outputText value="#{i18n.noItemsFound}" rendered="#{catalogController.item == null}"/>
+        <h:outputText value="#{i18n.noItemsFound}" rendered="#{catalogBean.item == null}"/>
     </ui:define>
 
     <ui:define name="main">
 
         <h:form>
-            <h:panelGrid columns="3" rendered="#{catalogController.item != null}" styleClass="table">
+            <h:panelGrid columns="3" rendered="#{catalogBean.item != null}" styleClass="table">
                 <h:column>
-                    <h:graphicImage url="/resources/images/#{catalogController.item.imagePath}"
-                                    alt="#{catalogController.item.name}"/>
+                    <h:graphicImage url="/resources/images/#{catalogBean.item.imagePath}"
+                                    alt="#{catalogBean.item.name}"/>
                 </h:column>
 
                 <h:column>
                     <h:outputText value="#{i18n.item_unitCost}:"/>
-                    <h:outputText value="#{catalogController.item.unitCost}"/> $
+                    <h:outputText value="#{catalogBean.item.unitCost}"/> $
                 </h:column>
 
                 <h:column>
-                    <h:commandLink action="#{shoppingCartController.addItemToCart}" styleClass="add-to-cart"
-                                   rendered="#{accountController.loggedIn}">
+                    <h:commandLink action="#{shoppingCartBean.addItemToCart}" styleClass="add-to-cart"
+                                   rendered="#{accountBean.loggedIn}">
                         <h:outputText value="#{i18n.searchResult_addToCart}"/>
-                        <f:param name="itemId" value="#{catalogController.item.id}"/>
+                        <f:param name="itemId" value="#{catalogBean.item.id}"/>
                     </h:commandLink>
                 </h:column>
             </h:panelGrid>
 
-            <h:panelGrid columns="1" rendered="#{catalogController.item != null}">
+            <h:panelGrid columns="1" rendered="#{catalogBean.item != null}">
                 <h:column>
-                    <h:outputText value="#{catalogController.item.description}"/>
+                    <h:outputText value="#{catalogBean.item.description}"/>
                 </h:column>
             </h:panelGrid>
         </h:form>

@@ -76,29 +76,29 @@
                                 <li>
                                     <!--<i class="icon-user icon-white"></i>-->
                                     <h:link outcome="/shopping/showaccount"
-                                            value="#{i18n.welcome} #{accountController.loggedinCustomer.firstname}"
-                                            rendered="#{accountController.loggedIn}">
+                                            value="#{i18n.welcome} #{accountBean.loggedinCustomer.firstname}"
+                                            rendered="#{accountBean.loggedIn}">
                                         <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
                                     </h:link>
                                 </li>
                                 <li>
                                     <!--<i class="icon-off icon-white"></i>-->
-                                    <h:commandLink action="#{accountController.doLogout}"
-                                                   rendered="#{accountController.loggedIn}">
+                                    <h:commandLink action="#{accountBean.doLogout}"
+                                                   rendered="#{accountBean.loggedIn}">
                                         <h:outputText value="${i18n.logOut}"/>
                                     </h:commandLink>
                                 </li>
                                 <li>
                                     <!--<i class="icon-eye-open icon-white"></i>-->
                                     <h:link outcome="/shopping/signon" value="#{i18n.logIn}"
-                                            rendered="#{!accountController.loggedIn}">
+                                            rendered="#{!accountBean.loggedIn}">
                                         <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
                                     </h:link>
                                 </li>
                                 <li>
                                     <!--<i class="icon-shopping-cart icon-white"></i>-->
                                     <h:link outcome="/shopping/showcart" value="#{i18n.shoppingCart}"
-                                            rendered="#{!shoppingCartController.shoppingCartIsEmpty()}">
+                                            rendered="#{!shoppingCartBean.shoppingCartIsEmpty()}">
                                         <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
                                     </h:link>
                                 </li>
@@ -106,9 +106,9 @@
                                 <li>
                                     <div class="navbar-form navbar-left" role="search">
                                         <div class="form-group">
-                                            <h:inputText class="form-control" value="#{catalogController.keyword}"/>
+                                            <h:inputText class="form-control" value="#{catalogBean.keyword}"/>
                                         </div>
-                                        <h:commandButton action="#{catalogController.doSearch}" value="#{i18n.search}"
+                                        <h:commandButton action="#{catalogBean.doSearch}" value="#{i18n.search}"
                                                          class="btn btn-default"/>
                                     </div>
                                 </li>
@@ -156,7 +156,7 @@
                         <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
                     </h:link>
                     <br/>
-                    <h:outputText value="Conversation [#{shoppingCartController.conversation.id}]"/>
+                    <h:outputText value="Conversation [#{shoppingCartBean.conversation.id}]"/>
                 </div>
             </div>
         </div>

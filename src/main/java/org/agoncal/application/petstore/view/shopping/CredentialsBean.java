@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.view;
+package org.agoncal.application.petstore.view.shopping;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 @Named
 @SessionScoped
-public class Credentials implements Serializable {
+public class CredentialsBean implements Serializable {
 
     // ======================================
     // =             Attributes             =

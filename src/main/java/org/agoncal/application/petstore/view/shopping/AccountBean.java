@@ -1,8 +1,11 @@
-package org.agoncal.application.petstore.view;
+package org.agoncal.application.petstore.view.shopping;
 
 import org.agoncal.application.petstore.model.Customer;
 import org.agoncal.application.petstore.service.CustomerService;
 import org.agoncal.application.petstore.util.Loggable;
+import org.agoncal.application.petstore.view.AbstractBean;
+import org.agoncal.application.petstore.view.CatchException;
+import org.agoncal.application.petstore.view.LoggedIn;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.SessionScoped;
@@ -23,7 +26,7 @@ import java.io.Serializable;
 @SessionScoped
 @Loggable
 @CatchException
-public class AccountController extends Controller implements Serializable {
+public class AccountBean extends AbstractBean implements Serializable {
 
     // ======================================
     // =             Attributes             =
@@ -33,7 +36,7 @@ public class AccountController extends Controller implements Serializable {
     private CustomerService customerService;
 
     @Inject
-    private Credentials credentials;
+    private CredentialsBean credentials;
 
     @Inject
     private Conversation conversation;

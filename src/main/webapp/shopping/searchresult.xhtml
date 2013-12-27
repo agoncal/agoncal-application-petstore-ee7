@@ -8,24 +8,24 @@
                 template="/resources/templates/templateShopping.xhtml">
 
     <f:metadata>
-        <f:viewParam name="keyword" value="#{catalogController.keyword}"/>
-        <f:viewAction action="#{catalogController.doSearch}"/>
+        <f:viewParam name="keyword" value="#{catalogBean.keyword}"/>
+        <f:viewAction action="#{catalogBean.doSearch}"/>
     </f:metadata>
 
-    <ui:param name="pageTitle" value="#{i18n.searchResult_searchFor} #{catalogController.keyword}"/>
+    <ui:param name="pageTitle" value="#{i18n.searchResult_searchFor} #{catalogBean.keyword}"/>
 
     <ui:define name="header">
-        #{i18n.searchResult_searchFor} : #{catalogController.keyword}
+        #{i18n.searchResult_searchFor} : #{catalogBean.keyword}
     </ui:define>
 
     <ui:define name="subheader">
         <h:outputText value="#{i18n.noItemsFound}"
-                      rendered="#{catalogController.items == null || catalogController.items.size() ==0}"/>
+                      rendered="#{catalogBean.items == null || catalogBean.items.size() ==0}"/>
     </ui:define>
 
     <ui:define name="main">
 
-        <h:dataTable value="#{catalogController.items}" var="oneItem" rendered="#{catalogController.items.size() > 0}"
+        <h:dataTable value="#{catalogBean.items}" var="oneItem" rendered="#{catalogBean.items.size() > 0}"
                      styleClass="table">
             <h:column>
                 <h:graphicImage url="/resources/images/#{oneItem.imagePath}" alt="Item"/>
@@ -51,8 +51,8 @@
 
             <h:column>
                 <h:form>
-                    <h:commandLink action="#{shoppingCartController.addItemToCart}" styleClass="add-to-cart"
-                                   rendered="#{accountController.loggedIn}">
+                    <h:commandLink action="#{shoppingCartBean.addItemToCart}" styleClass="add-to-cart"
+                                   rendered="#{accountBean.loggedIn}">
                         <h:outputText value="#{i18n.searchResult_addToCart}"/>
                         <f:param name="itemId" value="#{oneItem.id}"/>
                     </h:commandLink>

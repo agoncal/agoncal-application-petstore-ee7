@@ -1,9 +1,12 @@
-package org.agoncal.application.petstore.view;
+package org.agoncal.application.petstore.view.shopping;
 
 import org.agoncal.application.petstore.model.*;
 import org.agoncal.application.petstore.service.CatalogService;
 import org.agoncal.application.petstore.service.PurchaseOrderService;
 import org.agoncal.application.petstore.util.Loggable;
+import org.agoncal.application.petstore.view.AbstractBean;
+import org.agoncal.application.petstore.view.CatchException;
+import org.agoncal.application.petstore.view.LoggedIn;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -24,7 +27,7 @@ import java.util.List;
 @ConversationScoped
 @Loggable
 @CatchException
-public class ShoppingCartController extends Controller implements Serializable {
+public class ShoppingCartBean extends AbstractBean implements Serializable {
 
     // ======================================
     // =             Attributes             =

@@ -139,25 +139,25 @@
         <h2>System information</h2>
         <h:panelGrid columns="2">
             <h:outputLabel value="Working directory"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{debugController.workingDirectory}"
+            <h:inputText class="form-control" pt:disabled="disabled" value="#{debugBean.workingDirectory}"
                           size="64"/>
             <h:outputLabel value="InetAddress.getLocalHost()"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{debugController.workingDirectory}"/>
+            <h:inputText class="form-control" pt:disabled="disabled" value="#{debugBean.workingDirectory}"/>
             <h:outputLabel value="InetAddress.getAllByName(null)"/>
-            <h:inputText class="form-control" pt:disabled="disabled" value="#{debugController.workingDirectory}"/>
+            <h:inputText class="form-control" pt:disabled="disabled" value="#{debugBean.workingDirectory}"/>
         </h:panelGrid>
 
         <h2>Memory</h2>
         <h:panelGrid columns="2">
             <h:outputLabel value="Total Memory"/>
-            <h:outputText class="form-control" pt:disabled="disabled" value="#{debugController.totalMemory}" size="64"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{debugBean.totalMemory}" size="64"/>
             <h:outputLabel value="Free Memory"/>
-            <h:outputText class="form-control" pt:disabled="disabled" value="#{debugController.freeMemory}"/>
+            <h:outputText class="form-control" pt:disabled="disabled" value="#{debugBean.freeMemory}"/>
         </h:panelGrid>
 
         <h2>Thread stack</h2>
         <h:panelGrid columns="1">
-            <c:forEach items="#{debugController.threadStack}" var="entry">
+            <c:forEach items="#{debugBean.threadStack}" var="entry">
                 <h:outputLabel value="#{entry}" />
             </c:forEach>
         </h:panelGrid>

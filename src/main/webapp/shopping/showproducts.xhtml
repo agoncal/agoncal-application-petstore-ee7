@@ -8,25 +8,25 @@
                 template="/resources/templates/templateShopping.xhtml">
 
     <f:metadata>
-        <f:viewParam name="categoryName" value="#{catalogController.categoryName}" required="true"/>
-        <f:viewAction action="#{catalogController.doFindProducts}"/>
+        <f:viewParam name="categoryName" value="#{catalogBean.categoryName}" required="true"/>
+        <f:viewAction action="#{catalogBean.doFindProducts}"/>
     </f:metadata>
 
-    <ui:param name="pageTitle" value="#{i18n.showProducts_productForCategory} : #{catalogController.categoryName}"/>
+    <ui:param name="pageTitle" value="#{i18n.showProducts_productForCategory} : #{catalogBean.categoryName}"/>
 
     <ui:define name="header">
-        #{i18n.showProducts_productForCategory} : #{catalogController.categoryName}
+        #{i18n.showProducts_productForCategory} : #{catalogBean.categoryName}
     </ui:define>
 
     <ui:define name="subheader">
         <h:outputText value="#{i18n.product_noProductFound}"
-                      rendered="#{catalogController.products == null || catalogController.products.size() == 0}"/>
+                      rendered="#{catalogBean.products == null || catalogBean.products.size() == 0}"/>
     </ui:define>
 
     <ui:define name="main">
 
-        <h:dataTable value="#{catalogController.products}" var="oneProduct"
-                     rendered="#{catalogController.products.size() > 0}" styleClass="table">
+        <h:dataTable value="#{catalogBean.products}" var="oneProduct"
+                     rendered="#{catalogBean.products.size() > 0}" styleClass="table">
             <h:column>
                 <h:link outcome="showitems" includeViewParams="true" value="#{oneProduct.name}">
                     <f:param name="productId" value="#{oneProduct.id}"/>

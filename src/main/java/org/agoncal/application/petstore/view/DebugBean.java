@@ -17,7 +17,7 @@ import java.util.List;
 @RequestScoped
 @Loggable
 @CatchException
-public class DebugController extends Controller {
+public class DebugBean extends AbstractBean {
 
     // ======================================
     // =              Public Methods        =

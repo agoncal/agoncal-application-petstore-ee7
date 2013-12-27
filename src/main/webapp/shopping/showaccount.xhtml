@@ -25,33 +25,33 @@
                 <div class="panel-body">
                     <h:panelGrid columns="2">
                         <h:outputText value="#{i18n.customer_login}:"/>
-                        <h:inputText value="#{accountController.loggedinCustomer.login}" class="form-control"
+                        <h:inputText value="#{accountBean.loggedinCustomer.login}" class="form-control"
                                      pt:disabled="disabled" size="30"/>
 
                         <h:outputText value="#{i18n.customer_firstname}:"/>
-                        <h:inputText value="#{accountController.loggedinCustomer.firstname}" class="form-control"
+                        <h:inputText value="#{accountBean.loggedinCustomer.firstname}" class="form-control"
                                       pt:disabled="disabled"/>
 
                         <h:outputText value="#{i18n.customer_lastname}:"/>
-                        <h:inputText value="#{accountController.loggedinCustomer.lastname}" class="form-control"
+                        <h:inputText value="#{accountBean.loggedinCustomer.lastname}" class="form-control"
                                       pt:disabled="disabled"/>
 
                         <h:outputText value="#{i18n.customer_email}:"/>
-                        <h:inputText value="#{accountController.loggedinCustomer.email}" class="form-control"
+                        <h:inputText value="#{accountBean.loggedinCustomer.email}" class="form-control"
                                       pt:disabled="disabled"/>
 
                         <h:outputText value="#{i18n.customer_telephone}:"/>
-                        <h:inputText value="#{accountController.loggedinCustomer.telephone}" class="form-control"
+                        <h:inputText value="#{accountBean.loggedinCustomer.telephone}" class="form-control"
                                       pt:disabled="disabled"/>
 
                         <h:outputText value="#{i18n.customer_dateOfBirth}:"/>
-                        <h:inputText value="#{accountController.loggedinCustomer.dateOfBirth}" class="form-control"
+                        <h:inputText value="#{accountBean.loggedinCustomer.dateOfBirth}" class="form-control"
                                       pt:disabled="disabled">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:inputText>
 
                         <h:outputText value="#{i18n.customer_age}:"/>
-                        <h:inputText value="#{accountController.loggedinCustomer.age}" class="form-control"
+                        <h:inputText value="#{accountBean.loggedinCustomer.age}" class="form-control"
                                       pt:disabled="disabled"/>
 
                     </h:panelGrid>
@@ -65,27 +65,27 @@
                 <div class="panel-body">
                     <h:panelGrid columns="2">
                         <h:outputText value="#{i18n.address_street1}:"/>
-                        <h:inputText value="#{accountController.loggedinCustomer.homeAddress.street1}" class="form-control"
+                        <h:inputText value="#{accountBean.loggedinCustomer.homeAddress.street1}" class="form-control"
                                       pt:disabled="disabled" size="36"/>
 
                         <h:outputText value="#{i18n.address_street2}:"/>
-                        <h:inputText value="#{accountController.loggedinCustomer.homeAddress.street2}" class="form-control"
+                        <h:inputText value="#{accountBean.loggedinCustomer.homeAddress.street2}" class="form-control"
                                       pt:disabled="disabled"/>
 
                         <h:outputText value="#{i18n.address_city}:"/>
-                        <h:inputText value="#{accountController.loggedinCustomer.homeAddress.city}" class="form-control"
+                        <h:inputText value="#{accountBean.loggedinCustomer.homeAddress.city}" class="form-control"
                                       pt:disabled="disabled"/>
 
                         <h:outputText value="#{i18n.address_state}:"/>
-                        <h:inputText value="#{accountController.loggedinCustomer.homeAddress.state}" class="form-control"
+                        <h:inputText value="#{accountBean.loggedinCustomer.homeAddress.state}" class="form-control"
                                       pt:disabled="disabled"/>
 
                         <h:outputText value="#{i18n.address_zipcode}:"/>
-                        <h:inputText value="#{accountController.loggedinCustomer.homeAddress.zipcode}" class="form-control"
+                        <h:inputText value="#{accountBean.loggedinCustomer.homeAddress.zipcode}" class="form-control"
                                       pt:disabled="disabled"/>
 
                         <h:outputText value="#{i18n.address_country}:"/>
-                        <h:inputText value="#{accountController.loggedinCustomer.homeAddress.country.printableName}" class="form-control"
+                        <h:inputText value="#{accountBean.loggedinCustomer.homeAddress.country.printableName}" class="form-control"
                                       pt:disabled="disabled"/>
                     </h:panelGrid>
                 </div>

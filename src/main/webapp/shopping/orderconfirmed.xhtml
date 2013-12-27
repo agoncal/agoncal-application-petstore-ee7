@@ -15,7 +15,7 @@
     <ui:define name="main">
 
         <h:form>
-            <h:dataTable value="#{shoppingCartController.order.orderLines}" var="orderLine" styleClass="table">
+            <h:dataTable value="#{shoppingCartBean.order.orderLines}" var="orderLine" styleClass="table">
                 <h:column>
                     <strong><h:outputText value="#{orderLine.item.product.name}"/></strong>
                     <br/>
@@ -38,11 +38,11 @@
             <br/>
 
             <div style="margin-top: 20px; font-weight: bold;">
-                Total $ #{shoppingCartController.order.total}
+                Total $ #{shoppingCartBean.order.total}
             </div>
         </h:form>
 
-        <legend>#{i18n.orderConfirmed_yourOrderIdIs} : #{shoppingCartController.order.id}</legend>
+        <legend>#{i18n.orderConfirmed_yourOrderIdIs} : #{shoppingCartBean.order.id}</legend>
 
         <p style="margin-top: 15px">#{i18n.orderConfirmed_msg1}</p>
 
