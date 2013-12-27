@@ -22,50 +22,50 @@
 	</ui:define>
 
 	<ui:define name="main">
-		<h:form id="search">
+		<h:form id="search" class="form-horizontal" role="form">
 			<f:validateBean disabled="true">
 				<h:panelGroup styleClass="search">
 
-					<h:panelGrid columnClasses="label,component,required" columns="3">
+					<h:panelGrid columns="3">
 						<h:outputLabel for="countryBeanExampleIsoCode" value="Iso Code:"/>
 						<h:panelGroup>
-							<h:inputText id="countryBeanExampleIsoCode" maxLength="2" value="#{countryBean.example.isoCode}"/>
+							<h:inputText id="countryBeanExampleIsoCode" maxLength="2" value="#{countryBean.example.isoCode}" class="form-control"/>
 							<h:message for="countryBeanExampleIsoCode" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="countryBeanExampleName" value="Name:"/>
 						<h:panelGroup>
-							<h:inputText id="countryBeanExampleName" maxLength="80" value="#{countryBean.example.name}"/>
+							<h:inputText id="countryBeanExampleName" maxLength="80" value="#{countryBean.example.name}" class="form-control"/>
 							<h:message for="countryBeanExampleName" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="countryBeanExamplePrintableName" value="Printable Name:"/>
 						<h:panelGroup>
-							<h:inputText id="countryBeanExamplePrintableName" maxLength="80" value="#{countryBean.example.printableName}"/>
+							<h:inputText id="countryBeanExamplePrintableName" maxLength="80" value="#{countryBean.example.printableName}" class="form-control"/>
 							<h:message for="countryBeanExamplePrintableName" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="countryBeanExampleIso3" value="Iso 3:"/>
 						<h:panelGroup>
-							<h:inputText id="countryBeanExampleIso3" maxLength="3" value="#{countryBean.example.iso3}"/>
+							<h:inputText id="countryBeanExampleIso3" maxLength="3" value="#{countryBean.example.iso3}" class="form-control"/>
 							<h:message for="countryBeanExampleIso3" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="countryBeanExampleNumcode" value="Numcode:"/>
 						<h:panelGroup>
-							<h:inputText id="countryBeanExampleNumcode" maxLength="3" value="#{countryBean.example.numcode}"/>
+							<h:inputText id="countryBeanExampleNumcode" maxLength="3" value="#{countryBean.example.numcode}" class="form-control"/>
 							<h:message for="countryBeanExampleNumcode" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 					</h:panelGrid>
-					<h:panelGroup styleClass="buttons">
+					<h:panelGroup styleClass="form-group">
 						<h:commandLink value="Search" action="#{countryBean.search}" styleClass="btn btn-primary"/>
 						<h:commandLink value="Create New" action="#{countryBean.create}" styleClass="btn btn-primary"/>
 					</h:panelGroup>
 				</h:panelGroup>
 			</f:validateBean>
 			
-			<h:dataTable id="countryBeanPageItems" styleClass="data-table" value="#{countryBean.pageItems}" var="_item">
+			<h:dataTable id="countryBeanPageItems" styleClass="table table-striped" value="#{countryBean.pageItems}" var="_item">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Iso Code"/>

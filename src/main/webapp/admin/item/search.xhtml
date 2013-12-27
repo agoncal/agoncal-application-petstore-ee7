@@ -23,32 +23,32 @@
 	</ui:define>
 
 	<ui:define name="main">
-		<h:form id="search">
+		<h:form id="search" class="form-horizontal" role="form">
 			<f:validateBean disabled="true">
 				<h:panelGroup styleClass="search">
 
-					<h:panelGrid columnClasses="label,component,required" columns="3">
+					<h:panelGrid columns="3">
 						<h:outputLabel for="itemBeanExampleName" value="Name:"/>
 						<h:panelGroup>
-							<h:inputText id="itemBeanExampleName" maxLength="30" value="#{itemBean.example.name}"/>
+							<h:inputText id="itemBeanExampleName" maxLength="30" value="#{itemBean.example.name}" class="form-control"/>
 							<h:message for="itemBeanExampleName" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="itemBeanExampleDescription" value="Description:"/>
 						<h:panelGroup>
-							<h:inputText id="itemBeanExampleDescription" maxLength="3000" value="#{itemBean.example.description}"/>
+							<h:inputText id="itemBeanExampleDescription" maxLength="3000" value="#{itemBean.example.description}" class="form-control"/>
 							<h:message for="itemBeanExampleDescription" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="itemBeanExampleImagePath" value="Image Path:"/>
 						<h:panelGroup>
-							<h:inputText id="itemBeanExampleImagePath" value="#{itemBean.example.imagePath}"/>
+							<h:inputText id="itemBeanExampleImagePath" value="#{itemBean.example.imagePath}" class="form-control"/>
 							<h:message for="itemBeanExampleImagePath" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="itemBeanExampleProduct" value="Product:"/>
 						<h:panelGroup>
-							<h:selectOneMenu converter="#{productBean.converter}" id="itemBeanExampleProduct" value="#{itemBean.example.product}">
+							<h:selectOneMenu converter="#{productBean.converter}" id="itemBeanExampleProduct" value="#{itemBean.example.product}"  class="form-control">
 								<f:selectItem/>
 								<f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{productBean.all}" var="_item"/>
 							</h:selectOneMenu>
@@ -56,14 +56,14 @@
 						</h:panelGroup>
 						<h:outputText/>
 					</h:panelGrid>
-					<h:panelGroup styleClass="buttons">
+					<h:panelGroup styleClass="form-group">
 						<h:commandLink value="Search" action="#{itemBean.search}" styleClass="btn btn-primary"/>
 						<h:commandLink value="Create New" action="#{itemBean.create}" styleClass="btn btn-primary"/>
 					</h:panelGroup>
 				</h:panelGroup>
 			</f:validateBean>
 			
-			<h:dataTable id="itemBeanPageItems" styleClass="data-table" value="#{itemBean.pageItems}" var="_item">
+			<h:dataTable id="itemBeanPageItems" styleClass="table table-striped" value="#{itemBean.pageItems}" var="_item">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Name"/>

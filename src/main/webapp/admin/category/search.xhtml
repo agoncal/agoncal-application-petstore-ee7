@@ -22,32 +22,32 @@
 	</ui:define>
 
 	<ui:define name="main">
-		<h:form id="search">
+		<h:form id="search" class="form-horizontal" role="form">
 			<f:validateBean disabled="true">
 				<h:panelGroup styleClass="search">
 
-					<h:panelGrid columnClasses="label,component,required" columns="3">
+					<h:panelGrid columns="3">
 						<h:outputLabel for="categoryBeanExampleName" value="Name:"/>
 						<h:panelGroup>
-							<h:inputText id="categoryBeanExampleName" maxLength="30" value="#{categoryBean.example.name}"/>
+							<h:inputText id="categoryBeanExampleName" maxLength="30" value="#{categoryBean.example.name}" class="form-control"/>
 							<h:message for="categoryBeanExampleName" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="categoryBeanExampleDescription" value="Description:"/>
 						<h:panelGroup>
-							<h:inputText id="categoryBeanExampleDescription" value="#{categoryBean.example.description}"/>
+							<h:inputText id="categoryBeanExampleDescription" value="#{categoryBean.example.description}" class="form-control"/>
 							<h:message for="categoryBeanExampleDescription" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 					</h:panelGrid>
-					<h:panelGroup styleClass="buttons">
+					<h:panelGroup styleClass="form-group">
 						<h:commandLink value="Search" action="#{categoryBean.search}" styleClass="btn btn-primary"/>
 						<h:commandLink value="Create New" action="#{categoryBean.create}" styleClass="btn btn-primary"/>
 					</h:panelGroup>
 				</h:panelGroup>
 			</f:validateBean>
 			
-			<h:dataTable id="categoryBeanPageItems" styleClass="data-table" value="#{categoryBean.pageItems}" var="_item">
+			<h:dataTable id="categoryBeanPageItems" styleClass="table table-striped" value="#{categoryBean.pageItems}" var="_item">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Name"/>

@@ -23,26 +23,26 @@
 	</ui:define>
 
 	<ui:define name="main">
-		<h:form id="search">
+		<h:form id="search" class="form-horizontal" role="form">
 			<f:validateBean disabled="true">
 				<h:panelGroup styleClass="search">
 
-					<h:panelGrid columnClasses="label,component,required" columns="3">
+					<h:panelGrid columns="3">
 						<h:outputLabel for="productBeanExampleName" value="Name:"/>
 						<h:panelGroup>
-							<h:inputText id="productBeanExampleName" maxLength="30" value="#{productBean.example.name}"/>
+							<h:inputText id="productBeanExampleName" maxLength="30" value="#{productBean.example.name}" class="form-control"/>
 							<h:message for="productBeanExampleName" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="productBeanExampleDescription" value="Description:"/>
 						<h:panelGroup>
-							<h:inputText id="productBeanExampleDescription" value="#{productBean.example.description}"/>
+							<h:inputText id="productBeanExampleDescription" value="#{productBean.example.description}" class="form-control"/>
 							<h:message for="productBeanExampleDescription" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="productBeanExampleCategory" value="Category:"/>
 						<h:panelGroup>
-							<h:selectOneMenu converter="#{categoryBean.converter}" id="productBeanExampleCategory" value="#{productBean.example.category}">
+							<h:selectOneMenu converter="#{categoryBean.converter}" id="productBeanExampleCategory" value="#{productBean.example.category}" class="form-control">
 								<f:selectItem/>
 								<f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{categoryBean.all}" var="_item"/>
 							</h:selectOneMenu>
@@ -50,14 +50,14 @@
 						</h:panelGroup>
 						<h:outputText/>
 					</h:panelGrid>
-					<h:panelGroup styleClass="buttons">
+					<h:panelGroup styleClass="form-group">
 						<h:commandLink value="Search" action="#{productBean.search}" styleClass="btn btn-primary"/>
 						<h:commandLink value="Create New" action="#{productBean.create}" styleClass="btn btn-primary"/>
 					</h:panelGroup>
 				</h:panelGroup>
 			</f:validateBean>
 			
-			<h:dataTable id="productBeanPageItems" styleClass="data-table" value="#{productBean.pageItems}" var="_item">
+			<h:dataTable id="productBeanPageItems" styleClass="table table-striped" value="#{productBean.pageItems}" var="_item">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Name"/>

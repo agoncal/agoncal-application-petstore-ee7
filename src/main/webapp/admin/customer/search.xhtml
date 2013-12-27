@@ -22,50 +22,44 @@
 	</ui:define>
 
 	<ui:define name="main">
-		<h:form id="search">
+		<h:form id="search" class="form-horizontal" role="form">
 			<f:validateBean disabled="true">
 				<h:panelGroup styleClass="search">
 
-					<h:panelGrid columnClasses="label,component,required" columns="3">
+					<h:panelGrid columns="3">
 						<h:outputLabel for="customerBeanExampleLogin" value="Login:"/>
 						<h:panelGroup>
-							<h:inputText id="customerBeanExampleLogin" maxLength="10" value="#{customerBean.example.login}"/>
+							<h:inputText id="customerBeanExampleLogin" maxLength="10" value="#{customerBean.example.login}" class="form-control"/>
 							<h:message for="customerBeanExampleLogin" styleClass="error"/>
-						</h:panelGroup>
-						<h:outputText/>
-						<h:outputLabel for="customerBeanExamplePassword" value="Password:"/>
-						<h:panelGroup>
-							<h:inputText id="customerBeanExamplePassword" maxLength="256" value="#{customerBean.example.password}"/>
-							<h:message for="customerBeanExamplePassword" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="customerBeanExampleFirstname" value="Firstname:"/>
 						<h:panelGroup>
-							<h:inputText id="customerBeanExampleFirstname" maxLength="50" value="#{customerBean.example.firstname}"/>
+							<h:inputText id="customerBeanExampleFirstname" maxLength="50" value="#{customerBean.example.firstname}" class="form-control"/>
 							<h:message for="customerBeanExampleFirstname" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="customerBeanExampleLastname" value="Lastname:"/>
 						<h:panelGroup>
-							<h:inputText id="customerBeanExampleLastname" maxLength="50" value="#{customerBean.example.lastname}"/>
+							<h:inputText id="customerBeanExampleLastname" maxLength="50" value="#{customerBean.example.lastname}" class="form-control"/>
 							<h:message for="customerBeanExampleLastname" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="customerBeanExampleTelephone" value="Telephone:"/>
 						<h:panelGroup>
-							<h:inputText id="customerBeanExampleTelephone" value="#{customerBean.example.telephone}"/>
+							<h:inputText id="customerBeanExampleTelephone" value="#{customerBean.example.telephone}" class="form-control"/>
 							<h:message for="customerBeanExampleTelephone" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 					</h:panelGrid>
-					<h:panelGroup styleClass="buttons">
+					<h:panelGroup styleClass="form-group">
 						<h:commandLink value="Search" action="#{customerBean.search}" styleClass="btn btn-primary"/>
 						<h:commandLink value="Create New" action="#{customerBean.create}" styleClass="btn btn-primary"/>
 					</h:panelGroup>
 				</h:panelGroup>
 			</f:validateBean>
 			
-			<h:dataTable id="customerBeanPageItems" styleClass="data-table" value="#{customerBean.pageItems}" var="_item">
+			<h:dataTable id="customerBeanPageItems" styleClass="table table-striped" value="#{customerBean.pageItems}" var="_item">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Login"/>
@@ -73,15 +67,6 @@
 					<h:link outcome="/admin/customer/view">
 						<f:param name="id" value="#{_item.id}"/>
 						<h:outputText id="itemLogin" value="#{_item.login}"/>
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Password"/>
-					</f:facet>
-					<h:link outcome="/admin/customer/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemPassword" value="#{_item.password}"/>
 					</h:link>
 				</h:column>
 				<h:column>
@@ -100,15 +85,6 @@
 					<h:link outcome="/admin/customer/view">
 						<f:param name="id" value="#{_item.id}"/>
 						<h:outputText id="itemLastname" value="#{_item.lastname}"/>
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Street 1"/>
-					</f:facet>
-					<h:link outcome="/admin/customer/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemStreet1" value="#{_item.street1}"/>
 					</h:link>
 				</h:column>
 			</h:dataTable>

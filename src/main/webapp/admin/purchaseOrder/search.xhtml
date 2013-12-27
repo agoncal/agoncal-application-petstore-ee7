@@ -23,14 +23,14 @@
 	</ui:define>
 
 	<ui:define name="main">
-		<h:form id="search">
+		<h:form id="search" class="form-horizontal" role="form">
 			<f:validateBean disabled="true">
 				<h:panelGroup styleClass="search">
 
-					<h:panelGrid columnClasses="label,component,required" columns="3">
+					<h:panelGrid columns="3">
 						<h:outputLabel for="purchaseOrderBeanExampleCustomer" value="Customer:"/>
 						<h:panelGroup>
-							<h:selectOneMenu converter="#{customerBean.converter}" id="purchaseOrderBeanExampleCustomer" value="#{purchaseOrderBean.example.customer}">
+							<h:selectOneMenu converter="#{customerBean.converter}" id="purchaseOrderBeanExampleCustomer" value="#{purchaseOrderBean.example.customer}" class="form-control">
 								<f:selectItem/>
 								<f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{customerBean.all}" var="_item"/>
 							</h:selectOneMenu>
@@ -39,44 +39,44 @@
 						<h:outputText/>
 						<h:outputLabel for="purchaseOrderBeanExampleStreet1" value="Street 1:"/>
 						<h:panelGroup>
-							<h:inputText id="purchaseOrderBeanExampleStreet1" maxLength="50" value="#{purchaseOrderBean.example.street1}"/>
+							<h:inputText id="purchaseOrderBeanExampleStreet1" maxLength="50" value="#{purchaseOrderBean.example.deliveryAddress.street1}" class="form-control"/>
 							<h:message for="purchaseOrderBeanExampleStreet1" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="purchaseOrderBeanExampleStreet2" value="Street 2:"/>
 						<h:panelGroup>
-							<h:inputText id="purchaseOrderBeanExampleStreet2" value="#{purchaseOrderBean.example.street2}"/>
+							<h:inputText id="purchaseOrderBeanExampleStreet2" value="#{purchaseOrderBean.example.deliveryAddress.street2}" class="form-control"/>
 							<h:message for="purchaseOrderBeanExampleStreet2" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="purchaseOrderBeanExampleCity" value="City:"/>
 						<h:panelGroup>
-							<h:inputText id="purchaseOrderBeanExampleCity" maxLength="50" value="#{purchaseOrderBean.example.city}"/>
+							<h:inputText id="purchaseOrderBeanExampleCity" maxLength="50" value="#{purchaseOrderBean.example.deliveryAddress.city}" class="form-control"/>
 							<h:message for="purchaseOrderBeanExampleCity" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="purchaseOrderBeanExampleState" value="State:"/>
 						<h:panelGroup>
-							<h:inputText id="purchaseOrderBeanExampleState" value="#{purchaseOrderBean.example.state}"/>
+							<h:inputText id="purchaseOrderBeanExampleState" value="#{purchaseOrderBean.example.deliveryAddress.state}" class="form-control"/>
 							<h:message for="purchaseOrderBeanExampleState" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 					</h:panelGrid>
-					<h:panelGroup styleClass="buttons">
+					<h:panelGroup styleClass="form-group">
 						<h:commandLink value="Search" action="#{purchaseOrderBean.search}" styleClass="btn btn-primary"/>
 						<h:commandLink value="Create New" action="#{purchaseOrderBean.create}" styleClass="btn btn-primary"/>
 					</h:panelGroup>
 				</h:panelGroup>
 			</f:validateBean>
 			
-			<h:dataTable id="purchaseOrderBeanPageItems" styleClass="data-table" value="#{purchaseOrderBean.pageItems}" var="_item">
+			<h:dataTable id="purchaseOrderBeanPageItems" styleClass="table table-striped" value="#{purchaseOrderBean.pageItems}" var="_item">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Street 1"/>
 					</f:facet>
 					<h:link outcome="/admin/purchaseOrder/view">
 						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemStreet1" value="#{_item.street1}"/>
+						<h:outputText id="itemStreet1" value="#{_item.deliveryAddress.street1}"/>
 					</h:link>
 				</h:column>
 				<h:column>
@@ -85,7 +85,7 @@
 					</f:facet>
 					<h:link outcome="/admin/purchaseOrder/view">
 						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemCity" value="#{_item.city}"/>
+						<h:outputText id="itemCity" value="#{_item.deliveryAddress.city}"/>
 					</h:link>
 				</h:column>
 				<h:column>
@@ -94,7 +94,7 @@
 					</f:facet>
 					<h:link outcome="/admin/purchaseOrder/view">
 						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemZipcode" value="#{_item.zipcode}"/>
+						<h:outputText id="itemZipcode" value="#{_item.deliveryAddress.zipcode}"/>
 					</h:link>
 				</h:column>
 				<h:column>
@@ -104,15 +104,6 @@
 					<h:link outcome="/admin/purchaseOrder/view">
 						<f:param name="id" value="#{_item.id}"/>
 						<h:outputText id="itemCreditCardNumber" value="#{_item.creditCardNumber}"/>
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Credit Card Type"/>
-					</f:facet>
-					<h:link outcome="/admin/purchaseOrder/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemCreditCardType" value="#{_item.creditCardType}"/>
 					</h:link>
 				</h:column>
 			</h:dataTable>
