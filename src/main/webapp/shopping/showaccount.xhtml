@@ -4,7 +4,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
                 template="/resources/templates/templateShopping.xhtml">
 
     <ui:param name="pageTitle" value="#{i18n.accounts}"/>
@@ -38,9 +38,9 @@
                 <h:outputText value="#{i18n.customer_telephone} :"/>
                 <h:outputText value="#{accountController.loggedinCustomer.telephone}"/>
 
-                <h:outputText value="#{i18n.customer_dateOfBirth} (dd.MM.yyyy):"/>
+                <h:outputText value="#{i18n.customer_dateOfBirth} :"/>
                 <h:outputText value="#{accountController.loggedinCustomer.dateOfBirth}">
-                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
                 </h:outputText>
 
                 <h:outputText value="#{i18n.customer_age} :"/>

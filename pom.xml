@@ -31,6 +31,8 @@
         <!-- UI (WebJar, Bootstrap, JQuery...) -->
         <version.bootstrap>3.0.3</version.bootstrap>
         <version.jquery>2.0.3</version.jquery>
+        <version.primefaces>4.0</version.primefaces>
+        <version.primefaces-themes>1.0.10</version.primefaces-themes>
         <!--Maven Plugins & co-->
         <version.maven.war.plugin>2.4</version.maven.war.plugin>
         <version.maven.compiler.plugin>3.1</version.maven.compiler.plugin>
@@ -74,6 +76,17 @@
             <version>${version.jquery}</version>
         </dependency>
         <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>${version.primefaces}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>all-themes</artifactId>
+            <version>${version.primefaces-themes}</version>
+        </dependency>
+        <!-- Test -->
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>${version.mockito}</version>
@@ -94,7 +107,7 @@
     </dependencies>
 
     <profiles>
-    
+
         <profile>
             <id>jacoco</id>
             <properties>
@@ -108,11 +121,11 @@
             </activation>
             <build>
                 <plugins>
-                   <plugin>
-                       <groupId>org.jacoco</groupId>
-                       <artifactId>jacoco-maven-plugin</artifactId>
-                       <version>${version.jacoco}</version>
-                       <executions>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${version.jacoco}</version>
+                        <executions>
                             <execution>
                                 <id>test</id>
                                 <phase>initialize</phase>
@@ -140,7 +153,7 @@
                 </plugins>
             </build>
         </profile>
-    
+
         <profile>
             <id>glassfish4-embedded</id>
             <activation>
@@ -188,17 +201,17 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <!--<dependencies>-->
-                <!--<dependency>-->
-                    <!--<groupId>org.apache.derby</groupId>-->
-                    <!--<artifactId>derby</artifactId>-->
-                    <!--<version>${version.derby}</version>-->
-                <!--</dependency>-->
-                <!--<dependency>-->
-                    <!--<groupId>org.jboss.as</groupId>-->
-                    <!--<artifactId>jboss-as-arquillian-container-managed</artifactId>-->
-                    <!--<version>${version.arquillian.jboss}</version>-->
-                    <!--<scope>test</scope>-->
-                <!--</dependency>-->
+            <!--<dependency>-->
+            <!--<groupId>org.apache.derby</groupId>-->
+            <!--<artifactId>derby</artifactId>-->
+            <!--<version>${version.derby}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+            <!--<groupId>org.jboss.as</groupId>-->
+            <!--<artifactId>jboss-as-arquillian-container-managed</artifactId>-->
+            <!--<version>${version.arquillian.jboss}</version>-->
+            <!--<scope>test</scope>-->
+            <!--</dependency>-->
             <!--</dependencies>-->
         </profile>
 
@@ -274,7 +287,7 @@
                             <argLine>${surefire.argLine}</argLine>
                             <forkMode>once</forkMode>
                             <excludes>
-                              <exclude>**/*IT.java</exclude>
+                                <exclude>**/*IT.java</exclude>
                             </excludes>
                         </configuration>
                     </execution>
@@ -285,12 +298,12 @@
                             <goal>test</goal>
                         </goals>
                         <configuration>
-                          <skip>false</skip>
-                          <argLine>${it.surefire.argLine}</argLine>
-                          <forkMode>once</forkMode>
-                          <includes>
-                            <include>**/*IT.java</include>
-                          </includes>                                  
+                            <skip>false</skip>
+                            <argLine>${it.surefire.argLine}</argLine>
+                            <forkMode>once</forkMode>
+                            <includes>
+                                <include>**/*IT.java</include>
+                            </includes>
                         </configuration>
                     </execution>
                 </executions>
@@ -303,15 +316,15 @@
             <!-- Run mvn clean package embedded-glassfish:run -->
             <!-- and go to http://localhost:8080/applicationPetstore/ -->
             <!--<plugin>-->
-                <!--<groupId>org.glassfish</groupId>-->
-                <!--<artifactId>maven-embedded-glassfish-plugin</artifactId>-->
-                <!--<version>${version.maven.embedded.glassfish.plugin}</version>-->
-                <!--<configuration>-->
-                    <!--<app>${project.build.directory}/${project.build.finalName}.war</app>-->
-                    <!--<port>8080</port>-->
-                    <!--<contextRoot>${project.build.finalName}</contextRoot>-->
-                    <!--<name>${project.build.finalName}</name>-->
-                <!--</configuration>-->
+            <!--<groupId>org.glassfish</groupId>-->
+            <!--<artifactId>maven-embedded-glassfish-plugin</artifactId>-->
+            <!--<version>${version.maven.embedded.glassfish.plugin}</version>-->
+            <!--<configuration>-->
+            <!--<app>${project.build.directory}/${project.build.finalName}.war</app>-->
+            <!--<port>8080</port>-->
+            <!--<contextRoot>${project.build.finalName}</contextRoot>-->
+            <!--<name>${project.build.finalName}</name>-->
+            <!--</configuration>-->
             <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.openejb.maven</groupId>
@@ -372,6 +385,12 @@
             <id>java.net-snapshots-repository-group</id>
             <name>Java.Net Snapshots Maven Repository Group</name>
             <url>https://maven.java.net/content/repositories/snapshots</url>
+        </repository>
+        <repository>
+            <id>prime-repo</id>
+            <name>PrimeFaces Maven Repository</name>
+            <url>http://repository.primefaces.org</url>
+            <layout>default</layout>
         </repository>
     </repositories>
 
