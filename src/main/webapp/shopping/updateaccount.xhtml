@@ -24,32 +24,32 @@
                 </div>
                 <div class="panel-body">
                     <h:panelGrid columns="3">
-                        <h:outputText value="#{i18n.customer_login}"/>
+                        <h:outputText value="#{i18n.customer_login}:"/>
                         <h:inputText value="#{accountController.loggedinCustomer.login}" class="form-control"
                                      pt:disabled="disabled"/>
                         <h:outputText value=""/>
 
-                        <h:outputText value="* #{i18n.customer_firstname}"/>
+                        <h:outputText value="* #{i18n.customer_firstname}:"/>
                         <h:inputText id="firstname" value="#{accountController.loggedinCustomer.firstname}"
                                      class="form-control"/>
                         <h:message for="firstname" style="color: red;"/>
 
-                        <h:outputText value="* #{i18n.customer_lastname}"/>
+                        <h:outputText value="* #{i18n.customer_lastname}:"/>
                         <h:inputText id="lastname" value="#{accountController.loggedinCustomer.lastname}"
                                      class="form-control"/>
                         <h:message for="lastname" style="color: red;"/>
 
-                        <h:outputText value="#{i18n.customer_email}"/>
+                        <h:outputText value="#{i18n.customer_email}:"/>
                         <h:inputText id="email" value="#{accountController.loggedinCustomer.email}"
                                      class="form-control"/>
                         <h:message for="email" style="color: red;"/>
 
-                        <h:outputText value="#{i18n.customer_telephone}"/>
+                        <h:outputText value="#{i18n.customer_telephone}:"/>
                         <h:inputText id="telephone" value="#{accountController.loggedinCustomer.telephone}"
                                      class="form-control"/>
                         <h:message for="telephone" style="color: red;"/>
 
-                        <h:outputText value="#{i18n.customer_dateOfBirth}"/>
+                        <h:outputText value="#{i18n.customer_dateOfBirth}:"/>
                         <p:calendar id="dateOfBirth" display="inline" navigator="true" showOn="button"
                                     pattern="d/M/yyyy"
                                     value="#{accountController.loggedinCustomer.dateOfBirth}"/>
@@ -65,32 +65,32 @@
                 </div>
                 <div class="panel-body">
                     <h:panelGrid columns="3">
-                        <h:outputText value="* #{i18n.address_street1}"/>
+                        <h:outputText value="* #{i18n.address_street1}:"/>
                         <h:inputText id="street1" value="#{accountController.loggedinCustomer.homeAddress.street1}"
                                      class="form-control" size="40"/>
                         <h:message for="street1" style="color: red;"/>
 
-                        <h:outputText value="#{i18n.address_street2}"/>
+                        <h:outputText value="#{i18n.address_street2}:"/>
                         <h:inputText id="street2" value="#{accountController.loggedinCustomer.homeAddress.street2}"
                                      class="form-control"/>
                         <h:message for="street2" style="color: red;"/>
 
-                        <h:outputText value="* #{i18n.address_city}"/>
+                        <h:outputText value="* #{i18n.address_city}:"/>
                         <h:inputText id="city" value="#{accountController.loggedinCustomer.homeAddress.city}"
                                      class="form-control"/>
                         <h:message for="city" style="color: red;"/>
 
-                        <h:outputText value="#{i18n.address_state}"/>
+                        <h:outputText value="#{i18n.address_state}:"/>
                         <h:inputText id="state" value="#{accountController.loggedinCustomer.homeAddress.state}"
                                      class="form-control"/>
                         <h:message for="state" style="color: red;"/>
 
-                        <h:outputText value="* #{i18n.address_zipcode}"/>
+                        <h:outputText value="* #{i18n.address_zipcode}:"/>
                         <h:inputText id="zipcode" value="#{accountController.loggedinCustomer.homeAddress.zipcode}"
                                      class="form-control"/>
                         <h:message for="zipcode" style="color: red;"/>
 
-                        <h:outputText value="* #{i18n.address_country}"/>
+                        <h:outputText value="* #{i18n.address_country}:"/>
                         <h:inputText id="country"
                                      value="#{accountController.loggedinCustomer.homeAddress.country.printableName}"
                                      class="form-control"/>

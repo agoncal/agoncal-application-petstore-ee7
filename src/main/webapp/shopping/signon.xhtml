@@ -22,9 +22,9 @@
             <div class="panel-body">
                 <h:form>
                     <h:panelGrid columns="2">
-                        <h:outputLabel value="#{i18n.customer_login}" for="login"/>
+                        <h:outputLabel value="#{i18n.customer_login}:" for="login"/>
                         <h:inputText id="login" value="#{credentials.login}" maxlength="10" size="12"/>
-                        <h:outputLabel value="#{i18n.customer_password}" for="password"/>
+                        <h:outputLabel value="#{i18n.customer_password}:" for="password"/>
                         <h:inputSecret id="password" value="#{credentials.password}" maxlength="10" size="12"/>
                         <f:facet name="footer">
                             <h:outputLabel value="user/user - admin/admin"/>
@@ -43,9 +43,9 @@
             <div class="panel-body">
                 <h:form>
                     <h:panelGrid columns="2">
-                        <h:outputLabel value="#{i18n.customer_login}" for="newlogin"/>
+                        <h:outputLabel value="#{i18n.customer_login}:" for="newlogin"/>
                         <h:inputText id="newlogin" value="#{credentials.login}" maxlength="10" size="12"/>
-                        <h:outputLabel value="#{i18n.customer_password}" for="newpassword"/>
+                        <h:outputLabel value="#{i18n.customer_password}:" for="newpassword"/>
                         <h:inputSecret id="newpassword" value="#{credentials.password}" maxlength="10" size="12"/>
                         <h:outputLabel value="#{i18n.customer_password} (#{i18n.again}):" for="newpasswordagain"/>
                         <h:inputSecret id="newpasswordagain" value="#{credentials.password2}" maxlength="10" size="12"/>

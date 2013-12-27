@@ -24,15 +24,15 @@
             </div>
             <div class="panel-body">
                 <h:panelGrid columns="3">
-                    <h:outputText value="#{i18n.customer_firstname}"/>
+                    <h:outputText value="#{i18n.customer_firstname}:"/>
                     <h:inputText id="firstname" value="#{shoppingCartController.customer.firstname}" readonly="true" class="form-control"/>
                     <h:message for="firstname" style="color: red;"/>
 
-                    <h:outputText value="#{i18n.customer_lastname}"/>
+                    <h:outputText value="#{i18n.customer_lastname}:"/>
                     <h:inputText id="lastname" value="#{shoppingCartController.customer.lastname}" readonly="true" class="form-control"/>
                     <h:message for="lastname" style="color: red;"/>
 
-                    <h:outputText value="#{i18n.customer_email}"/>
+                    <h:outputText value="#{i18n.customer_email}:"/>
                     <h:inputText id="email" value="#{shoppingCartController.customer.email}" readonly="true" class="form-control"/>
                     <h:message for="email" style="color: red;"/>
 
@@ -46,27 +46,27 @@
             </div>
             <div class="panel-body">
                 <h:panelGrid columns="3">
-                    <h:outputText value="* #{i18n.address_street1}"/>
+                    <h:outputText value="* #{i18n.address_street1}:"/>
                     <h:inputText id="street1" value="#{shoppingCartController.customer.homeAddress.street1}" class="form-control"/>
                     <h:message for="street1" style="color: red;"/>
 
-                    <h:outputText value="#{i18n.address_street2}"/>
+                    <h:outputText value="#{i18n.address_street2}:"/>
                     <h:inputText id="street2" value="#{shoppingCartController.customer.homeAddress.street2}" class="form-control"/>
                     <h:message for="street2" style="color: red;"/>
 
-                    <h:outputText value="* #{i18n.address_city}"/>
+                    <h:outputText value="* #{i18n.address_city}:"/>
                     <h:inputText id="city" value="#{shoppingCartController.customer.homeAddress.city}" class="form-control"/>
                     <h:message for="city" style="color: red;"/>
 
-                    <h:outputText value="#{i18n.address_state}"/>
+                    <h:outputText value="#{i18n.address_state}:"/>
                     <h:inputText id="state" value="#{shoppingCartController.customer.homeAddress.state}" class="form-control"/>
                     <h:message for="state" style="color: red;"/>
 
-                    <h:outputText value="* #{i18n.address_zipcode}"/>
+                    <h:outputText value="* #{i18n.address_zipcode}:"/>
                     <h:inputText id="zipcode" value="#{shoppingCartController.customer.homeAddress.zipcode}" class="form-control"/>
                     <h:message for="zipcode" style="color: red;"/>
 
-                    <h:outputText value="* #{i18n.address_country}"/>
+                    <h:outputText value="* #{i18n.address_country}:"/>
                     <h:selectOneMenu id="country"  converter="#{countryBean.converter}" value="#{shoppingCartController.customer.homeAddress.country}" class="form-control">
                         <f:selectItem/>
                         <f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{countryBean.all}" var="_item"/>
@@ -83,17 +83,17 @@
             </div>
             <div class="panel-body">
                 <h:panelGrid columns="3">
-                    <h:outputText value="* #{i18n.creditCard_creditCardNumber}"/>
+                    <h:outputText value="* #{i18n.creditCard_creditCardNumber}:"/>
                     <h:inputText id="creditCardNumber" value="#{shoppingCartController.creditCard.creditCardNumber}" class="form-control"/>
                     <h:message for="creditCardNumber" style="color: red;"/>
 
-                    <h:outputText value="* #{i18n.creditCard_creditCardType}"/>
+                    <h:outputText value="* #{i18n.creditCard_creditCardType}:"/>
                     <h:selectOneMenu value="#{shoppingCartController.creditCard.creditCardType}" class="form-control">
                         <f:selectItems value="#{shoppingCartController.creditCardTypes}"/>
                     </h:selectOneMenu>
                     <h:outputText value=""/>
 
-                    <h:outputText value="* #{i18n.creditCard_creditCardExpDate} (MM/YY) "/>
+                    <h:outputText value="* #{i18n.creditCard_creditCardExpDate} (MM/YY):"/>
                     <h:inputText id="creditCardExpDate" value="#{shoppingCartController.creditCard.creditCardExpDate}"  class="form-control"/>
                     <h:message for="creditCardExpDate" style="color: red;"/>
                 </h:panelGrid>
