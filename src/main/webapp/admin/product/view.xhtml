@@ -22,7 +22,7 @@
 	</ui:define>
 
 	<ui:define name="main">
-		<h:panelGrid columnClasses="label,component,required" columns="3">
+		<h:panelGrid columns="3">
 			<h:outputLabel for="productBeanProductName" value="Name:"/>
 			<h:outputText id="productBeanProductName" value="#{productBean.product.name}"/>
 			<h:outputText/>
@@ -30,13 +30,13 @@
 			<h:outputText id="productBeanProductDescription" value="#{productBean.product.description}"/>
 			<h:outputText/>
 			<h:outputLabel for="productBeanProductCategory" value="Category:"/>
-			<h:link id="productBeanProductCategory" outcome="/admin/category/view" value="#{productBean.product.category}">
+			<h:link id="productBeanProductCategory" outcome="/admin/category/view" value="#{productBean.product.category.name}">
 				<f:param name="id" value="#{productBean.product.category.id}"/>
 			</h:link>
 			<h:outputText/>
 		</h:panelGrid>
 
-		<div class="buttons">
+		<div class="form-group">
 			<h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
 			<h:link value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
 			<h:link value="Create New" outcome="create" styleClass="btn btn-primary"/>

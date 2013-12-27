@@ -22,7 +22,7 @@
 	</ui:define>
 
 	<ui:define name="main">
-		<h:panelGrid columnClasses="label,component,required" columns="3">
+		<h:panelGrid columns="3">
 			<h:outputLabel for="countryBeanCountryIsoCode" value="Iso Code:"/>
 			<h:outputText id="countryBeanCountryIsoCode" value="#{countryBean.country.isoCode}"/>
 			<h:outputText/>
@@ -40,7 +40,7 @@
 			<h:outputText/>
 		</h:panelGrid>
 
-		<div class="buttons">
+		<div class="form-group">
 			<h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
 			<h:link value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
 			<h:link value="Create New" outcome="create" styleClass="btn btn-primary"/>

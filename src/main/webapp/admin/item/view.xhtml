@@ -22,7 +22,7 @@
 	</ui:define>
 
 	<ui:define name="main">
-		<h:panelGrid columnClasses="label,component,required" columns="3">
+		<h:panelGrid columns="3">
 			<h:outputLabel for="itemBeanItemName" value="Name:"/>
 			<h:outputText id="itemBeanItemName" value="#{itemBean.item.name}"/>
 			<h:outputText/>
@@ -32,17 +32,17 @@
 			<h:outputLabel for="itemBeanItemUnitCost" value="Unit Cost:"/>
 			<h:outputText id="itemBeanItemUnitCost" value="#{itemBean.item.unitCost}"/>
 			<h:outputText/>
-			<h:outputLabel for="itemBeanItemImagePath" value="Image Path:"/>
-			<h:outputText id="itemBeanItemImagePath" value="#{itemBean.item.imagePath}"/>
+			<h:outputLabel for="itemBeanItemImagePath" value="Image:"/>
+			<h:graphicImage id="itemBeanItemImagePath" value="/resources/images/#{itemBean.item.imagePath}"/>
 			<h:outputText/>
 			<h:outputLabel for="itemBeanItemProduct" value="Product:"/>
-			<h:link id="itemBeanItemProduct" outcome="/admin/product/view" value="#{itemBean.item.product}">
+			<h:link id="itemBeanItemProduct" outcome="/admin/product/view" value="#{itemBean.item.product.name}">
 				<f:param name="id" value="#{itemBean.item.product.id}"/>
 			</h:link>
 			<h:outputText/>
 		</h:panelGrid>
 
-		<div class="buttons">
+		<div class="form-group">
 			<h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
 			<h:link value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
 			<h:link value="Create New" outcome="create" styleClass="btn btn-primary"/>

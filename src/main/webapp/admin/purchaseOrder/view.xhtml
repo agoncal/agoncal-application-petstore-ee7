@@ -23,24 +23,24 @@
 	</ui:define>
 
 	<ui:define name="main">
-		<h:panelGrid columnClasses="label,component,required" columns="3">
+		<h:panelGrid columns="3">
 			<h:outputLabel for="purchaseOrderBeanPurchaseOrderOrderDate" value="Order Date:"/>
 			<h:outputText id="purchaseOrderBeanPurchaseOrderOrderDate" value="#{purchaseOrderBean.purchaseOrder.orderDate}">
 				<f:convertDateTime type="date"/>
 			</h:outputText>
 			<h:outputText/>
 			<h:outputLabel for="purchaseOrderBeanPurchaseOrderCustomer" value="Customer:"/>
-			<h:link id="purchaseOrderBeanPurchaseOrderCustomer" outcome="/admin/customer/view" value="#{purchaseOrderBean.purchaseOrder.customer}">
+			<h:link id="purchaseOrderBeanPurchaseOrderCustomer" outcome="/admin/customer/view" value="#{purchaseOrderBean.purchaseOrder.customer.firstname} #{purchaseOrderBean.purchaseOrder.customer.lastname}">
 				<f:param name="id" value="#{purchaseOrderBean.purchaseOrder.customer.id}"/>
 			</h:link>
 			<h:outputText/>
-			<h:outputLabel for="purchaseOrderBeanPurchaseOrderOrderLines" value="Order Lines:"/>
-			<h:dataTable id="purchaseOrderBeanPurchaseOrderOrderLines" styleClass="data-table" value="#{forgeview:asList(purchaseOrderBean.purchaseOrder.orderLines)}" var="_item">
+			<h:outputLabel for="purchaseOrderBeanPurchaseOrderOrderLines" value="Items:"/>
+			<h:dataTable id="purchaseOrderBeanPurchaseOrderOrderLines" styleClass="table table-striped" value="#{forgeview:asList(purchaseOrderBean.purchaseOrder.orderLines)}" var="_item">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Quantity"/>
 					</f:facet>
-					<h:link outcome="/admin/orderLine/view">
+					<h:link outcome="/admin/item/view">
 						<f:param name="id" value="#{_item.id}"/>
 						<h:outputText id="itemQuantity" value="#{_item.quantity}"/>
 					</h:link>
@@ -49,7 +49,7 @@
 					<f:facet name="header">
 						<h:outputText value="Name"/>
 					</f:facet>
-					<h:link outcome="/admin/orderLine/view">
+					<h:link outcome="/admin/item/view">
 						<f:param name="id" value="#{_item.id}"/>
 						<h:outputText id="itemItemName" value="#{_item.item.name}"/>
 					</h:link>
@@ -58,7 +58,7 @@
 					<f:facet name="header">
 						<h:outputText value="Unit Cost"/>
 					</f:facet>
-					<h:link outcome="/admin/orderLine/view">
+					<h:link outcome="/admin/item/view">
 						<f:param name="id" value="#{_item.id}"/>
 						<h:outputText id="itemItemUnitCost" value="#{_item.item.unitCost}"/>
 					</h:link>
@@ -67,7 +67,7 @@
 					<f:facet name="header">
 						<h:outputText value="Image Path"/>
 					</f:facet>
-					<h:link outcome="/admin/orderLine/view">
+					<h:link outcome="/admin/item/view">
 						<f:param name="id" value="#{_item.id}"/>
 						<h:outputText id="itemItemImagePath" value="#{_item.item.imagePath}"/>
 					</h:link>
@@ -75,19 +75,24 @@
 			</h:dataTable>
 			<h:outputText/>
 			<h:outputLabel for="purchaseOrderBeanPurchaseOrderStreet1" value="Street 1:"/>
-			<h:outputText id="purchaseOrderBeanPurchaseOrderStreet1" value="#{purchaseOrderBean.purchaseOrder.street1}"/>
+			<h:outputText id="purchaseOrderBeanPurchaseOrderStreet1" value="#{purchaseOrderBean.purchaseOrder.deliveryAddress.street1}"/>
 			<h:outputText/>
 			<h:outputLabel for="purchaseOrderBeanPurchaseOrderStreet2" value="Street 2:"/>
-			<h:outputText id="purchaseOrderBeanPurchaseOrderStreet2" value="#{purchaseOrderBean.purchaseOrder.street2}"/>
+			<h:outputText id="purchaseOrderBeanPurchaseOrderStreet2" value="#{purchaseOrderBean.purchaseOrder.deliveryAddress.street2}"/>
 			<h:outputText/>
 			<h:outputLabel for="purchaseOrderBeanPurchaseOrderCity" value="City:"/>
-			<h:outputText id="purchaseOrderBeanPurchaseOrderCity" value="#{purchaseOrderBean.purchaseOrder.city}"/>
+			<h:outputText id="purchaseOrderBeanPurchaseOrderCity" value="#{purchaseOrderBean.purchaseOrder.deliveryAddress.city}"/>
 			<h:outputText/>
 			<h:outputLabel for="purchaseOrderBeanPurchaseOrderState" value="State:"/>
-			<h:outputText id="purchaseOrderBeanPurchaseOrderState" value="#{purchaseOrderBean.purchaseOrder.state}"/>
+			<h:outputText id="purchaseOrderBeanPurchaseOrderState" value="#{purchaseOrderBean.purchaseOrder.deliveryAddress.state}"/>
 			<h:outputText/>
 			<h:outputLabel for="purchaseOrderBeanPurchaseOrderZipcode" value="Zipcode:"/>
-			<h:outputText id="purchaseOrderBeanPurchaseOrderZipcode" value="#{purchaseOrderBean.purchaseOrder.zipcode}"/>
+			<h:outputText id="purchaseOrderBeanPurchaseOrderZipcode" value="#{purchaseOrderBean.purchaseOrder.deliveryAddress.zipcode}"/>
+			<h:outputText/>
+			<h:outputLabel for="purchaseOrderBeanPurchaseOrderCountry" value="Country:"/>
+            <h:link id="purchaseOrderBeanPurchaseOrderCountry" outcome="/admin/country/view" value="#{purchaseOrderBean.purchaseOrder.deliveryAddress.country.printableName}">
+                <f:param name="id" value="#{purchaseOrderBean.purchaseOrder.deliveryAddress.country.id}"/>
+            </h:link>
 			<h:outputText/>
 			<h:outputLabel for="purchaseOrderBeanPurchaseOrderCreditCardNumber" value="Credit Card Number:"/>
 			<h:outputText id="purchaseOrderBeanPurchaseOrderCreditCardNumber" value="#{purchaseOrderBean.purchaseOrder.creditCardNumber}"/>
@@ -96,11 +101,11 @@
 			<h:outputText id="purchaseOrderBeanPurchaseOrderCreditCardType" value="#{purchaseOrderBean.purchaseOrder.creditCardType}"/>
 			<h:outputText/>
 			<h:outputLabel for="purchaseOrderBeanPurchaseOrderCreditCardExpDate" value="Credit Card Exp Date:"/>
-			<h:outputText id="purchaseOrderBeanPurchaseOrderCreditCardExpDate" value="#{purchaseOrderBean.purchaseOrder.creditCardExpDate}"/>
+			<h:outputText id="purchaseOrderBeanPurchaseOrderCreditCardExpDate" value="#{purchaseOrderBean.purchaseOrder.creditCardExpiryDate}"/>
 			<h:outputText/>
 		</h:panelGrid>
 
-		<div class="buttons">
+		<div class="form-group">
 			<h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
 			<h:link value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
 			<h:link value="Create New" outcome="create" styleClass="btn btn-primary"/>

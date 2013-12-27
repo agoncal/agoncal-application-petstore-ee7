@@ -67,6 +67,15 @@
 						<h:outputText id="itemName" value="#{_item.name}"/>
 					</h:link>
 				</h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Description"/>
+                    </f:facet>
+                    <h:link outcome="/admin/product/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="description" value="#{_item.description}"/>
+                    </h:link>
+                </h:column>
 			</h:dataTable>
 			<ui:include src="/resources/templates/paginator.xhtml">
 				<ui:param name="paginatorBean" value="#{productBean}"/>
