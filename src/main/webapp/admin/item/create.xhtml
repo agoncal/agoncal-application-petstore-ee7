@@ -31,35 +31,35 @@
 	</ui:define>
 
 	<ui:define name="main">
-		<h:form id="create">
-			<h:panelGrid columnClasses="label,component,required" columns="3">
+		<h:form id="create" class="form-horizontal" role="form">
+			<h:panelGrid columns="3">
 				<h:outputLabel for="itemBeanItemName" value="Name:"/>
 				<h:panelGroup>
-					<h:inputText id="itemBeanItemName" maxLength="30" required="true" value="#{itemBean.item.name}"/>
+					<h:inputText id="itemBeanItemName" maxLength="30" required="true" value="#{itemBean.item.name}" class="form-control"/>
 					<h:message for="itemBeanItemName" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="itemBeanItemDescription" value="Description:"/>
 				<h:panelGroup>
-					<h:inputText id="itemBeanItemDescription" maxLength="3000" value="#{itemBean.item.description}"/>
+					<h:inputText id="itemBeanItemDescription" maxLength="3000" value="#{itemBean.item.description}" class="form-control"/>
 					<h:message for="itemBeanItemDescription" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText/>
 				<h:outputLabel for="itemBeanItemUnitCost" value="Unit Cost:"/>
 				<h:panelGroup>
-					<h:inputText id="itemBeanItemUnitCost" required="true" value="#{itemBean.item.unitCost}"/>
+					<h:inputText id="itemBeanItemUnitCost" required="true" value="#{itemBean.item.unitCost}" class="form-control"/>
 					<h:message for="itemBeanItemUnitCost" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="itemBeanItemImagePath" value="Image Path:"/>
 				<h:panelGroup>
-					<h:inputText id="itemBeanItemImagePath" required="true" value="#{itemBean.item.imagePath}"/>
+					<h:inputText id="itemBeanItemImagePath" required="true" value="#{itemBean.item.imagePath}" class="form-control"/>
 					<h:message for="itemBeanItemImagePath" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="itemBeanItemProduct" value="Product:"/>
 				<h:panelGroup>
-					<h:selectOneMenu converter="#{productBean.converter}" id="itemBeanItemProduct" value="#{itemBean.item.product}">
+					<h:selectOneMenu converter="#{productBean.converter}" id="itemBeanItemProduct" value="#{itemBean.item.product}" class="form-control">
 						<f:selectItem/>
 						<f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{productBean.all}" var="_item"/>
 					</h:selectOneMenu>
@@ -68,7 +68,7 @@
 				<h:outputText/>
 			</h:panelGrid>
 
-			<div class="buttons">
+            <h:panelGroup styleClass="form-group">
 				<h:commandLink value="Save" action="#{itemBean.update}" styleClass="btn btn-primary"/>
 				<c:choose>
 					<c:when test="#{!empty itemBean.id}">
@@ -81,7 +81,7 @@
 						<h:link value="Cancel" outcome="search" styleClass="btn btn-primary"/>
 					</c:otherwise>
 				</c:choose>
-			</div>
+            </h:panelGroup>
 		</h:form>
 	</ui:define>
 

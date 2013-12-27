@@ -31,23 +31,23 @@
 	</ui:define>
 
 	<ui:define name="main">
-		<h:form id="create">
-			<h:panelGrid columnClasses="label,component,required" columns="3">
+		<h:form id="create" class="form-horizontal" role="form">
+			<h:panelGrid columns="3">
 				<h:outputLabel for="productBeanProductName" value="Name:"/>
 				<h:panelGroup>
-					<h:inputText id="productBeanProductName" maxLength="30" required="true" value="#{productBean.product.name}"/>
+					<h:inputText id="productBeanProductName" maxLength="30" required="true" value="#{productBean.product.name}" class="form-control"/>
 					<h:message for="productBeanProductName" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="productBeanProductDescription" value="Description:"/>
 				<h:panelGroup>
-					<h:inputText id="productBeanProductDescription" value="#{productBean.product.description}"/>
+					<h:inputText id="productBeanProductDescription" value="#{productBean.product.description}" class="form-control"/>
 					<h:message for="productBeanProductDescription" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText/>
 				<h:outputLabel for="productBeanProductCategory" value="Category:"/>
 				<h:panelGroup>
-					<h:selectOneMenu converter="#{categoryBean.converter}" id="productBeanProductCategory" value="#{productBean.product.category}">
+					<h:selectOneMenu converter="#{categoryBean.converter}" id="productBeanProductCategory" value="#{productBean.product.category}" class="form-control">
 						<f:selectItem/>
 						<f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{categoryBean.all}" var="_item"/>
 					</h:selectOneMenu>
@@ -56,7 +56,7 @@
 				<h:outputText/>
 			</h:panelGrid>
 
-			<div class="buttons">
+            <h:panelGroup styleClass="form-group">
 				<h:commandLink value="Save" action="#{productBean.update}" styleClass="btn btn-primary"/>
 				<c:choose>
 					<c:when test="#{!empty productBean.id}">
@@ -69,7 +69,7 @@
 						<h:link value="Cancel" outcome="search" styleClass="btn btn-primary"/>
 					</c:otherwise>
 				</c:choose>
-			</div>
+            </h:panelGroup>
 		</h:form>
 	</ui:define>
 

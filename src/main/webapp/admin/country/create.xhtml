@@ -30,41 +30,41 @@
 	</ui:define>
 
 	<ui:define name="main">
-		<h:form id="create">
-			<h:panelGrid columnClasses="label,component,required" columns="3">
+		<h:form id="create" class="form-horizontal" role="form">
+			<h:panelGrid columns="3">
 				<h:outputLabel for="countryBeanCountryIsoCode" value="Iso Code:"/>
 				<h:panelGroup>
-					<h:inputText id="countryBeanCountryIsoCode" maxLength="2" required="true" value="#{countryBean.country.isoCode}"/>
+					<h:inputText id="countryBeanCountryIsoCode" maxLength="2" required="true" value="#{countryBean.country.isoCode}" class="form-control"/>
 					<h:message for="countryBeanCountryIsoCode" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="countryBeanCountryName" value="Name:"/>
 				<h:panelGroup>
-					<h:inputText id="countryBeanCountryName" maxLength="80" required="true" value="#{countryBean.country.name}"/>
+					<h:inputText id="countryBeanCountryName" maxLength="80" required="true" value="#{countryBean.country.name}" class="form-control"/>
 					<h:message for="countryBeanCountryName" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="countryBeanCountryPrintableName" value="Printable Name:"/>
 				<h:panelGroup>
-					<h:inputText id="countryBeanCountryPrintableName" maxLength="80" required="true" value="#{countryBean.country.printableName}"/>
+					<h:inputText id="countryBeanCountryPrintableName" maxLength="80" required="true" value="#{countryBean.country.printableName}" class="form-control"/>
 					<h:message for="countryBeanCountryPrintableName" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="countryBeanCountryIso3" value="Iso 3:"/>
 				<h:panelGroup>
-					<h:inputText id="countryBeanCountryIso3" maxLength="3" required="true" value="#{countryBean.country.iso3}"/>
+					<h:inputText id="countryBeanCountryIso3" maxLength="3" required="true" value="#{countryBean.country.iso3}" class="form-control"/>
 					<h:message for="countryBeanCountryIso3" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="countryBeanCountryNumcode" value="Numcode:"/>
 				<h:panelGroup>
-					<h:inputText id="countryBeanCountryNumcode" maxLength="3" required="true" value="#{countryBean.country.numcode}"/>
+					<h:inputText id="countryBeanCountryNumcode" maxLength="3" required="true" value="#{countryBean.country.numcode}" class="form-control"/>
 					<h:message for="countryBeanCountryNumcode" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 			</h:panelGrid>
 
-			<div class="buttons">
+            <h:panelGroup styleClass="form-group">
 				<h:commandLink value="Save" action="#{countryBean.update}" styleClass="btn btn-primary"/>
 				<c:choose>
 					<c:when test="#{!empty countryBean.id}">
@@ -77,7 +77,7 @@
 						<h:link value="Cancel" outcome="search" styleClass="btn btn-primary"/>
 					</c:otherwise>
 				</c:choose>
-			</div>
+            </h:panelGroup>
 		</h:form>
 	</ui:define>
 

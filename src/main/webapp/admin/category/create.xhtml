@@ -30,23 +30,23 @@
 	</ui:define>
 
 	<ui:define name="main">
-		<h:form id="create">
-			<h:panelGrid columnClasses="label,component,required" columns="3">
+		<h:form id="create" class="form-horizontal" role="form">
+			<h:panelGrid columns="3">
 				<h:outputLabel for="categoryBeanCategoryName" value="Name:"/>
 				<h:panelGroup>
-					<h:inputText id="categoryBeanCategoryName" maxLength="30" required="true" value="#{categoryBean.category.name}"/>
+					<h:inputText id="categoryBeanCategoryName" maxLength="30" required="true" value="#{categoryBean.category.name}" class="form-control"/>
 					<h:message for="categoryBeanCategoryName" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="categoryBeanCategoryDescription" value="Description:"/>
 				<h:panelGroup>
-					<h:inputText id="categoryBeanCategoryDescription" required="true" value="#{categoryBean.category.description}"/>
+					<h:inputText id="categoryBeanCategoryDescription" required="true" value="#{categoryBean.category.description}" class="form-control"/>
 					<h:message for="categoryBeanCategoryDescription" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 			</h:panelGrid>
 
-			<div class="buttons">
+            <h:panelGroup styleClass="form-group">
 				<h:commandLink value="Save" action="#{categoryBean.update}" styleClass="btn btn-primary"/>
 				<c:choose>
 					<c:when test="#{!empty categoryBean.id}">
@@ -59,7 +59,7 @@
 						<h:link value="Cancel" outcome="search" styleClass="btn btn-primary"/>
 					</c:otherwise>
 				</c:choose>
-			</div>
+            </h:panelGroup>
 		</h:form>
 	</ui:define>
 

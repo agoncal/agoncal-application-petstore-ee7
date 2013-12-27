@@ -38,7 +38,7 @@ public class PurchaseOrder {
             inverseJoinColumns = {@JoinColumn(name = "order_line_fk")})
     private List<OrderLine> orderLines;
     @Embedded
-    private Address deliveryAddress;
+    private Address deliveryAddress = new Address();
     @Embedded
     private CreditCard creditCard = new CreditCard();
 

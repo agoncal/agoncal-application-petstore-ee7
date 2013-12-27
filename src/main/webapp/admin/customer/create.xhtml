@@ -31,47 +31,47 @@
 	</ui:define>
 
 	<ui:define name="main">
-		<h:form id="create">
-			<h:panelGrid columnClasses="label,component,required" columns="3">
+		<h:form id="create" class="form-horizontal" role="form">
+			<h:panelGrid columns="3">
 				<h:outputLabel for="customerBeanCustomerLogin" value="Login:"/>
 				<h:panelGroup>
-					<h:inputText id="customerBeanCustomerLogin" maxLength="10" required="true" value="#{customerBean.customer.login}"/>
+					<h:inputText id="customerBeanCustomerLogin" maxLength="10" required="true" value="#{customerBean.customer.login}" class="form-control"/>
 					<h:message for="customerBeanCustomerLogin" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="customerBeanCustomerPassword" value="Password:"/>
 				<h:panelGroup>
-					<h:inputText id="customerBeanCustomerPassword" maxLength="256" required="true" value="#{customerBean.customer.password}"/>
+					<h:inputText id="customerBeanCustomerPassword" maxLength="256" required="true" value="#{customerBean.customer.password}" class="form-control"/>
 					<h:message for="customerBeanCustomerPassword" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="customerBeanCustomerFirstname" value="Firstname:"/>
 				<h:panelGroup>
-					<h:inputText id="customerBeanCustomerFirstname" maxLength="50" required="true" value="#{customerBean.customer.firstname}"/>
+					<h:inputText id="customerBeanCustomerFirstname" maxLength="50" required="true" value="#{customerBean.customer.firstname}" class="form-control"/>
 					<h:message for="customerBeanCustomerFirstname" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="customerBeanCustomerLastname" value="Lastname:"/>
 				<h:panelGroup>
-					<h:inputText id="customerBeanCustomerLastname" maxLength="50" required="true" value="#{customerBean.customer.lastname}"/>
+					<h:inputText id="customerBeanCustomerLastname" maxLength="50" required="true" value="#{customerBean.customer.lastname}" class="form-control"/>
 					<h:message for="customerBeanCustomerLastname" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="customerBeanCustomerTelephone" value="Telephone:"/>
 				<h:panelGroup>
-					<h:inputText id="customerBeanCustomerTelephone" value="#{customerBean.customer.telephone}"/>
+					<h:inputText id="customerBeanCustomerTelephone" value="#{customerBean.customer.telephone}" class="form-control"/>
 					<h:message for="customerBeanCustomerTelephone" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText/>
 				<h:outputLabel for="customerBeanCustomerEmail" value="Email:"/>
 				<h:panelGroup>
-					<h:inputText id="customerBeanCustomerEmail" value="#{customerBean.customer.email}"/>
+					<h:inputText id="customerBeanCustomerEmail" value="#{customerBean.customer.email}" class="form-control"/>
 					<h:message for="customerBeanCustomerEmail" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText/>
 				<h:outputLabel for="customerBeanCustomerDateOfBirth" value="Date Of Birth:"/>
 				<h:panelGroup>
-					<h:inputText id="customerBeanCustomerDateOfBirth" value="#{customerBean.customer.dateOfBirth}">
+					<h:inputText id="customerBeanCustomerDateOfBirth" value="#{customerBean.customer.dateOfBirth}" class="form-control">
 						<f:convertDateTime type="date"/>
 					</h:inputText>
 					<h:message for="customerBeanCustomerDateOfBirth" styleClass="error"/>
@@ -79,37 +79,37 @@
 				<h:outputText/>
 				<h:outputLabel for="customerBeanCustomerStreet1" value="Street 1:"/>
 				<h:panelGroup>
-					<h:inputText id="customerBeanCustomerStreet1" maxLength="50" required="true" value="#{customerBean.customer.street1}"/>
+					<h:inputText id="customerBeanCustomerStreet1" maxLength="50" required="true" value="#{customerBean.customer.homeAddress.street1}" class="form-control"/>
 					<h:message for="customerBeanCustomerStreet1" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="customerBeanCustomerStreet2" value="Street 2:"/>
 				<h:panelGroup>
-					<h:inputText id="customerBeanCustomerStreet2" value="#{customerBean.customer.street2}"/>
+					<h:inputText id="customerBeanCustomerStreet2" value="#{customerBean.customer.homeAddress.street2}" class="form-control"/>
 					<h:message for="customerBeanCustomerStreet2" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText/>
 				<h:outputLabel for="customerBeanCustomerCity" value="City:"/>
 				<h:panelGroup>
-					<h:inputText id="customerBeanCustomerCity" maxLength="50" required="true" value="#{customerBean.customer.city}"/>
+					<h:inputText id="customerBeanCustomerCity" maxLength="50" required="true" value="#{customerBean.customer.homeAddress.city}" class="form-control"/>
 					<h:message for="customerBeanCustomerCity" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="customerBeanCustomerState" value="State:"/>
 				<h:panelGroup>
-					<h:inputText id="customerBeanCustomerState" value="#{customerBean.customer.state}"/>
+					<h:inputText id="customerBeanCustomerState" value="#{customerBean.customer.homeAddress.state}" class="form-control"/>
 					<h:message for="customerBeanCustomerState" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText/>
 				<h:outputLabel for="customerBeanCustomerZipcode" value="Zipcode:"/>
 				<h:panelGroup>
-					<h:inputText id="customerBeanCustomerZipcode" maxLength="10" required="true" value="#{customerBean.customer.zipcode}"/>
+					<h:inputText id="customerBeanCustomerZipcode" maxLength="10" required="true" value="#{customerBean.customer.homeAddress.zipcode}" class="form-control"/>
 					<h:message for="customerBeanCustomerZipcode" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText value="*"/>
 				<h:outputLabel for="customerBeanCustomerCountry" value="Country:"/>
 				<h:panelGroup>
-					<h:selectOneMenu converter="#{countryBean.converter}" id="customerBeanCustomerCountry" value="#{customerBean.customer.country}">
+					<h:selectOneMenu converter="#{countryBean.converter}" id="customerBeanCustomerCountry" value="#{customerBean.customer.homeAddress.country}" class="form-control">
 						<f:selectItem/>
 						<f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{countryBean.all}" var="_item"/>
 					</h:selectOneMenu>
@@ -118,7 +118,7 @@
 				<h:outputText/>
 			</h:panelGrid>
 
-			<div class="buttons">
+            <h:panelGroup styleClass="form-group">
 				<h:commandLink value="Save" action="#{customerBean.update}" styleClass="btn btn-primary"/>
 				<c:choose>
 					<c:when test="#{!empty customerBean.id}">
@@ -131,7 +131,7 @@
 						<h:link value="Cancel" outcome="search" styleClass="btn btn-primary"/>
 					</c:otherwise>
 				</c:choose>
-			</div>
+            </h:panelGroup>
 		</h:form>
 	</ui:define>
 

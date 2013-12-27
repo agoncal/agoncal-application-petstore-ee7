@@ -73,13 +73,6 @@ public class PurchaseOrderBean implements Serializable
    @PersistenceContext(type = PersistenceContextType.EXTENDED)
    private EntityManager entityManager;
 
-   public String create()
-   {
-
-      this.conversation.begin();
-      return "create?faces-redirect=true";
-   }
-
    public void retrieve()
    {
 
