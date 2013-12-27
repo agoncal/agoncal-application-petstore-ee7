@@ -136,13 +136,6 @@ public class Country {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Country{");
-        sb.append("isoCode='").append(isoCode).append('\'');
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", printableName='").append(printableName).append('\'');
-        sb.append(", iso3='").append(iso3).append('\'');
-        sb.append(", numcode='").append(numcode).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return printableName;
     }
 }
