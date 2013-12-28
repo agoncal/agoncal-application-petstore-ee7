@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * Backing bean for Product entities.
- * <p>
+ * <p/>
  * This class provides CRUD functionality for all Product entities. It focuses
  * purely on Java EE 6 standards (e.g. <tt>&#64;ConversationScoped</tt> for
  * state management, <tt>PersistenceContext</tt> for persistence,
@@ -39,286 +39,256 @@ import java.util.List;
 @Named
 @Stateful
 @ConversationScoped
-public class ProductBean implements Serializable
-{
+public class ProductBean implements Serializable {
 
-   private static final long serialVersionUID = 1L;
+    // ======================================
+    // =             Attributes             =
+    // ======================================
+
+    private static final long serialVersionUID = 1L;
 
    /*
     * Support creating and retrieving Product entities
     */
 
-   private Long id;
+    private Long id;
+    private Product product;
 
-   public Long getId()
-   {
-      return this.id;
-   }
+   /*
+    * Support searching Product entities with pagination
+    */
+    private int page;
+    private long count;
+    private List<Product> pageItems;
 
-   public void setId(Long id)
-   {
-      this.id = id;
-   }
+    private Product example = new Product();
 
-   private Product product;
+    @Inject
+    private Conversation conversation;
 
-   public Product getProduct()
-   {
-      return this.product;
-   }
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
+    private EntityManager entityManager;
 
-   @Inject
-   private Conversation conversation;
+   /*
+    * Support listing and POSTing back Category entities (e.g. from inside an
+    * HtmlSelectOneMenu)
+    */
 
-   @PersistenceContext(type = PersistenceContextType.EXTENDED)
-   private EntityManager entityManager;
+    @Resource
+    private SessionContext sessionContext;
 
-   public String create()
-   {
+   /*
+    * Support adding children to bidirectional, one-to-many tables
+    */
+    private Product add = new Product();
 
-      this.conversation.begin();
-      return "create?faces-redirect=true";
-   }
+    // ======================================
+    // =              Public Methods        =
+    // ======================================
 
-   public void retrieve()
-   {
+    public String create() {
 
-      if (FacesContext.getCurrentInstance().isPostback())
-      {
-         return;
-      }
+        this.conversation.begin();
+        return "create?faces-redirect=true";
+    }
 
-      if (this.conversation.isTransient())
-      {
-         this.conversation.begin();
-      }
+    public void retrieve() {
 
-      if (this.id == null)
-      {
-         this.product = this.example;
-      }
-      else
-      {
-         this.product = findById(getId());
-      }
-   }
+        if (FacesContext.getCurrentInstance().isPostback()) {
+            return;
+        }
 
-   public Product findById(Long id)
-   {
+        if (this.conversation.isTransient()) {
+            this.conversation.begin();
+        }
 
-      return this.entityManager.find(Product.class, id);
-   }
+        if (this.id == null) {
+            this.product = this.example;
+        } else {
+            this.product = findById(getId());
+        }
+    }
+
+    public Product findById(Long id) {
+
+        return this.entityManager.find(Product.class, id);
+    }
 
    /*
     * Support updating and deleting Product entities
     */
 
-   public String update()
-   {
-      this.conversation.end();
+    public String update() {
+        this.conversation.end();
 
-      try
-      {
-         if (this.id == null)
-         {
-            this.entityManager.persist(this.product);
+        try {
+            if (this.id == null) {
+                this.entityManager.persist(this.product);
+                return "search?faces-redirect=true";
+            } else {
+                this.entityManager.merge(this.product);
+                return "view?faces-redirect=true&id=" + this.product.getId();
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            return null;
+        }
+    }
+
+    public String delete() {
+        this.conversation.end();
+
+        try {
+            Product deletableEntity = findById(getId());
+
+            this.entityManager.remove(deletableEntity);
+            this.entityManager.flush();
             return "search?faces-redirect=true";
-         }
-         else
-         {
-            this.entityManager.merge(this.product);
-            return "view?faces-redirect=true&id=" + this.product.getId();
-         }
-      }
-      catch (Exception e)
-      {
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-         return null;
-      }
-   }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            return null;
+        }
+    }
 
-   public String delete()
-   {
-      this.conversation.end();
+    public void search() {
+        this.page = 0;
+    }
 
-      try
-      {
-         Product deletableEntity = findById(getId());
+    public void paginate() {
 
-         this.entityManager.remove(deletableEntity);
-         this.entityManager.flush();
-         return "search?faces-redirect=true";
-      }
-      catch (Exception e)
-      {
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-         return null;
-      }
-   }
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
 
-   /*
-    * Support searching Product entities with pagination
-    */
+        // Populate this.count
 
-   private int page;
-   private long count;
-   private List<Product> pageItems;
+        CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
+        Root<Product> root = countCriteria.from(Product.class);
+        countCriteria = countCriteria.select(builder.count(root)).where(
+                getSearchPredicates(root));
+        this.count = this.entityManager.createQuery(countCriteria)
+                .getSingleResult();
 
-   private Product example = new Product();
+        // Populate this.pageItems
 
-   public int getPage()
-   {
-      return this.page;
-   }
+        CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
+        root = criteria.from(Product.class);
+        TypedQuery<Product> query = this.entityManager.createQuery(criteria
+                .select(root).where(getSearchPredicates(root)));
+        query.setFirstResult(this.page * getPageSize()).setMaxResults(
+                getPageSize());
+        this.pageItems = query.getResultList();
+    }
 
-   public void setPage(int page)
-   {
-      this.page = page;
-   }
+    private Predicate[] getSearchPredicates(Root<Product> root) {
 
-   public int getPageSize()
-   {
-      return 10;
-   }
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-   public Product getExample()
-   {
-      return this.example;
-   }
+        String name = this.example.getName();
+        if (name != null && !"".equals(name)) {
+            predicatesList.add(builder.like(root.<String>get("name"), '%' + name + '%'));
+        }
+        String description = this.example.getDescription();
+        if (description != null && !"".equals(description)) {
+            predicatesList.add(builder.like(root.<String>get("description"), '%' + description + '%'));
+        }
+        Category category = this.example.getCategory();
+        if (category != null) {
+            predicatesList.add(builder.equal(root.get("category"), category));
+        }
 
-   public void setExample(Product example)
-   {
-      this.example = example;
-   }
+        return predicatesList.toArray(new Predicate[predicatesList.size()]);
+    }
 
-   public void search()
-   {
-      this.page = 0;
-   }
+    public List<Product> getAll() {
 
-   public void paginate()
-   {
+        CriteriaQuery<Product> criteria = this.entityManager
+                .getCriteriaBuilder().createQuery(Product.class);
+        return this.entityManager.createQuery(
+                criteria.select(criteria.from(Product.class))).getResultList();
+    }
 
-      CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+    // ======================================
+    // =         Getters & setters          =
+    // ======================================
 
-      // Populate this.count
+    public Long getId() {
+        return this.id;
+    }
 
-      CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
-      Root<Product> root = countCriteria.from(Product.class);
-      countCriteria = countCriteria.select(builder.count(root)).where(
-            getSearchPredicates(root));
-      this.count = this.entityManager.createQuery(countCriteria)
-            .getSingleResult();
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-      // Populate this.pageItems
+    public Product getProduct() {
+        return this.product;
+    }
 
-      CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
-      root = criteria.from(Product.class);
-      TypedQuery<Product> query = this.entityManager.createQuery(criteria
-            .select(root).where(getSearchPredicates(root)));
-      query.setFirstResult(this.page * getPageSize()).setMaxResults(
-            getPageSize());
-      this.pageItems = query.getResultList();
-   }
+    public int getPage() {
+        return this.page;
+    }
 
-   private Predicate[] getSearchPredicates(Root<Product> root)
-   {
+    public void setPage(int page) {
+        this.page = page;
+    }
 
-      CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-      List<Predicate> predicatesList = new ArrayList<Predicate>();
+    public int getPageSize() {
+        return 10;
+    }
 
-      String name = this.example.getName();
-      if (name != null && !"".equals(name))
-      {
-         predicatesList.add(builder.like(root.<String> get("name"), '%' + name + '%'));
-      }
-      String description = this.example.getDescription();
-      if (description != null && !"".equals(description))
-      {
-         predicatesList.add(builder.like(root.<String> get("description"), '%' + description + '%'));
-      }
-      Category category = this.example.getCategory();
-      if (category != null)
-      {
-         predicatesList.add(builder.equal(root.get("category"), category));
-      }
+    public Product getExample() {
+        return this.example;
+    }
 
-      return predicatesList.toArray(new Predicate[predicatesList.size()]);
-   }
+    public void setExample(Product example) {
+        this.example = example;
+    }
 
-   public List<Product> getPageItems()
-   {
-      return this.pageItems;
-   }
+    public List<Product> getPageItems() {
+        return this.pageItems;
+    }
 
-   public long getCount()
-   {
-      return this.count;
-   }
+    public long getCount() {
+        return this.count;
+    }
 
-   /*
-    * Support listing and POSTing back Product entities (e.g. from inside an
-    * HtmlSelectOneMenu)
-    */
 
-   public List<Product> getAll()
-   {
+    public Product getAdd() {
+        return this.add;
+    }
 
-      CriteriaQuery<Product> criteria = this.entityManager
-            .getCriteriaBuilder().createQuery(Product.class);
-      return this.entityManager.createQuery(
-            criteria.select(criteria.from(Product.class))).getResultList();
-   }
+    public Product getAdded() {
+        Product added = this.add;
+        this.add = new Product();
+        return added;
+    }
 
-   @Resource
-   private SessionContext sessionContext;
+    // ======================================
+    // =            Inner Class             =
+    // ======================================
 
-   public Converter getConverter()
-   {
+    public Converter getConverter() {
 
-      final ProductBean ejbProxy = this.sessionContext.getBusinessObject(ProductBean.class);
+        final ProductBean ejbProxy = this.sessionContext.getBusinessObject(ProductBean.class);
 
-      return new Converter()
-      {
+        return new Converter() {
 
-         @Override
-         public Object getAsObject(FacesContext context,
-               UIComponent component, String value)
-         {
+            @Override
+            public Object getAsObject(FacesContext context,
+                                      UIComponent component, String value) {
 
-            return ejbProxy.findById(Long.valueOf(value));
-         }
-
-         @Override
-         public String getAsString(FacesContext context,
-               UIComponent component, Object value)
-         {
-
-            if (value == null)
-            {
-               return "";
+                return ejbProxy.findById(Long.valueOf(value));
             }
 
-            return String.valueOf(((Product) value).getId());
-         }
-      };
-   }
+            @Override
+            public String getAsString(FacesContext context,
+                                      UIComponent component, Object value) {
 
-   /*
-    * Support adding children to bidirectional, one-to-many tables
-    */
+                if (value == null) {
+                    return "";
+                }
 
-   private Product add = new Product();
-
-   public Product getAdd()
-   {
-      return this.add;
-   }
-
-   public Product getAdded()
-   {
-      Product added = this.add;
-      this.add = new Product();
-      return added;
-   }
+                return String.valueOf(((Product) value).getId());
+            }
+        };
+    }
 }

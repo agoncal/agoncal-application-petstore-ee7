@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * Backing bean for PurchaseOrder entities.
- * <p>
+ * <p/>
  * This class provides CRUD functionality for all PurchaseOrder entities. It focuses
  * purely on Java EE 6 standards (e.g. <tt>&#64;ConversationScoped</tt> for
  * state management, <tt>PersistenceContext</tt> for persistence,
@@ -39,192 +39,148 @@ import java.util.List;
 @Named
 @Stateful
 @ConversationScoped
-public class PurchaseOrderBean implements Serializable
-{
+public class PurchaseOrderBean implements Serializable {
 
-   private static final long serialVersionUID = 1L;
+    // ======================================
+    // =             Attributes             =
+    // ======================================
+
+    private static final long serialVersionUID = 1L;
 
    /*
     * Support creating and retrieving PurchaseOrder entities
     */
 
-   private Long id;
+    private Long id;
+    private PurchaseOrder purchaseOrder;
 
-   public Long getId()
-   {
-      return this.id;
-   }
+   /*
+    * Support searching PurchaseOrder entities with pagination
+    */
+    private int page;
+    private long count;
+    private List<PurchaseOrder> pageItems;
 
-   public void setId(Long id)
-   {
-      this.id = id;
-   }
+    private PurchaseOrder example = new PurchaseOrder();
 
-   private PurchaseOrder purchaseOrder;
+    @Inject
+    private Conversation conversation;
 
-   public PurchaseOrder getPurchaseOrder()
-   {
-      return this.purchaseOrder;
-   }
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
+    private EntityManager entityManager;
 
-   @Inject
-   private Conversation conversation;
+   /*
+    * Support listing and POSTing back Category entities (e.g. from inside an
+    * HtmlSelectOneMenu)
+    */
 
-   @PersistenceContext(type = PersistenceContextType.EXTENDED)
-   private EntityManager entityManager;
+    @Resource
+    private SessionContext sessionContext;
 
-   public void retrieve()
-   {
+   /*
+    * Support adding children to bidirectional, one-to-many tables
+    */
+    private PurchaseOrder add = new PurchaseOrder();
 
-      if (FacesContext.getCurrentInstance().isPostback())
-      {
-         return;
-      }
+    // ======================================
+    // =              Public Methods        =
+    // ======================================
 
-      if (this.conversation.isTransient())
-      {
-         this.conversation.begin();
-      }
+    public void retrieve() {
 
-      if (this.id == null)
-      {
-         this.purchaseOrder = this.example;
-      }
-      else
-      {
-         this.purchaseOrder = findById(getId());
-      }
-   }
+        if (FacesContext.getCurrentInstance().isPostback()) {
+            return;
+        }
 
-   public PurchaseOrder findById(Long id)
-   {
+        if (this.conversation.isTransient()) {
+            this.conversation.begin();
+        }
 
-      return this.entityManager.find(PurchaseOrder.class, id);
-   }
+        if (this.id == null) {
+            this.purchaseOrder = this.example;
+        } else {
+            this.purchaseOrder = findById(getId());
+        }
+    }
+
+    public PurchaseOrder findById(Long id) {
+
+        return this.entityManager.find(PurchaseOrder.class, id);
+    }
 
    /*
     * Support updating and deleting PurchaseOrder entities
     */
 
-   public String update()
-   {
-      this.conversation.end();
+    public String update() {
+        this.conversation.end();
 
-      try
-      {
-         if (this.id == null)
-         {
-            this.entityManager.persist(this.purchaseOrder);
+        try {
+            if (this.id == null) {
+                this.entityManager.persist(this.purchaseOrder);
+                return "search?faces-redirect=true";
+            } else {
+                this.entityManager.merge(this.purchaseOrder);
+                return "view?faces-redirect=true&id=" + this.purchaseOrder.getId();
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            return null;
+        }
+    }
+
+    public String delete() {
+        this.conversation.end();
+
+        try {
+            PurchaseOrder deletableEntity = findById(getId());
+
+            this.entityManager.remove(deletableEntity);
+            this.entityManager.flush();
             return "search?faces-redirect=true";
-         }
-         else
-         {
-            this.entityManager.merge(this.purchaseOrder);
-            return "view?faces-redirect=true&id=" + this.purchaseOrder.getId();
-         }
-      }
-      catch (Exception e)
-      {
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-         return null;
-      }
-   }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            return null;
+        }
+    }
 
-   public String delete()
-   {
-      this.conversation.end();
+    public void search() {
+        this.page = 0;
+    }
 
-      try
-      {
-         PurchaseOrder deletableEntity = findById(getId());
+    public void paginate() {
 
-         this.entityManager.remove(deletableEntity);
-         this.entityManager.flush();
-         return "search?faces-redirect=true";
-      }
-      catch (Exception e)
-      {
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-         return null;
-      }
-   }
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
 
-   /*
-    * Support searching PurchaseOrder entities with pagination
-    */
+        // Populate this.count
 
-   private int page;
-   private long count;
-   private List<PurchaseOrder> pageItems;
+        CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
+        Root<PurchaseOrder> root = countCriteria.from(PurchaseOrder.class);
+        countCriteria = countCriteria.select(builder.count(root)).where(
+                getSearchPredicates(root));
+        this.count = this.entityManager.createQuery(countCriteria)
+                .getSingleResult();
 
-   private PurchaseOrder example = new PurchaseOrder();
+        // Populate this.pageItems
 
-   public int getPage()
-   {
-      return this.page;
-   }
+        CriteriaQuery<PurchaseOrder> criteria = builder.createQuery(PurchaseOrder.class);
+        root = criteria.from(PurchaseOrder.class);
+        TypedQuery<PurchaseOrder> query = this.entityManager.createQuery(criteria
+                .select(root).where(getSearchPredicates(root)));
+        query.setFirstResult(this.page * getPageSize()).setMaxResults(
+                getPageSize());
+        this.pageItems = query.getResultList();
+    }
 
-   public void setPage(int page)
-   {
-      this.page = page;
-   }
+    private Predicate[] getSearchPredicates(Root<PurchaseOrder> root) {
 
-   public int getPageSize()
-   {
-      return 10;
-   }
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-   public PurchaseOrder getExample()
-   {
-      return this.example;
-   }
-
-   public void setExample(PurchaseOrder example)
-   {
-      this.example = example;
-   }
-
-   public void search()
-   {
-      this.page = 0;
-   }
-
-   public void paginate()
-   {
-
-      CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-
-      // Populate this.count
-
-      CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
-      Root<PurchaseOrder> root = countCriteria.from(PurchaseOrder.class);
-      countCriteria = countCriteria.select(builder.count(root)).where(
-            getSearchPredicates(root));
-      this.count = this.entityManager.createQuery(countCriteria)
-            .getSingleResult();
-
-      // Populate this.pageItems
-
-      CriteriaQuery<PurchaseOrder> criteria = builder.createQuery(PurchaseOrder.class);
-      root = criteria.from(PurchaseOrder.class);
-      TypedQuery<PurchaseOrder> query = this.entityManager.createQuery(criteria
-            .select(root).where(getSearchPredicates(root)));
-      query.setFirstResult(this.page * getPageSize()).setMaxResults(
-            getPageSize());
-      this.pageItems = query.getResultList();
-   }
-
-   private Predicate[] getSearchPredicates(Root<PurchaseOrder> root)
-   {
-
-      CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-      List<Predicate> predicatesList = new ArrayList<Predicate>();
-
-      Customer customer = this.example.getCustomer();
-      if (customer != null)
-      {
-         predicatesList.add(builder.equal(root.get("customer"), customer));
-      }
+        Customer customer = this.example.getCustomer();
+        if (customer != null) {
+            predicatesList.add(builder.equal(root.get("customer"), customer));
+        }
 //      String street1 = this.example.getStreet1();
 //      if (street1 != null && !"".equals(street1))
 //      {
@@ -246,82 +202,98 @@ public class PurchaseOrderBean implements Serializable
 //         predicatesList.add(builder.like(root.<String> get("state"), '%' + state + '%'));
 //      }
 
-      return predicatesList.toArray(new Predicate[predicatesList.size()]);
-   }
+        return predicatesList.toArray(new Predicate[predicatesList.size()]);
+    }
 
-   public List<PurchaseOrder> getPageItems()
-   {
-      return this.pageItems;
-   }
+    public List<PurchaseOrder> getAll() {
 
-   public long getCount()
-   {
-      return this.count;
-   }
+        CriteriaQuery<PurchaseOrder> criteria = this.entityManager
+                .getCriteriaBuilder().createQuery(PurchaseOrder.class);
+        return this.entityManager.createQuery(
+                criteria.select(criteria.from(PurchaseOrder.class))).getResultList();
+    }
 
-   /*
-    * Support listing and POSTing back PurchaseOrder entities (e.g. from inside an
-    * HtmlSelectOneMenu)
-    */
+    // ======================================
+    // =         Getters & setters          =
+    // ======================================
 
-   public List<PurchaseOrder> getAll()
-   {
+    public Long getId() {
+        return this.id;
+    }
 
-      CriteriaQuery<PurchaseOrder> criteria = this.entityManager
-            .getCriteriaBuilder().createQuery(PurchaseOrder.class);
-      return this.entityManager.createQuery(
-            criteria.select(criteria.from(PurchaseOrder.class))).getResultList();
-   }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-   @Resource
-   private SessionContext sessionContext;
+    public PurchaseOrder getPurchaseOrder() {
+        return this.purchaseOrder;
+    }
 
-   public Converter getConverter()
-   {
+    public int getPage() {
+        return this.page;
+    }
 
-      final PurchaseOrderBean ejbProxy = this.sessionContext.getBusinessObject(PurchaseOrderBean.class);
+    public void setPage(int page) {
+        this.page = page;
+    }
 
-      return new Converter()
-      {
+    public int getPageSize() {
+        return 10;
+    }
 
-         @Override
-         public Object getAsObject(FacesContext context,
-               UIComponent component, String value)
-         {
+    public PurchaseOrder getExample() {
+        return this.example;
+    }
 
-            return ejbProxy.findById(Long.valueOf(value));
-         }
+    public void setExample(PurchaseOrder example) {
+        this.example = example;
+    }
 
-         @Override
-         public String getAsString(FacesContext context,
-               UIComponent component, Object value)
-         {
+    public List<PurchaseOrder> getPageItems() {
+        return this.pageItems;
+    }
 
-            if (value == null)
-            {
-               return "";
+    public long getCount() {
+        return this.count;
+    }
+
+    public PurchaseOrder getAdd() {
+        return this.add;
+    }
+
+    public PurchaseOrder getAdded() {
+        PurchaseOrder added = this.add;
+        this.add = new PurchaseOrder();
+        return added;
+    }
+
+    // ======================================
+    // =            Inner Class             =
+    // ======================================
+
+    public Converter getConverter() {
+
+        final PurchaseOrderBean ejbProxy = this.sessionContext.getBusinessObject(PurchaseOrderBean.class);
+
+        return new Converter() {
+
+            @Override
+            public Object getAsObject(FacesContext context,
+                                      UIComponent component, String value) {
+
+                return ejbProxy.findById(Long.valueOf(value));
             }
 
-            return String.valueOf(((PurchaseOrder) value).getId());
-         }
-      };
-   }
+            @Override
+            public String getAsString(FacesContext context,
+                                      UIComponent component, Object value) {
 
-   /*
-    * Support adding children to bidirectional, one-to-many tables
-    */
+                if (value == null) {
+                    return "";
+                }
 
-   private PurchaseOrder add = new PurchaseOrder();
-
-   public PurchaseOrder getAdd()
-   {
-      return this.add;
-   }
-
-   public PurchaseOrder getAdded()
-   {
-      PurchaseOrder added = this.add;
-      this.add = new PurchaseOrder();
-      return added;
-   }
+                return String.valueOf(((PurchaseOrder) value).getId());
+            }
+        };
+    }
 }
