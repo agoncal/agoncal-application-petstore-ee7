@@ -1,4 +1,4 @@
-@/* Forge 1.x Script */ ;
+@/* Forge 2.x Script */ ;
 @/* Generates the draft of the Petstore application */ ;
 
 @/* ================= */ ;
@@ -11,14 +11,14 @@
 
 
 clear ;
-set ACCEPT_DEFAULTS true ;
+export ACCEPT_DEFAULTS=true ;
 
 
 @/* ========================== */;
 @/* == Creating the project == */;
 @/* ========================== */;
 
-new-project --named agoncal-application-petstore-ee7 --topLevelPackage org.agoncal.application.petstore --type war --finalName applicationPetstore ;
+project-new --named agoncal-application-petstore-ee7 --topLevelPackage org.agoncal.application.petstore --type war ; @/* --finalName applicationPetstore */;
 
 
 @/* ================================ */;
@@ -26,7 +26,7 @@ new-project --named agoncal-application-petstore-ee7 --topLevelPackage org.agonc
 @/* ================================ */;
 
 @/* Setup JPA */;
-persistence setup --provider ECLIPSELINK --container GLASSFISH_3 --named applicationPetstorePU ;
+@/* persistence setup --provider ECLIPSELINK --container GLASSFISH_3 --named applicationPetstorePU */;
 
 
 @/* ================================ */;
@@ -42,13 +42,14 @@ validation setup ;
 @/* ======================= */;
 
 @/* Country */;
-entity --named Country ;
-field string --named isoCode --length 2 ;
-field string --named name --length 80 ;
-field string --named printableName --length 80 ;
-field string --named iso3 --length 3 ;
-field string --named numcode --length 3 ;
+jpa-new-entity --named Country ;
+jpa-new-field --named isoCode --length 2 ;
+jpa-new-field --named name --length 80 ;
+jpa-new-field --named printableName --length 80 ;
+jpa-new-field --named iso3 --length 3 ;
+jpa-new-field --named numcode --length 3 ;
 
+@/*
 constraint NotNull --onProperty isoCode ;
 constraint Size --min 2 --max 2 --onProperty isoCode ;
 constraint NotNull --onProperty name ;
@@ -59,24 +60,23 @@ constraint NotNull --onProperty iso3 ;
 constraint Size --min 3 --max 3 --onProperty iso3 ;
 constraint NotNull --onProperty numcode ;
 constraint Size --min 3 --max 3 --onProperty numcode ;
-
+*/;
 
 @/* Customer */;
-entity --named Customer ;
-field string --named login --length 10 ;
-field string --named password --length 256 ;
-field string --named firstname --length 50 ;
-field string --named lastname --length 50 ;
-field string --named telephone ;
-field string --named email ;
-field temporal --type DATE --named dateOfBirth ;
-field string --named street1 --length 50 ;
-field string --named street2 ;
-field string --named city --length 50 ;
-field string --named state ;
-field string --named zipcode --length 10 ;
-field manyToOne --named country --fieldType org.agoncal.application.petstore.model.Country.java ;
-
+jpa-new-entity --named Customer ;
+jpa-new-field --named login --length 10 ;
+jpa-new-field --named password --length 256 ;
+jpa-new-field --named firstname --length 50 ;
+jpa-new-field --named lastname --length 50 ;
+jpa-new-field --named telephone ;
+jpa-new-field --named email ;
+jpa-new-field --named street1 --length 50 ;
+jpa-new-field --named street2 ;
+jpa-new-field --named city --length 50 ;
+jpa-new-field --named state ;
+jpa-new-field --named zipcode --length 10 ;
+@/* field temporal --named dateOfBirth --type DATE ; */;
+jpa-new-field --named country --entity org.agoncal.application.petstore.model.Country --relationshipType Many-to-One
 
 constraint NotNull --onProperty login ;
 constraint NotNull --onProperty password ;
@@ -94,9 +94,9 @@ constraint Size --min 1 --max 10 --onProperty zipcode ;
 
 
 @/* Category */;
-entity --named Category ;
-field string --named name --length 30 ;
-field string --named description ;
+jpa-new-entity  --named Category ;
+jpa-new-field --named name --length 30 ;
+jpa-new-field --named description ;
 
 constraint NotNull --onProperty name ;
 constraint Size --min 1 --max 30 --onProperty name ;
@@ -104,22 +104,22 @@ constraint NotNull --onProperty description ;
 
 
 @/* Product */;
-entity --named Product ;
-field string --named name --length 30 ;
-field string --named description ;
-field manyToOne --named category --fieldType org.agoncal.application.petstore.model.Category ;
+jpa-new-entity --named Product ;
+jpa-new-field --named name --length 30 ;
+jpa-new-field --named description ;
+jpa-new-field --named category --entity org.agoncal.application.petstore.model.Category --relationshipType Many-to-One ;
 
 constraint NotNull --onProperty name ;
 constraint Size --min 1 --max 30 --onProperty name ;
 
 
 @/* Item */;
-entity --named Item ;
-field string --named name --length 30 ;
-field string --named description --length 3000 ;
-field custom --named unitCost --type java.lang.Float ;
-field string --named imagePath ;
-field manyToOne --named product --fieldType org.agoncal.application.petstore.model.Product ;
+jpa-new-entity --named Item ;
+jpa-new-field --named name --length 30 ;
+jpa-new-field --named description --length 3000 ;
+jpa-new-field --named imagePath ;
+jpa-new-field --named unitCost --typeName float ;
+jpa-new-field --named product --entity org.agoncal.application.petstore.model.Product --relationshipType Many-to-One ;
 
 constraint NotNull --onProperty name ;
 constraint Size --min 1 --max 30 --onProperty name ;
@@ -136,24 +136,24 @@ java new-enum-const MASTER_CARD ;
 
 
 @/* OrderLine */;
-entity --named OrderLine ;
-field int --named quantity ;
-field oneToOne --named item --fieldType org.agoncal.application.petstore.model.Item.java ;
+jpa-new-entity --named OrderLine ;
+jpa-new-field --named quantity --typeName int
+jpa-new-field --named item --entity org.agoncal.application.petstore.model.Item --relationshipType One-to-One ;
 
 
 @/* PurchaseOrder */;
-entity --named PurchaseOrder ;
+jpa-new-entity --named PurchaseOrder ;
 field temporal --type DATE --named orderDate ;
 field manyToOne --named customer --fieldType org.agoncal.application.petstore.model.Customer.java ;
 field oneToMany --named orderLines --fieldType org.agoncal.application.petstore.model.OrderLine.java ;
-field string --named street1 --length 50 ;
-field string --named street2 ;
-field string --named city --length 50 ;
-field string --named state ;
-field string --named zipcode --length 10 ;
-field string --named creditCardNumber --length 30 ;
+jpa-new-field --named street1 --length 50 ;
+jpa-new-field --named street2 ;
+jpa-new-field --named city --length 50 ;
+jpa-new-field --named state ;
+jpa-new-field --named zipcode --length 10 ;
+jpa-new-field --named creditCardNumber --length 30 ;
 field custom --named creditCardType --type org.agoncal.application.petstore.model.CreditCardType.java ;
-field string --named creditCardExpDate --length 5 ;
+jpa-new-field --named creditCardExpDate --length 5 ;
 
 constraint NotNull --onProperty street1 ;
 constraint Size --min 5 --max 50 --onProperty street1 ;
