@@ -41,5 +41,4 @@ public class LoggingInterceptor implements Serializable {
             logger.info("<<< " + ic.getTarget().getClass().getName() + "-" + ic.getMethod().getName());
         }
     }
-
 }
