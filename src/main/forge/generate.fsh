@@ -15,12 +15,12 @@ project-new --named agoncal-application-petstore-ee7 --topLevelPackage org.agonc
 
 #  Setup the deployment descriptors to Java EE 7
 #  ############
-jpa-setup --persistenceUnitName injectionPU --jpaVersion 2.1 ;
+jpa-setup --persistenceUnitName applicationPetstorePU --jpaVersion 2.1 ;
 cdi-setup --cdiVersion 1.1 ;
 ejb-setup --ejbVersion 3.2 ;
 faces-setup --facesVersion 2.2 ;
 servlet-setup --servletVersion 3.1 ;
-
+rest-setup --jaxrsVersion 2.0 ;
 
 
 #  ###################  #
@@ -85,6 +85,7 @@ constraint-add --onProperty zipcode --constraint Size --min 1 --max 10 ;
 constraint-add --onProperty zipcode --constraint NotNull ;
 constraint-add --onProperty country --constraint Size --min 2 --max 50 ;
 constraint-add --onProperty country --constraint NotNull ;
+
 
 #  Customer entity
 #  ############
@@ -162,6 +163,22 @@ java-new-enum-const VISA ;
 java-new-enum-const MASTER_CARD ;
 java-new-enum-const AMERICAN_EXPRESS ;
 
+java-new-class --named CreditCardConverter --targetPackage org.agoncal.application.petstore.model ;
+
+
+# CreditCard embeddable
+# ############
+jpa-new-embeddable --named CreditCard ;
+jpa-new-field --named creditCardNumber --columnName credit_card_number ;
+jpa-new-field --named creditCardType --type org.agoncal.application.petstore.model.CreditCardType --columnName credit_card_type ;
+jpa-new-field --named creditCardExpDate --columnName credit_card_expiry_date  ;
+
+constraint-add --onProperty creditCardNumber --constraint NotNull ;
+constraint-add --onProperty creditCardNumber --constraint Size --min 1 --max 30 ;
+constraint-add --onProperty creditCardType --constraint NotNull ;
+constraint-add --onProperty creditCardExpDate --constraint NotNull ;
+constraint-add --onProperty creditCardExpDate --constraint Size --min 1 --max 5 ;
+
 
 #  OrderLine entity
 #  ############
@@ -175,80 +192,200 @@ jpa-new-field --named item --type org.agoncal.application.petstore.model.Item --
 #  ############
 jpa-new-entity --named PurchaseOrder ;
 jpa-new-field --named orderDate --type java.util.Date --temporalType DATE --columnName order_date ;
+jpa-new-field --named totalWithoutVat --type java.lang.Float ;
+jpa-new-field --named vatRate --type java.lang.Float --columnName vat_rate ;
+jpa-new-field --named vat --type java.lang.Float ;
+jpa-new-field --named totalWithVat --type java.lang.Float ;
+jpa-new-field --named discountRate --type java.lang.Float --columnName discount_rate ;
+jpa-new-field --named discount --type java.lang.Float ;
+jpa-new-field --named total --type java.lang.Float ;
 # Address embeddable
 jpa-new-field --named street1 --length 50 ;
 jpa-new-field --named street2 ;
 jpa-new-field --named city --length 50 ;
 jpa-new-field --named state ;
 jpa-new-field --named zipcode --length 10 ;
+# Credit card embeddable
+jpa-new-field --named creditCardNumber --columnName credit_card_number ;
+jpa-new-field --named creditCardType --type org.agoncal.application.petstore.model.CreditCardType --columnName credit_card_type ;
+jpa-new-field --named creditCardExpDate --columnName credit_card_expiry_date  ;
 # Relationships
 jpa-new-field --named customer --type org.agoncal.application.petstore.model.Customer --relationshipType Many-to-One ;
 jpa-new-field --named orderLines --type org.agoncal.application.petstore.model.OrderLine --relationshipType One-to-Many ;
 
+constraint-add --constraint NotNull --onProperty street1 ;
+constraint-add --constraint Size --min 5 --max 50 --onProperty street1 ;
+constraint-add --constraint NotNull --onProperty city ;
+constraint-add --constraint Size --min 5 --max 50 --onProperty city ;
+constraint-add --constraint NotNull --onProperty zipcode ;
+constraint-add --constraint Size --min 1 --max 10 --onProperty zipcode ;
+constraint-add --constraint NotNull --onProperty creditCardNumber ;
+constraint-add --constraint Size --min 1 --max 30 --onProperty creditCardNumber ;
+constraint-add --constraint NotNull --onProperty creditCardType ;
+constraint-add --constraint NotNull --onProperty creditCardExpDate ;
+constraint-add --constraint Size --min 5 --max 5 --onProperty creditCardExpDate ;
 
 
-jpa-new-field --named creditCardNumber --length 30 ;
-field custom --named creditCardType --type org.agoncal.application.petstore.model.CreditCardType.java ;
-jpa-new-field --named creditCardExpDate --length 5 ;
 
-constraint NotNull --onProperty street1 ;
-constraint Size --min 5 --max 50 --onProperty street1 ;
-constraint NotNull --onProperty city ;
-constraint Size --min 5 --max 50 --onProperty city ;
-constraint NotNull --onProperty zipcode ;
-constraint Size --min 1 --max 10 --onProperty zipcode ;
-constraint NotNull --onProperty creditCardNumber ;
-constraint Size --min 1 --max 30 --onProperty creditCardNumber ;
-constraint NotNull --onProperty creditCardType ;
-constraint NotNull --onProperty creditCardExpDate ;
-constraint Size --min 5 --max 5 --onProperty creditCardExpDate ;
+#  #######################  #
+#  Creates utility classes  #
+#  #######################  #
 
+# TODO java-new-exception --named ValidationException --targetPackage org.agoncal.application.petstore.exception ;
+java-new-class --named ValidationException --targetPackage org.agoncal.application.petstore.exceptions ;
+java-new-class --named LoginContextProducer --targetPackage org.agoncal.application.petstore.security ;
+java-new-class --named SimpleCallbackHandler --targetPackage org.agoncal.application.petstore.security ;
+java-new-class --named SimpleLoginModule --targetPackage org.agoncal.application.petstore.security ;
 
-@/* ===================== */;
-@/* == Setting up REST == */;
-@/* ===================== */;
+#  Config producer
+#  ############
+cdi-new-qualifier --named ConfigProperty --targetPackage org.agoncal.application.petstore.util ;
+java-new-class --named ConfigPropertyProducer --targetPackage org.agoncal.application.petstore.util ;
 
-@/* Setup JAX-RS */;
-rest setup ;
+#  DatabaseProducer
+#  ############
+java-new-class --named DatabaseProducer --targetPackage org.agoncal.application.petstore.util ;
+java-new-field --named em --type javax.persistence.EntityManager --generateGetter=false --generateSetter=false --updateToString=false ;
+java-add-annotation --annotation javax.enterprise.inject.Produces --onProperty em ;
+java-add-annotation --annotation javax.persistence.PersistenceContext --onProperty em ;
 
+#  Logging Interceptor
+#  ############
+cdi-new-interceptor-binding --named Loggable --targetPackage org.agoncal.application.petstore.util ;
+cdi-new-interceptor --named LoggingInterceptor --interceptorBinding org.agoncal.application.petstore.util.Loggable --targetPackage org.agoncal.application.petstore.util ;
+java-new-field --named logger --type org.apache.logging.log4j.Logger --generateGetter=false --generateSetter=false --updateToString=false --updateToString=false ;
+java-add-annotation --annotation javax.inject.Inject --onProperty logger ;
 
-@/* ============================= */;
-@/* == Creating REST endpoints == */;
-@/* ============================= */;
+#  Logging Producer
+#  ############
+java-new-class --named LoggingProducer --targetPackage org.agoncal.application.petstore.util ;
 
-@/* Generate CRUD endpoints for all the @Entities */;
-rest endpoint-from-entity ~.model.* ;
+#  Number producer
+#  ############
+cdi-new-qualifier --named Vat --targetPackage org.agoncal.application.petstore.util ;
+cdi-new-qualifier --named Discount --targetPackage org.agoncal.application.petstore.util ;
+java-new-class --named NumberProducer --targetPackage org.agoncal.application.petstore.util ;
 
+java-new-field --named vatRate --type java.lang.Float --generateGetter=false --generateSetter=false --updateToString=false ;
+java-add-annotation --annotation javax.enterprise.inject.Produces --onProperty vat ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Vat --onProperty vat ;
+java-add-annotation --annotation javax.inject.Named --onProperty vat ;
 
-@/* ==================== */;
-@/* == Setting up JSF == */;
-@/* ==================== */;
-
-@/* Turn our Java project into a Web project with JSF, CDI, EJB, and JPA */;
-scaffold setup --scaffoldType faces ;
-
-@/* Generate the UI for all the @Entities */ ;
-scaffold from-entity ~.model.* --targetDir admin;
-
-
-@/* ========================== */;
-@/* == Building the project == */;
-@/* ========================== */;
-
-build --notest ;
-
-
-@/* ================ */;
-@/* == Arquillian == */;
-@/* ================ */;
-
-arquillian setup --containerType EMBEDDED --containerName GLASSFISH_EMBEDDED_3.1 ;
-arquillian create-test --class org.agoncal.application.petstore.rest.CategoryEndpoint.java ;
+java-new-field --named discountRate --type java.lang.Float --generateGetter=false --generateSetter=false --updateToString=false ;
+java-add-annotation --annotation javax.enterprise.inject.Produces --onProperty discountRate ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Discount --onProperty discountRate ;
+java-add-annotation --annotation javax.inject.Named --onProperty discountRate ;
 
 
-@/* =================================== */;
-@/* == Returning to the project root == */;
-@/* =================================== */;
 
-set ACCEPT_DEFAULTS false ;
-cd ~~ ;
+#  #####################  #
+#  Adding a Service Tier  #
+#  #####################  #
+
+java-new-class --named AbstractService --targetPackage org.agoncal.application.petstore.service ;
+ejb-new-bean --named CountryService ;
+ejb-new-bean --named CustomerService ;
+ejb-new-bean --named CategoryService ;
+ejb-new-bean --named ProductService ;
+ejb-new-bean --named ItemService ;
+ejb-new-bean --named PurchaseOrderService ;
+ejb-new-bean --named OrderLineService ;
+java-new-class --named InventoryService --targetPackage org.agoncal.application.petstore.service ;
+java-new-class --named ShippingService --targetPackage org.agoncal.application.petstore.service ;
+java-new-class --named StatisticService --targetPackage org.agoncal.application.petstore.service ;
+cdi-new-decorator --named PurchaseOrderDecorator --delegate org.agoncal.application.petstore.service.ComputablePurchaseOrder --targetPackage org.agoncal.application.petstore.service ;
+
+
+
+#  #############################  #
+#  Generates JSF beans and pages  #
+#  #############################  #
+
+scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.Country ;
+scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.Customer ;
+scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.Category ;
+scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.Product ;
+scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.Item ;
+scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.OrderLine ;
+scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.PurchaseOrder ;
+
+#  AccountBean
+#  ############
+faces-new-bean --named AccountBean --targetPackage org.agoncal.application.petstore.view.shopping ;
+
+#  CredentialsBean
+#  ############
+faces-new-bean --named CredentialsBean --targetPackage org.agoncal.application.petstore.view.shopping ;
+
+#  ShoppingCartBean
+#  ############
+faces-new-bean --named ShoppingCartBean --targetPackage org.agoncal.application.petstore.view.shopping ;
+# java-add-annotation --annotation javax.enterprise.context.ConversationScoped ;
+
+#  ShoppingCartItem
+#  ############
+java-new-class --named ShoppingCartItem --targetPackage org.agoncal.application.petstore.view.shopping ;
+java-new-field --named book --type org.agoncal.application.petstore.model.Book ;
+constraint-add --constraint NotNull --onProperty book ;
+java-new-field --named quantity --type java.lang.Integer ;
+constraint-add --constraint NotNull --onProperty quantity ;
+constraint-add --constraint Min --onProperty quantity --value 1 ;
+
+
+
+#  ############################  #
+#  Creates view utility classes  #
+#  ############################  #
+
+#  FacesContext producer
+#  ############
+java-new-class --named FacesProducer --targetPackage org.agoncal.application.petstore.view.util ;
+java-new-field --named facesContext --type javax.faces.context.FacesContext --generateGetter=false --generateSetter=false --updateToString=false ;
+java-add-annotation --annotation javax.inject.Inject --onProperty facesContext ;
+
+#  Exception
+#  ############
+cdi-new-interceptor-binding --named DisplayException --targetPackage org.agoncal.application.petstore.view.util ;
+cdi-new-interceptor --named ExceptionInterceptor --interceptorBinding org.agoncal.application.petstore.view.util.DisplayException  --targetPackage org.agoncal.application.petstore.view.util ;
+java-new-field --named logger --type org.apache.logging.log4j.Logger --generateGetter=false --generateSetter=false --updateToString=false ;
+java-add-annotation --annotation javax.inject.Inject --onProperty logger ;
+
+
+
+#  ########################  #
+#  Generates REST endpoints  #
+#  ########################  #
+
+rest-generate-endpoints-from-entities --targets org.agoncal.application.petstore.model.Country --contentType application/xml application/json ;
+rest-generate-endpoints-from-entities --targets org.agoncal.application.petstore.model.Customer --contentType application/xml application/json ;
+rest-generate-endpoints-from-entities --targets org.agoncal.application.petstore.model.Category --contentType application/xml application/json ;
+rest-generate-endpoints-from-entities --targets org.agoncal.application.petstore.model.Product --contentType application/xml application/json ;
+rest-generate-endpoints-from-entities --targets org.agoncal.application.petstore.model.Item --contentType application/xml application/json ;
+
+
+
+#  ##################  #
+#  Cleans the pom.xml  #
+#  ##################  #
+
+project-remove-dependencies org.hibernate.javax.persistence:hibernate-jpa-2.1-api:jar:: ;
+project-remove-dependencies javax.enterprise:cdi-api:jar:: ;
+project-remove-dependencies javax.ejb:javax.ejb-api:jar:: ;
+project-remove-dependencies javax.faces:javax.faces-api:jar:: ;
+# project-remove-dependencies javax.servlet:javax.servlet-api:jar:: ;
+project-remove-dependencies javax.validation:validation-api:jar:: ;
+project-remove-dependencies javax.ws.rs:javax.ws.rs-api:jar:: ;
+
+project-remove-managed-dependencies org.hibernate.javax.persistence:hibernate-jpa-2.1-api:jar::1.0.0.Draft-16 ;
+project-remove-managed-dependencies javax.enterprise:cdi-api:jar::1.1 ;
+project-remove-managed-dependencies javax.ejb:javax.ejb-api:jar::3.2 ;
+project-remove-managed-dependencies javax.faces:javax.faces-api:jar::2.2 ;
+# project-remove-managed-dependencies javax.servlet:javax.servlet-api:jar::3.1.0 ;
+project-remove-dependencies javax.ws.rs:javax.ws.rs-api:jar:2.0: ;
+project-remove-managed-dependencies org.jboss.spec:jboss-javaee-6.0:pom::3.0.2.Final ;
+
+#  Adding Java EE and Web Jars dependencies
+#  ############################
+project-add-dependencies org.webjars:bootstrap:2.3.2 ;
+project-add-dependencies org.primefaces:primefaces:5.1 ;
+project-add-dependencies org.jboss.spec:jboss-javaee-7.0:1.0.1.Final:provided:pom ;
