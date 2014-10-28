@@ -1,7 +1,7 @@
 package org.agoncal.application.petstore.service;
 
 import org.agoncal.application.petstore.model.*;
-import org.agoncal.application.petstore.exception.ValidationException;
+import org.agoncal.application.petstore.exceptions.ValidationException;
 import org.agoncal.application.petstore.util.Loggable;
 
 import javax.ejb.Stateless;

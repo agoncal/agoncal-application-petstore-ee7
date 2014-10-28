@@ -1,14 +1,11 @@
 package org.agoncal.application.petstore.model;
 
-import org.agoncal.application.petstore.constraint.NotEmpty;
+import org.agoncal.application.petstore.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Antonio Goncalves

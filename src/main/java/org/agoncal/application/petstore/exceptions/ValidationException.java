@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.exception;
+package org.agoncal.application.petstore.exceptions;
 
 import javax.ejb.ApplicationException;
 

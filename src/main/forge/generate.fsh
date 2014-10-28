@@ -10,7 +10,7 @@
 #  Creates a new project  #
 #  #####################  #
 
-project-new --named agoncal-application-petstore-ee7 --topLevelPackage org.agoncal.application.petstore --type war --finalName applicationPetstore ;
+project-new --named agoncal-application-petstore-ee7 --topLevelPackage org.agoncal.application.petstore --type war --finalName applicationPetstore --version 7.0 ;
 
 
 #  Setup the deployment descriptors to Java EE 7
@@ -21,6 +21,11 @@ ejb-setup --ejbVersion 3.2 ;
 faces-setup --facesVersion 2.2 ;
 servlet-setup --servletVersion 3.1 ;
 rest-setup --jaxrsVersion 2.0 ;
+
+#  Setup Arquillian
+#  ############
+arquillian-setup --arquillianVersion 1.1.5.Final --testFramework junit --testFrameworkVersion 4.11 --containerAdapter wildfly-remote --containerAdapterVersion 8.1.0.Final ;
+
 
 
 #  ###################  #
@@ -231,7 +236,7 @@ constraint-add --constraint Size --min 5 --max 5 --onProperty creditCardExpDate 
 #  Creates utility classes  #
 #  #######################  #
 
-# TODO java-new-exception --named ValidationException --targetPackage org.agoncal.application.petstore.exception ;
+# TODO java-new-exception --named ValidationException --targetPackage org.agoncal.application.petstore.exceptions ;
 java-new-class --named ValidationException --targetPackage org.agoncal.application.petstore.exceptions ;
 java-new-class --named LoginContextProducer --targetPackage org.agoncal.application.petstore.security ;
 java-new-class --named SimpleCallbackHandler --targetPackage org.agoncal.application.petstore.security ;
@@ -309,21 +314,26 @@ scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.mo
 scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.OrderLine ;
 scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.PurchaseOrder ;
 
-#  AccountBean
+#  AbstractBean
 #  ############
-faces-new-bean --named AccountBean --targetPackage org.agoncal.application.petstore.view.shopping ;
+faces-new-bean --named AbstractBean --targetPackage org.agoncal.application.petstore.view ;
 
-#  CredentialsBean
+#  Utility beans
 #  ############
-faces-new-bean --named CredentialsBean --targetPackage org.agoncal.application.petstore.view.shopping ;
+faces-new-bean --named DebugBean --targetPackage org.agoncal.application.petstore.view.util ;
+faces-new-bean --named LocalBean --targetPackage org.agoncal.application.petstore.view.util ;
+
+#  CredentialsBean and AccountBean
+#  ############
+faces-new-bean --named AccountBean --targetPackage org.agoncal.application.petstore.view.credentials ;
+faces-new-bean --named CredentialsBean --targetPackage org.agoncal.application.petstore.view.credentials ;
+cdi-new-interceptor-binding --named LoggedIn --targetPackage org.agoncal.application.petstore.view.credentials ;
 
 #  ShoppingCartBean
 #  ############
 faces-new-bean --named ShoppingCartBean --targetPackage org.agoncal.application.petstore.view.shopping ;
 # java-add-annotation --annotation javax.enterprise.context.ConversationScoped ;
 
-#  ShoppingCartItem
-#  ############
 java-new-class --named ShoppingCartItem --targetPackage org.agoncal.application.petstore.view.shopping ;
 java-new-field --named book --type org.agoncal.application.petstore.model.Book ;
 constraint-add --constraint NotNull --onProperty book ;
@@ -345,8 +355,8 @@ java-add-annotation --annotation javax.inject.Inject --onProperty facesContext ;
 
 #  Exception
 #  ############
-cdi-new-interceptor-binding --named DisplayException --targetPackage org.agoncal.application.petstore.view.util ;
-cdi-new-interceptor --named ExceptionInterceptor --interceptorBinding org.agoncal.application.petstore.view.util.DisplayException  --targetPackage org.agoncal.application.petstore.view.util ;
+cdi-new-interceptor-binding --named CatchException --targetPackage org.agoncal.application.petstore.view.util ;
+cdi-new-interceptor --named ExceptionInterceptor --interceptorBinding org.agoncal.application.petstore.view.util.CatchException  --targetPackage org.agoncal.application.petstore.view.util ;
 java-new-field --named logger --type org.apache.logging.log4j.Logger --generateGetter=false --generateSetter=false --updateToString=false ;
 java-add-annotation --annotation javax.inject.Inject --onProperty logger ;
 
@@ -364,6 +374,30 @@ rest-generate-endpoints-from-entities --targets org.agoncal.application.petstore
 
 
 
+#  #########################  #
+#  Generate Arquillian tests
+#  #########################  #
+
+# JSF Beacking Beans
+# ##################
+arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/view/CountryBean.java ;
+arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/view/CustomerBean.java ;
+arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/view/CategoryBean.java ;
+arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/view/ProductBean.java ;
+arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/view/ItemBean.java ;
+arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/view/OrderLineBean.java ;
+arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/view/PurchaseOrderBean.java ;
+
+# REST Endpoints
+# ##############
+arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/rest/CountryEndpoint.java ;
+arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/rest/CustomerEndpoint.java ;
+arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/rest/CategoryEndpoint.java ;
+arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/rest/ProductEndpoint.java ;
+arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/rest/ItemEndpoint.java ;
+
+
+
 #  ##################  #
 #  Cleans the pom.xml  #
 #  ##################  #
@@ -372,16 +406,17 @@ project-remove-dependencies org.hibernate.javax.persistence:hibernate-jpa-2.1-ap
 project-remove-dependencies javax.enterprise:cdi-api:jar:: ;
 project-remove-dependencies javax.ejb:javax.ejb-api:jar:: ;
 project-remove-dependencies javax.faces:javax.faces-api:jar:: ;
-# project-remove-dependencies javax.servlet:javax.servlet-api:jar:: ;
-project-remove-dependencies javax.validation:validation-api:jar:: ;
+project-remove-dependencies javax.servlet:javax.servlet-api:jar:: ;
+project-remove-dependencies org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec:jar:: ;
 project-remove-dependencies javax.ws.rs:javax.ws.rs-api:jar:: ;
+project-remove-dependencies javax.validation:validation-api:jar:: ;
 
 project-remove-managed-dependencies org.hibernate.javax.persistence:hibernate-jpa-2.1-api:jar::1.0.0.Draft-16 ;
 project-remove-managed-dependencies javax.enterprise:cdi-api:jar::1.1 ;
 project-remove-managed-dependencies javax.ejb:javax.ejb-api:jar::3.2 ;
 project-remove-managed-dependencies javax.faces:javax.faces-api:jar::2.2 ;
-# project-remove-managed-dependencies javax.servlet:javax.servlet-api:jar::3.1.0 ;
-project-remove-dependencies javax.ws.rs:javax.ws.rs-api:jar:2.0: ;
+project-remove-managed-dependencies javax.servlet:javax.servlet-api:jar::3.1.0 ;
+project-remove-managed-dependencies javax.ws.rs:javax.ws.rs-api:jar::2.0
 project-remove-managed-dependencies org.jboss.spec:jboss-javaee-6.0:pom::3.0.2.Final ;
 
 #  Adding Java EE and Web Jars dependencies

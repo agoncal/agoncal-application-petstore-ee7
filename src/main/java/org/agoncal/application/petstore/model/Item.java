@@ -1,7 +1,7 @@
 package org.agoncal.application.petstore.model;
 
-import org.agoncal.application.petstore.constraint.NotEmpty;
-import org.agoncal.application.petstore.constraint.Price;
+import org.agoncal.application.petstore.constraints.NotEmpty;
+import org.agoncal.application.petstore.constraints.Price;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

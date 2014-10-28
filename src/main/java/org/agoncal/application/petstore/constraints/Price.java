@@ -1,10 +1,9 @@
-package org.agoncal.application.petstore.constraint;
+package org.agoncal.application.petstore.constraints;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import javax.validation.ReportAsSingleViolation;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.DecimalMin;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -19,20 +18,19 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *         --
  */
 
-@NotNull
-@Size(min = 1)
-@Constraint(validatedBy = {})
-@ReportAsSingleViolation
+@DecimalMin("10")
 @Target({METHOD, FIELD})
 @Retention(RUNTIME)
+@Constraint(validatedBy = {})
+@ReportAsSingleViolation
 @Documented
-public @interface NotEmpty {
+public @interface Price {
 
     // ======================================
     // =             Attributes             =
     // ======================================
 
-    String message() default "{org.agoncal.application.petstore.constraint.NotEmpty.message}";
+    String message() default "{org.agoncal.application.petstore.constraint.Price.message}";
 
     Class<?>[] groups() default {};
 

@@ -1,7 +1,7 @@
 package org.agoncal.application.petstore.model;
 
-import org.agoncal.application.petstore.constraint.Login;
-import org.agoncal.application.petstore.exception.ValidationException;
+import org.agoncal.application.petstore.constraints.Login;
+import org.agoncal.application.petstore.exceptions.ValidationException;
 import org.hibernate.validator.constraints.Email;
 import sun.misc.BASE64Encoder;
 

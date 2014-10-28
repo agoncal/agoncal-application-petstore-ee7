@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.constraint;
+package org.agoncal.application.petstore.constraints;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
