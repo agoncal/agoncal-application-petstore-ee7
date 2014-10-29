@@ -1,196 +1,291 @@
 package org.agoncal.application.petstore.model;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-/**
- * @author Antonio Goncalves
- *         http://www.antoniogoncalves.org
- *         --
- */
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name = "t_order")
+@Table(name = "purchase_order")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = PurchaseOrder.FIND_ALL, query = "SELECT o FROM PurchaseOrder o")
+         @NamedQuery(name = PurchaseOrder.FIND_ALL, query = "SELECT o FROM PurchaseOrder o")
 })
-public class PurchaseOrder {
+public class PurchaseOrder implements Serializable
+{
 
-    // ======================================
-    // =             Attributes             =
-    // ======================================
+   // ======================================
+   // = Attributes =
+   // ======================================
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(name = "order_date", updatable = false)
-    @Temporal(TemporalType.DATE)
-    private Date orderDate;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer_fk", nullable = false)
-    private Customer customer;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "t_order_order_line",
-            joinColumns = {@JoinColumn(name = "order_fk")},
-            inverseJoinColumns = {@JoinColumn(name = "order_line_fk")})
-    private List<OrderLine> orderLines;
-    @Embedded
-    private Address deliveryAddress = new Address();
-    @Embedded
-    private CreditCard creditCard = new CreditCard();
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   @Column(name = "id", updatable = false, nullable = false)
+   private Long id;
+   @Version
+   @Column(name = "version")
+   private int version;
 
-    // ======================================
-    // =             Constants              =
-    // ======================================
+   @Column(name = "order_date", updatable = false)
+   @Temporal(TemporalType.DATE)
+   private Date orderDate;
 
-    public static final String FIND_ALL = "Order.findAll";
+   @Column
+   private Float totalWithoutVat;
 
-    // ======================================
-    // =            Constructors            =
-    // ======================================
+   @Column(name = "vat_rate")
+   private Float vatRate;
 
-    public PurchaseOrder() {
-    }
+   @Column
+   private Float vat;
 
-    public PurchaseOrder(Customer customer, CreditCard creditCard, Address deliveryAddress) {
-        this.customer = customer;
-        this.creditCard = creditCard;
-        this.deliveryAddress = deliveryAddress;
-    }
+   @Column
+   private Float totalWithVat;
 
-    // ======================================
-    // =          Lifecycle Methods         =
-    // ======================================
+   @Column(name = "discount_rate")
+   private Float discountRate;
 
-    @PrePersist
-    private void setDefaultData() {
-        orderDate = new Date();
-    }
+   @Column
+   private Float discount;
 
-    // ======================================
-    // =              Public Methods        =
-    // ======================================
+   @Column
+   private Float total;
 
-    public Float getTotal() {
-        if (orderLines == null || orderLines.isEmpty())
-            return 0f;
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "customer_fk", nullable = false)
+   private Customer customer;
 
-        Float total = 0f;
+   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @JoinTable(name = "t_order_order_line",
+            joinColumns = { @JoinColumn(name = "order_fk") },
+            inverseJoinColumns = { @JoinColumn(name = "order_line_fk") })
+   private Set<OrderLine> orderLines = new HashSet<OrderLine>();
 
-        // Sum up the quantities
-        for (OrderLine orderLine : orderLines) {
-            total += (orderLine.getSubTotal());
-        }
+   @Embedded
+   @Valid
+   private Address deliveryAddress = new Address();
 
-        return total;
-    }
+   @Embedded
+   @Valid
+   private CreditCard creditCard = new CreditCard();
 
-    // ======================================
-    // =         Getters & setters          =
-    // ======================================
+   // ======================================
+   // = Constants =
+   // ======================================
 
-    public Long getId() {
-        return id;
-    }
+   public static final String FIND_ALL = "Order.findAll";
 
-    public Date getOrderDate() {
-        return orderDate;
-    }
+   // ======================================
+   // = Constructors =
+   // ======================================
 
-    public Customer getCustomer() {
-        return customer;
-    }
+   public PurchaseOrder()
+   {
+   }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+   public PurchaseOrder(Customer customer, CreditCard creditCard, Address deliveryAddress)
+   {
+      this.customer = customer;
+      this.creditCard = creditCard;
+      this.deliveryAddress = deliveryAddress;
+   }
 
-    public List<OrderLine> getOrderLines() {
-        return orderLines;
-    }
+   // ======================================
+   // = Lifecycle Methods =
+   // ======================================
 
-    public void setOrderLines(List<OrderLine> orderLines) {
-        this.orderLines = orderLines;
-    }
+   @PrePersist
+   private void setDefaultData()
+   {
+      orderDate = new Date();
+   }
 
-    public Address getDeliveryAddress() {
-        return deliveryAddress;
-    }
+   // ======================================
+   // = Public Methods =
+   // ======================================
 
-    public void setDeliveryAddress(Address deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
-    }
+   public Long getId()
+   {
+      return this.id;
+   }
 
-    public CreditCard getCreditCard() {
-        return creditCard;
-    }
+   public void setId(final Long id)
+   {
+      this.id = id;
+   }
 
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
-    }
+   public int getVersion()
+   {
+      return this.version;
+   }
 
-    public String getCreditCardNumber() {
-        return creditCard.getCreditCardNumber();
-    }
+   public void setVersion(final int version)
+   {
+      this.version = version;
+   }
 
-    public void setCreditCardNumber(String creditCardNumber) {
-        creditCard.setCreditCardNumber(creditCardNumber);
-    }
+   public Date getOrderDate()
+   {
+      return orderDate;
+   }
 
-    public CreditCardType getCreditCardType() {
-        return creditCard.getCreditCardType();
-    }
+   public void setOrderDate(Date orderDate)
+   {
+      this.orderDate = orderDate;
+   }
 
-    public void setCreditCardType(CreditCardType creditCardType) {
-        creditCard.setCreditCardType(creditCardType);
-    }
+   public Float getTotalWithoutVat()
+   {
+      return totalWithoutVat;
+   }
 
-    public String getCreditCardExpiryDate() {
-        return creditCard.getCreditCardExpDate();
-    }
+   public void setTotalWithoutVat(Float totalWithoutVat)
+   {
+      this.totalWithoutVat = totalWithoutVat;
+   }
 
-    public void setCreditCardExpiryDate(String creditCardExpiryDate) {
-        creditCard.setCreditCardExpDate(creditCardExpiryDate);
-    }
+   public Float getVatRate()
+   {
+      return vatRate;
+   }
 
-    // ======================================
-    // =   Methods hash, equals, toString   =
-    // ======================================
+   public void setVatRate(Float vatRate)
+   {
+      this.vatRate = vatRate;
+   }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PurchaseOrder)) return false;
+   public Float getVat()
+   {
+      return vat;
+   }
 
-        PurchaseOrder order = (PurchaseOrder) o;
+   public void setVat(Float vat)
+   {
+      this.vat = vat;
+   }
 
-        if (!customer.equals(order.customer)) return false;
-        if (orderDate != null && !orderDate.equals(order.orderDate)) return false;
+   public Float getTotalWithVat()
+   {
+      return totalWithVat;
+   }
 
-        return true;
-    }
+   public void setTotalWithVat(Float totalWithVat)
+   {
+      this.totalWithVat = totalWithVat;
+   }
 
-    @Override
-    public int hashCode() {
-        int result = orderDate != null ? orderDate.hashCode() : 0;
-        result = 31 * result + customer.hashCode();
-        return result;
-    }
+   public Float getDiscountRate()
+   {
+      return discountRate;
+   }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Order");
-        sb.append("{id=").append(id);
-        sb.append(", orderDate=").append(orderDate);
-        sb.append(", customer=").append(customer);
-        sb.append(", orderLines=").append(orderLines);
-        sb.append(", deliveryAddress=").append(deliveryAddress);
-        sb.append(", creditCard=").append(creditCard);
-        sb.append('}');
-        return sb.toString();
-    }
+   public void setDiscountRate(Float discountRate)
+   {
+      this.discountRate = discountRate;
+   }
+
+   public Float getDiscount()
+   {
+      return discount;
+   }
+
+   public void setDiscount(Float discount)
+   {
+      this.discount = discount;
+   }
+
+   public Float getTotal()
+   {
+      return total;
+   }
+
+   public void setTotal(Float total)
+   {
+      this.total = total;
+   }
+
+   public Customer getCustomer()
+   {
+      return this.customer;
+   }
+
+   public void setCustomer(final Customer customer)
+   {
+      this.customer = customer;
+   }
+
+   public Set<OrderLine> getOrderLines()
+   {
+      return this.orderLines;
+   }
+
+   public void setOrderLines(final Set<OrderLine> orderLines)
+   {
+      this.orderLines = orderLines;
+   }
+
+   // ======================================
+   // = Methods hash, equals, toString =
+   // ======================================
+
+   @Override
+   public boolean equals(Object obj)
+   {
+      if (this == obj)
+      {
+         return true;
+      }
+      if (!(obj instanceof PurchaseOrder))
+      {
+         return false;
+      }
+      PurchaseOrder other = (PurchaseOrder) obj;
+      if (id != null)
+      {
+         if (!id.equals(other.id))
+         {
+            return false;
+         }
+      }
+      return true;
+   }
+
+   @Override
+   public int hashCode()
+   {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((id == null) ? 0 : id.hashCode());
+      return result;
+   }
+
+   @Override
+   public String toString()
+   {
+      String result = getClass().getSimpleName() + " ";
+      if (id != null)
+         result += "id: " + id;
+      result += ", version: " + version;
+      if (orderDate != null)
+         result += ", orderDate: " + orderDate;
+      if (totalWithoutVat != null)
+         result += ", totalWithoutVat: " + totalWithoutVat;
+      if (vatRate != null)
+         result += ", vatRate: " + vatRate;
+      if (vat != null)
+         result += ", vat: " + vat;
+      if (totalWithVat != null)
+         result += ", totalWithVat: " + totalWithVat;
+      if (discountRate != null)
+         result += ", discountRate: " + discountRate;
+      if (discount != null)
+         result += ", discount: " + discount;
+      if (total != null)
+         result += ", total: " + total;
+      return result;
+   }
 }

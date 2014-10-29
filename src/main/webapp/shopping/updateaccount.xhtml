@@ -29,15 +29,15 @@
                                      pt:disabled="disabled"/>
                         <h:outputText value=""/>
 
-                        <h:outputText value="* #{i18n.customer_firstname}:"/>
-                        <h:inputText id="firstname" value="#{accountBean.loggedinCustomer.firstname}"
+                        <h:outputText value="* #{i18n.customer_firstName}:"/>
+                        <h:inputText id="firstName" value="#{accountBean.loggedinCustomer.firstName}"
                                      class="form-control"/>
-                        <h:message for="firstname" style="color: red;"/>
+                        <h:message for="firstName" style="color: red;"/>
 
-                        <h:outputText value="* #{i18n.customer_lastname}:"/>
-                        <h:inputText id="lastname" value="#{accountBean.loggedinCustomer.lastname}"
+                        <h:outputText value="* #{i18n.customer_lastName}:"/>
+                        <h:inputText id="lastName" value="#{accountBean.loggedinCustomer.lastName}"
                                      class="form-control"/>
-                        <h:message for="lastname" style="color: red;"/>
+                        <h:message for="lastName" style="color: red;"/>
 
                         <h:outputText value="#{i18n.customer_email}:"/>
                         <h:inputText id="email" value="#{accountBean.loggedinCustomer.email}"

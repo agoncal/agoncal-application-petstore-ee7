@@ -11,7 +11,9 @@ import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Antonio Goncalves
@@ -44,7 +46,7 @@ public class PurchaseOrderService implements Serializable {
         PurchaseOrder order = new PurchaseOrder(em.merge(customer), creditCard, customer.getHomeAddress());
 
         // From the shopping cart we create the order lines
-        List<OrderLine> orderLines = new ArrayList<>();
+        Set<OrderLine> orderLines = new HashSet<>();
 
         for (ShoppingCartItem cartItem : cartItems) {
             orderLines.add(new OrderLine(cartItem.getQuantity(), em.merge(cartItem.getItem())));

@@ -30,7 +30,7 @@
 			</h:outputText>
 			<h:outputText/>
 			<h:outputLabel for="purchaseOrderBeanPurchaseOrderCustomer" value="Customer:"/>
-			<h:link id="purchaseOrderBeanPurchaseOrderCustomer" outcome="/admin/customer/view" value="#{purchaseOrderBean.purchaseOrder.customer.firstname} #{purchaseOrderBean.purchaseOrder.customer.lastname}">
+			<h:link id="purchaseOrderBeanPurchaseOrderCustomer" outcome="/admin/customer/view" value="#{purchaseOrderBean.purchaseOrder.customer.firstName} #{purchaseOrderBean.purchaseOrder.customer.lastName}">
 				<f:param name="id" value="#{purchaseOrderBean.purchaseOrder.customer.id}"/>
 			</h:link>
 			<h:outputText/>

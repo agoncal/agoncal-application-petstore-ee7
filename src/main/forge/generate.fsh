@@ -53,14 +53,17 @@ constraint-new-annotation --named Price ;
 #  Country entity
 #  ############
 jpa-new-entity --named Country ;
-jpa-new-field --named isoCode --length 2 ;
+#--nullable
+jpa-new-field --named isoCode --length 2 --columnName iso_code ;
+#--nullable
 jpa-new-field --named name --length 80 ;
-jpa-new-field --named printableName --length 80 ;
+#--nullable
+jpa-new-field --named printableName --length 80 --columnName printable_name ;
 jpa-new-field --named iso3 --length 3 ;
 jpa-new-field --named numcode --length 3 ;
-
+# Constraints
 constraint-add --onProperty isoCode --constraint NotNull ;
-constraint-add --onProperty isoCode --constraint NotNull Size --min 2 --max 2 ;
+constraint-add --onProperty isoCode --constraint Size --min 2 --max 2 ;
 constraint-add --onProperty name --constraint NotNull ;
 constraint-add --onProperty name --constraint Size --min 2 --max 80 ;
 constraint-add --onProperty printableName --constraint NotNull ;
@@ -69,35 +72,42 @@ constraint-add --onProperty iso3 --constraint NotNull ;
 constraint-add --onProperty iso3 --constraint Size --min 3 --max 3 ;
 constraint-add --onProperty numcode --constraint NotNull ;
 constraint-add --onProperty numcode --constraint Size --min 3 --max 3 ;
+# Cache
+java-add-annotation --annotation javax.persistence.Cacheable ;
 
 
 #  Address embeddable
 #  ############
 jpa-new-embeddable --named Address ;
-jpa-new-field --named street1 ;
+#--nullable
+jpa-new-field --named street1 --length 50 ;
 jpa-new-field --named street2 ;
-jpa-new-field --named city ;
+#--nullable
+jpa-new-field --named city  --length 50 ;
 jpa-new-field --named state ;
-jpa-new-field --named zipcode --columnName zip_code ;
+#--nullable
+jpa-new-field --named zipcode --columnName zip_code --length 10 ;
 # Relationships
 jpa-new-field --named country --type org.agoncal.application.petstore.model.Country --relationshipType Many-to-One
-
+# Constraints
 constraint-add --onProperty street1 --constraint Size --min 5 --max 50 ;
 constraint-add --onProperty street1 --constraint NotNull ;
 constraint-add --onProperty city --constraint Size --min 2 --max 50 ;
 constraint-add --onProperty city --constraint NotNull ;
 constraint-add --onProperty zipcode --constraint Size --min 1 --max 10 ;
 constraint-add --onProperty zipcode --constraint NotNull ;
-constraint-add --onProperty country --constraint Size --min 2 --max 50 ;
-constraint-add --onProperty country --constraint NotNull ;
 
 
 #  Customer entity
 #  ############
 jpa-new-entity --named Customer ;
+#--nullable
 jpa-new-field --named login --length 10 ;
+#--nullable
 jpa-new-field --named password --length 256 ;
+#--nullable
 jpa-new-field --named firstName --length 50 --columnName first_name ;
+#--nullable
 jpa-new-field --named lastName --length 50 --columnName last_name ;
 jpa-new-field --named telephone ;
 jpa-new-field --named email ;
@@ -109,8 +119,7 @@ jpa-new-field --named street2 ;
 jpa-new-field --named city --length 50 ;
 jpa-new-field --named state ;
 jpa-new-field --named zipcode --length 10 ;
-
-constraint-add --onProperty login --constraint NotNull ;
+# Constraints
 constraint-add --onProperty password --constraint NotNull ;
 constraint-add --onProperty password --constraint Size --min 1 --max 256 ;
 constraint-add --onProperty firstName --constraint NotNull ;
@@ -123,42 +132,58 @@ constraint-add --onProperty dateOfBirth --constraint Past ;
 #  Category entity
 #  ############
 jpa-new-entity  --named Category ;
+#--nullable
 jpa-new-field --named name --length 30 ;
-jpa-new-field --named description ;
-
+#--nullable
+jpa-new-field --named description --length 3000 ;
+# Constraints
 constraint-add --onProperty name --constraint NotNull ;
 constraint-add --onProperty name --constraint Size --min 1 --max 30 ;
 constraint-add --onProperty description --constraint NotNull ;
+constraint-add --onProperty description --constraint Size --max 3000 ;
+# Cache
+java-add-annotation --annotation javax.persistence.Cacheable ;
 
 
 #  Product entity
 #  ############
 jpa-new-entity --named Product ;
+#--nullable
 jpa-new-field --named name --length 30 ;
-jpa-new-field --named description ;
+#--nullable
+jpa-new-field --named description --length 3000 ;
 # Relationships
 jpa-new-field --named category --type org.agoncal.application.petstore.model.Category --relationshipType Many-to-One ;
-
+# Constraints
 constraint-add --onProperty name --constraint NotNull ;
 constraint-add --onProperty name --constraint Size --min 1 --max 30 ;
+constraint-add --onProperty description --constraint NotNull ;
+constraint-add --onProperty description --constraint Size --max 3000 ;
+# Cache
+java-add-annotation --annotation javax.persistence.Cacheable ;
 
 
 #  Item entity
 #  ############
 jpa-new-entity --named Item ;
+#--nullable
 jpa-new-field --named name --length 30 ;
+#--nullable
 jpa-new-field --named description --length 3000 ;
-jpa-new-field --named imagePath ;
-jpa-new-field --named unitCost --typeName float ;
+jpa-new-field --named imagePath --columnName image_path ;
+jpa-new-field --named unitCost --type java.lang.Float --columnName unit_cost ;
 # Relationships
 jpa-new-field --named product --type org.agoncal.application.petstore.model.Product --relationshipType Many-to-One ;
-
+# Constraints
 constraint-add --onProperty name --constraint NotNull ;
 constraint-add --onProperty name --constraint Size --min 1 --max 30 ;
-constraint-add --onProperty description --constraint Size --max 30 ;
+constraint-add --onProperty description --constraint NotNull ;
+constraint-add --onProperty description --constraint Size --max 3000 ;
 constraint-add --onProperty unitCost --constraint NotNull ;
-constraint-add --onProperty unitCost --constraint Min --value 1
-constraint-add --onProperty imagePath --constraint NotNull ;
+# TODO constraint-add --onProperty unitCost --constraint Price ;
+# TODO constraint-add --onProperty imagePath --constraint NotEmpty ;
+# Cache
+java-add-annotation --annotation javax.persistence.Cacheable ;
 
 
 #  CreditCardType enumeration
@@ -174,10 +199,12 @@ java-new-class --named CreditCardConverter --targetPackage org.agoncal.applicati
 # CreditCard embeddable
 # ############
 jpa-new-embeddable --named CreditCard ;
-jpa-new-field --named creditCardNumber --columnName credit_card_number ;
+#--nullable
+jpa-new-field --named creditCardNumber --columnName credit_card_number --length 30 ;
 jpa-new-field --named creditCardType --type org.agoncal.application.petstore.model.CreditCardType --columnName credit_card_type ;
-jpa-new-field --named creditCardExpDate --columnName credit_card_expiry_date  ;
-
+#--nullable
+jpa-new-field --named creditCardExpDate --columnName credit_card_expiry_date --length 5 ;
+# Constraints
 constraint-add --onProperty creditCardNumber --constraint NotNull ;
 constraint-add --onProperty creditCardNumber --constraint Size --min 1 --max 30 ;
 constraint-add --onProperty creditCardType --constraint NotNull ;
@@ -187,15 +214,16 @@ constraint-add --onProperty creditCardExpDate --constraint Size --min 1 --max 5 
 
 #  OrderLine entity
 #  ############
-jpa-new-entity --named OrderLine ;
-jpa-new-field --named quantity --typeName int
+jpa-new-entity --named OrderLine --tableName order_line ;
+#--nullable
+jpa-new-field --named quantity --type java.lang.Integer ;
 # Relationships
 jpa-new-field --named item --type org.agoncal.application.petstore.model.Item --relationshipType Many-to-One ;
 
 
 #  PurchaseOrder entity
 #  ############
-jpa-new-entity --named PurchaseOrder ;
+jpa-new-entity --named PurchaseOrder --tableName purchase_order ;
 jpa-new-field --named orderDate --type java.util.Date --temporalType DATE --columnName order_date ;
 jpa-new-field --named totalWithoutVat --type java.lang.Float ;
 jpa-new-field --named vatRate --type java.lang.Float --columnName vat_rate ;
@@ -217,7 +245,7 @@ jpa-new-field --named creditCardExpDate --columnName credit_card_expiry_date  ;
 # Relationships
 jpa-new-field --named customer --type org.agoncal.application.petstore.model.Customer --relationshipType Many-to-One ;
 jpa-new-field --named orderLines --type org.agoncal.application.petstore.model.OrderLine --relationshipType One-to-Many ;
-
+# Constraints
 constraint-add --constraint NotNull --onProperty street1 ;
 constraint-add --constraint Size --min 5 --max 50 --onProperty street1 ;
 constraint-add --constraint NotNull --onProperty city ;

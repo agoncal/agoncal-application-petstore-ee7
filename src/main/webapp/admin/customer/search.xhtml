@@ -35,13 +35,13 @@
 						<h:outputText/>
 						<h:outputLabel for="customerBeanExampleFirstname" value="Firstname:"/>
 						<h:panelGroup>
-							<h:inputText id="customerBeanExampleFirstname" maxLength="50" value="#{customerBean.example.firstname}" class="form-control"/>
+							<h:inputText id="customerBeanExampleFirstname" maxLength="50" value="#{customerBean.example.firstName}" class="form-control"/>
 							<h:message for="customerBeanExampleFirstname" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
 						<h:outputLabel for="customerBeanExampleLastname" value="Lastname:"/>
 						<h:panelGroup>
-							<h:inputText id="customerBeanExampleLastname" maxLength="50" value="#{customerBean.example.lastname}" class="form-control"/>
+							<h:inputText id="customerBeanExampleLastname" maxLength="50" value="#{customerBean.example.lastName}" class="form-control"/>
 							<h:message for="customerBeanExampleLastname" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
@@ -75,7 +75,7 @@
 					</f:facet>
 					<h:link outcome="/admin/customer/view">
 						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemFirstname" value="#{_item.firstname}"/>
+						<h:outputText id="itemFirstname" value="#{_item.firstName}"/>
 					</h:link>
 				</h:column>
 				<h:column>
@@ -84,7 +84,7 @@
 					</f:facet>
 					<h:link outcome="/admin/customer/view">
 						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemLastname" value="#{_item.lastname}"/>
+						<h:outputText id="itemLastname" value="#{_item.lastName}"/>
 					</h:link>
 				</h:column>
 			</h:dataTable>

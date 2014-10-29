@@ -8,7 +8,7 @@
         <!--<jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>-->
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-          <property name="javax.persistence.sql-load-script-source" value="init_db.sql"/>
+            <property name="javax.persistence.sql-load-script-source" value="init_db.sql"/>
 
             <!-- Properties for EclipseLink -->
             <property name="eclipselink.logging.level" value="INFO"/>

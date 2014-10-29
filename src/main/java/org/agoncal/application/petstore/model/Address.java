@@ -1,5 +1,7 @@
 package org.agoncal.application.petstore.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
@@ -13,135 +15,136 @@ import javax.validation.constraints.Size;
  */
 
 @Embeddable
-public class Address {
+public class Address implements Serializable
+{
 
-    // ======================================
-    // =             Attributes             =
-    // ======================================
+   // ======================================
+   // = Attributes =
+   // ======================================
 
-    @Column(nullable = false)
-    @NotNull
-    @Size(min = 5, max = 50)
-    private String street1;
-    private String street2;
-    @Column(nullable = false, length = 100)
-    @NotNull
-    @Size(min = 2, max = 50)
-    private String city;
-    private String state;
-    @Column(name = "zip_code", nullable = false, length = 10)
-    @NotNull
-    @Size(min = 1, max = 10)
-    private String zipcode;
-    @ManyToOne
-    private Country country; // TODO use the country entity
+   @Column(nullable = false, length = 50)
+   @Size(min = 5, max = 50)
+   @NotNull
+   private String street1;
 
-    // ======================================
-    // =            Constructors            =
-    // ======================================
+   @Column
+   private String street2;
 
-    public Address() {
-    }
+   @Column(nullable = false, length = 50)
+   @Size(min = 2, max = 50)
+   @NotNull
+   private String city;
 
-    public Address(String street1, String city, String zipcode, Country country) {
-        this.street1 = street1;
-        this.city = city;
-        this.zipcode = zipcode;
-        this.country = country;
-    }
+   @Column
+   private String state;
 
-    // ======================================
-    // =         Getters & setters          =
-    // ======================================
+   @Column(length = 10, nullable = false, name = "zip_code")
+   @Size(min = 1, max = 10)
+   @NotNull
+   private String zipcode;
 
-    public String getStreet1() {
-        return street1;
-    }
+   @ManyToOne
+   private Country country;
 
-    public void setStreet1(String street1) {
-        this.street1 = street1;
-    }
+   // ======================================
+   // = Constructors =
+   // ======================================
 
-    public String getStreet2() {
-        return street2;
-    }
+   public Address()
+   {
+   }
 
-    public void setStreet2(String street2) {
-        this.street2 = street2;
-    }
+   public Address(String street1, String city, String zipcode, Country country)
+   {
+      this.street1 = street1;
+      this.city = city;
+      this.zipcode = zipcode;
+      this.country = country;
+   }
 
-    public String getCity() {
-        return city;
-    }
+   // ======================================
+   // = Getters & setters =
+   // ======================================
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+   public String getStreet1()
+   {
+      return street1;
+   }
 
-    public String getState() {
-        return state;
-    }
+   public void setStreet1(String street1)
+   {
+      this.street1 = street1;
+   }
 
-    public void setState(String state) {
-        this.state = state;
-    }
+   public String getStreet2()
+   {
+      return street2;
+   }
 
-    public String getZipcode() {
-        return zipcode;
-    }
+   public void setStreet2(String street2)
+   {
+      this.street2 = street2;
+   }
 
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
+   public String getCity()
+   {
+      return city;
+   }
 
-    public Country getCountry() {
-        return country;
-    }
+   public void setCity(String city)
+   {
+      this.city = city;
+   }
 
-    public void setCountry(Country country) {
-        this.country = country;
-    }
+   public String getState()
+   {
+      return state;
+   }
 
-    // ======================================
-    // =   Methods hash, equals, toString   =
-    // ======================================
+   public void setState(String state)
+   {
+      this.state = state;
+   }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Address)) return false;
+   public String getZipcode()
+   {
+      return zipcode;
+   }
 
-        Address address = (Address) o;
+   public void setZipcode(String zipcode)
+   {
+      this.zipcode = zipcode;
+   }
 
-        if (!city.equals(address.city)) return false;
-        if (state != null ? !state.equals(address.state) : address.state != null) return false;
-        if (!street1.equals(address.street1)) return false;
-        if (street2 != null ? !street2.equals(address.street2) : address.street2 != null) return false;
-        if (!zipcode.equals(address.zipcode)) return false;
+   public Country getCountry()
+   {
+      return this.country;
+   }
 
-        return true;
-    }
+   public void setCountry(final Country country)
+   {
+      this.country = country;
+   }
 
-    @Override
-    public int hashCode() {
-        int result = street1.hashCode();
-        result = 31 * result + (street2 != null ? street2.hashCode() : 0);
-        result = 31 * result + city.hashCode();
-        result = 31 * result + (state != null ? state.hashCode() : 0);
-        result = 31 * result + zipcode.hashCode();
-        return result;
-    }
+   // ======================================
+   // = Methods hash, equals, toString =
+   // ======================================
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Address");
-        sb.append("{street1='").append(street1).append('\'');
-        sb.append(", street2='").append(street2).append('\'');
-        sb.append(", city='").append(city).append('\'');
-        sb.append(", state='").append(state).append('\'');
-        sb.append(", zipcode='").append(zipcode).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
+   @Override
+   public String toString()
+   {
+      String result = getClass().getSimpleName() + " ";
+      if (street1 != null && !street1.trim().isEmpty())
+         result += "street1: " + street1;
+      if (street2 != null && !street2.trim().isEmpty())
+         result += ", street2: " + street2;
+      if (city != null && !city.trim().isEmpty())
+         result += ", city: " + city;
+      if (state != null && !state.trim().isEmpty())
+         result += ", state: " + state;
+      if (zipcode != null && !zipcode.trim().isEmpty())
+         result += ", zipcode: " + zipcode;
+      return result;
+   }
+
 }

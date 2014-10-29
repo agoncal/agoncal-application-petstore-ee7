@@ -190,13 +190,13 @@ public class CustomerBean implements Serializable {
         if (password != null && !"".equals(password)) {
             predicatesList.add(builder.like(root.<String>get("password"), '%' + password + '%'));
         }
-        String firstname = this.example.getFirstname();
-        if (firstname != null && !"".equals(firstname)) {
-            predicatesList.add(builder.like(root.<String>get("firstname"), '%' + firstname + '%'));
+        String firstName = this.example.getFirstName();
+        if (firstName != null && !"".equals(firstName)) {
+            predicatesList.add(builder.like(root.<String>get("firstName"), '%' + firstName + '%'));
         }
-        String lastname = this.example.getLastname();
-        if (lastname != null && !"".equals(lastname)) {
-            predicatesList.add(builder.like(root.<String>get("lastname"), '%' + lastname + '%'));
+        String lastName = this.example.getLastName();
+        if (lastName != null && !"".equals(lastName)) {
+            predicatesList.add(builder.like(root.<String>get("lastName"), '%' + lastName + '%'));
         }
         String telephone = this.example.getTelephone();
         if (telephone != null && !"".equals(telephone)) {

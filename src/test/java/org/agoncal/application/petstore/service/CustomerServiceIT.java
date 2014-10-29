@@ -49,15 +49,15 @@ public class CustomerServiceIT extends AbstractServiceIT {
 
         // Finds the object by login
         customer = customerService.findCustomer(login);
-        assertEquals("Richard", customer.getFirstname());
+        assertEquals("Richard", customer.getFirstName());
 
         // Updates the object
-        customer.setFirstname("Rich");
+        customer.setFirstName("Rich");
         customerService.updateCustomer(customer);
 
         // Finds the object by login
         customer = customerService.findCustomer(login);
-        assertEquals("Rich", customer.getFirstname());
+        assertEquals("Rich", customer.getFirstName());
 
         // Deletes the object
         customerService.removeCustomer(customer);

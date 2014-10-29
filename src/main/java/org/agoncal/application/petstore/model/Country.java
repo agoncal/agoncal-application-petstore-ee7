@@ -1,141 +1,202 @@
 package org.agoncal.application.petstore.model;
 
-import javax.persistence.*;
+import java.io.Serializable;
+
+import javax.persistence.Cacheable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-/**
- * @author Antonio Goncalves
- *         http://www.antoniogoncalves.org
- *         --
- */
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Cacheable
-public class Country {
+@XmlRootElement
+public class Country implements Serializable
+{
 
-    // ======================================
-    // =             Attributes             =
-    // ======================================
+   // ======================================
+   // = Attributes =
+   // ======================================
 
-    @Id @GeneratedValue
-    private Long id;
-    @NotNull
-    @Size(min = 2, max = 2)
-    private String isoCode;
-    @Column(nullable = false, length = 80)
-    @NotNull
-    @Size(min = 2, max = 80)
-    private String name;
-    @Column(nullable = false, length = 80)
-    @NotNull
-    @Size(min = 2, max = 80)
-    private String printableName;
-    @Column(length = 3)
-    @Size(min = 3, max = 3)
-    private String iso3;
-    @Column(length = 3)
-    @Size(min = 3, max = 3)
-    private String numcode;
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   @Column(name = "id", updatable = false, nullable = false)
+   private Long id;
+   @Version
+   @Column(name = "version")
+   private int version;
 
-    // ======================================
-    // =            Constructors            =
-    // ======================================
+   @Column(nullable = true, length = 2, name = "iso_code")
+   @NotNull
+   @Size(min = 2, max = 2)
+   private String isoCode;
 
-    public Country() {
-    }
+   @Column(nullable = false, length = 80)
+   @NotNull
+   @Size(min = 2, max = 80)
+   private String name;
 
-    public Country(String isoCode, String name, String printableName) {
-        this.isoCode = isoCode;
-        this.name = name;
-        this.printableName = printableName;
-    }
+   @Column(nullable = false, length = 80, name ="printable_name")
+   @NotNull
+   @Size(min = 2, max = 80)
+   private String printableName;
 
-    // ======================================
-    // =         Getters & setters          =
-    // ======================================
+   @Column(length = 3)
+   @NotNull
+   @Size(min = 3, max = 3)
+   private String iso3;
 
+   @Column(length = 3)
+   @NotNull
+   @Size(min = 3, max = 3)
+   private String numcode;
 
-  public Long getId() {
-    return id;
-  }
+   // ======================================
+   // = Constructors =
+   // ======================================
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+   public Country()
+   {
+   }
 
-  public String getIsoCode() {
-        return isoCode;
-    }
+   public Country(String isoCode, String name, String printableName)
+   {
+      this.isoCode = isoCode;
+      this.name = name;
+      this.printableName = printableName;
+   }
 
-    public void setIsoCode(String isoCode) {
-        this.isoCode = isoCode;
-    }
+   // ======================================
+   // = Getters & setters =
+   // ======================================
 
-    public String getName() {
-        return name;
-    }
+   public Long getId()
+   {
+      return this.id;
+   }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+   public void setId(final Long id)
+   {
+      this.id = id;
+   }
 
-    public String getPrintableName() {
-        return printableName;
-    }
+   public int getVersion()
+   {
+      return this.version;
+   }
 
-    public void setPrintableName(String printableName) {
-        this.printableName = printableName;
-    }
+   public void setVersion(final int version)
+   {
+      this.version = version;
+   }
 
-    public String getIso3() {
-        return iso3;
-    }
+   public String getIsoCode()
+   {
+      return isoCode;
+   }
 
-    public void setIso3(String iso3) {
-        this.iso3 = iso3;
-    }
+   public void setIsoCode(String isoCode)
+   {
+      this.isoCode = isoCode;
+   }
 
-    public String getNumcode() {
-        return numcode;
-    }
+   public String getName()
+   {
+      return name;
+   }
 
-    public void setNumcode(String numcode) {
-        this.numcode = numcode;
-    }
+   public void setName(String name)
+   {
+      this.name = name;
+   }
 
-    // ======================================
-    // =   Methods hash, equals, toString   =
-    // ======================================
+   public String getPrintableName()
+   {
+      return printableName;
+   }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+   public void setPrintableName(String printableName)
+   {
+      this.printableName = printableName;
+   }
 
-        Country country = (Country) o;
+   public String getIso3()
+   {
+      return iso3;
+   }
 
-        if (iso3 != null ? !iso3.equals(country.iso3) : country.iso3 != null) return false;
-        if (!isoCode.equals(country.isoCode)) return false;
-        if (!name.equals(country.name)) return false;
-        if (numcode != null ? !numcode.equals(country.numcode) : country.numcode != null) return false;
-        if (!printableName.equals(country.printableName)) return false;
+   public void setIso3(String iso3)
+   {
+      this.iso3 = iso3;
+   }
 
-        return true;
-    }
+   public String getNumcode()
+   {
+      return numcode;
+   }
 
-    @Override
-    public int hashCode() {
-        int result = isoCode.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + printableName.hashCode();
-        result = 31 * result + (iso3 != null ? iso3.hashCode() : 0);
-        result = 31 * result + (numcode != null ? numcode.hashCode() : 0);
-        return result;
-    }
+   public void setNumcode(String numcode)
+   {
+      this.numcode = numcode;
+   }
 
-    @Override
-    public String toString() {
-        return printableName;
-    }
+   // ======================================
+   // = Methods hash, equals, toString =
+   // ======================================
+
+   @Override
+   public boolean equals(Object obj)
+   {
+      if (this == obj)
+      {
+         return true;
+      }
+      if (!(obj instanceof Country))
+      {
+         return false;
+      }
+      Country other = (Country) obj;
+      if (id != null)
+      {
+         if (!id.equals(other.id))
+         {
+            return false;
+         }
+      }
+      return true;
+   }
+
+   @Override
+   public int hashCode()
+   {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((id == null) ? 0 : id.hashCode());
+      return result;
+   }
+
+   @Override
+   public String toString()
+   {
+      String result = getClass().getSimpleName() + " ";
+      if (id != null)
+         result += "id: " + id;
+      result += ", version: " + version;
+      if (isoCode != null && !isoCode.trim().isEmpty())
+         result += ", isoCode: " + isoCode;
+      if (name != null && !name.trim().isEmpty())
+         result += ", name: " + name;
+      if (printableName != null && !printableName.trim().isEmpty())
+         result += ", printableName: " + printableName;
+      if (iso3 != null && !iso3.trim().isEmpty())
+         result += ", iso3: " + iso3;
+      if (numcode != null && !numcode.trim().isEmpty())
+         result += ", numcode: " + numcode;
+      return result;
+   }
 }

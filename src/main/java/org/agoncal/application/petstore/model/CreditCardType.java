@@ -6,13 +6,11 @@ package org.agoncal.application.petstore.model;
  *         --
  */
 
-public enum CreditCardType {
+public enum CreditCardType
+{
+   // ======================================
+   // = Constants =
+   // ======================================
 
-    // ======================================
-    // =             Constants              =
-    // ======================================
-
-    VISA,
-    MASTER_CARD,
-    AMERICAN_EXPRESS
+   VISA, MASTER_CARD, AMERICAN_EXPRESS
 }

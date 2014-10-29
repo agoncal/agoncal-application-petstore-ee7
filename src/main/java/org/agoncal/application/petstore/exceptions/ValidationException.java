@@ -1,7 +1,5 @@
 package org.agoncal.application.petstore.exceptions;
 
-import javax.ejb.ApplicationException;
-
 /**
  * @author Antonio Goncalves
  *         http://www.antoniogoncalves.org
@@ -9,9 +7,8 @@ import javax.ejb.ApplicationException;
  *         Thrown when data is not valid
  */
 
-@ApplicationException(rollback = true)
-public class ValidationException extends RuntimeException {
-
+public class ValidationException extends RuntimeException
+{
     // ======================================
     // =            Constructors            =
     // ======================================
