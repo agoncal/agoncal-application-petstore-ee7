@@ -2,7 +2,7 @@
 #  Install Addons  #
 #  ##############  #
 #  If the following plugins are not installed
-#  forge install-plugin arquillian
+#  addon-install-from-git --url https://github.com/forge/addon-arquillian.git --coordinate org.arquillian.forge:arquillian-addon
 
 
 
@@ -408,21 +408,31 @@ rest-generate-endpoints-from-entities --targets org.agoncal.application.petstore
 
 # JSF Beacking Beans
 # ##################
-arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/view/CountryBean.java ;
-arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/view/CustomerBean.java ;
-arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/view/CategoryBean.java ;
-arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/view/ProductBean.java ;
-arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/view/ItemBean.java ;
-arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/view/OrderLineBean.java ;
-arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/view/PurchaseOrderBean.java ;
+arquillian-create-test --targets org.agoncal.application.petstore.view.CountryBean ;
+arquillian-create-test --targets org.agoncal.application.petstore.view.CustomerBean ;
+arquillian-create-test --targets org.agoncal.application.petstore.view.CategoryBean ;
+arquillian-create-test --targets org.agoncal.application.petstore.view.ProductBean ;
+arquillian-create-test --targets org.agoncal.application.petstore.view.ItemBean ;
+arquillian-create-test --targets org.agoncal.application.petstore.view.OrderLineBean ;
+arquillian-create-test --targets org.agoncal.application.petstore.view.PurchaseOrderBean ;
 
 # REST Endpoints
 # ##############
-arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/rest/CountryEndpoint.java ;
-arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/rest/CustomerEndpoint.java ;
-arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/rest/CategoryEndpoint.java ;
-arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/rest/ProductEndpoint.java ;
-arquillian-create-test --value agoncal-application-petstore-ee7/src/main/java/org/agoncal/application/petstore/rest/ItemEndpoint.java ;
+arquillian-create-test --targets org.agoncal.application.petstore.rest.CountryEndpoint ;
+arquillian-create-test --targets org.agoncal.application.petstore.rest.CustomerEndpoint ;
+arquillian-create-test --targets org.agoncal.application.petstore.rest.CategoryEndpoint ;
+arquillian-create-test --targets org.agoncal.application.petstore.rest.ProductEndpoint ;
+arquillian-create-test --targets org.agoncal.application.petstore.rest.ItemEndpoint ;
+
+# Services
+# ##############
+arquillian-create-test --targets org.agoncal.application.petstore.service.CountryService ;
+arquillian-create-test --targets org.agoncal.application.petstore.service.CustomerService ;
+arquillian-create-test --targets org.agoncal.application.petstore.service.CategoryService ;
+arquillian-create-test --targets org.agoncal.application.petstore.service.ProductService ;
+arquillian-create-test --targets org.agoncal.application.petstore.service.ItemService ;
+arquillian-create-test --targets org.agoncal.application.petstore.service.PurchaseOrderService ;
+arquillian-create-test --targets org.agoncal.application.petstore.service.OrderLineService ;
 
 
 
