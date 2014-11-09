@@ -94,7 +94,7 @@ public class PurchaseOrder implements Serializable
    }
 
    // ======================================
-   // = Lifecycle Methods =
+   // =         Lifecycle Methods          =
    // ======================================
 
    @PrePersist

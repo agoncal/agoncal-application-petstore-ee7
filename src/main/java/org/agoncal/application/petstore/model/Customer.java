@@ -112,7 +112,7 @@ public class Customer implements Serializable
    }
 
    // ======================================
-   // = Lifecycle Methods =
+   // =         Lifecycle Methods          =
    // ======================================
 
    /**
@@ -142,7 +142,7 @@ public class Customer implements Serializable
    }
 
    // ======================================
-   // = Public Methods =
+   // =          Business methods          =
    // ======================================
 
    /**

@@ -1,0 +1,72 @@
+package org.agoncal.application.petstore.service;
+
+import org.agoncal.application.petstore.model.OrderLine;
+import org.agoncal.application.petstore.service.OrderLineService;
+import javax.inject.Inject;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import static org.junit.Assert.*;
+import static org.hamcrest.core.Is.*;
+
+@RunWith(Arquillian.class)
+public class OrderLineServiceTest
+{
+
+   @Inject
+   private OrderLineService orderlineservice;
+
+   @Deployment
+   public static JavaArchive createDeployment()
+   {
+      return ShrinkWrap.create(JavaArchive.class)
+            .addClass(AbstractService.class)
+            .addClass(OrderLineService.class)
+            .addClass(OrderLine.class)
+            .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+            .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+   }
+
+   @Test
+   public void should_be_deployed()
+   {
+      Assert.assertNotNull(orderlineservice);
+   }
+
+   @Test
+   public void should_crud()
+   {
+      // Gets all the objects
+      int initialSize = orderlineservice.listAll().size();
+
+      // Creates an object
+      OrderLine orderLine = new OrderLine();
+      orderLine.setQuantity(77);
+
+      // Inserts the object into the database
+      orderLine = orderlineservice.persist(orderLine);
+      assertNotNull(orderLine.getId());
+      assertEquals(initialSize + 1, orderlineservice.listAll().size());
+
+      // Finds the object from the database and checks it's the right one
+      orderLine = orderlineservice.findById(orderLine.getId());
+      assertEquals(new Integer(77), orderLine.getQuantity());
+
+      // Updates the object
+      orderLine.setQuantity(88);
+      orderLine = orderlineservice.merge(orderLine);
+
+      // Finds the object from the database and checks it has been updated
+      orderLine = orderlineservice.findById(orderLine.getId());
+      assertEquals(new Integer(88), orderLine.getQuantity());
+
+      // Deletes the object from the database and checks it's not there anymore
+      orderlineservice.remove(orderLine);
+      assertEquals(initialSize, orderlineservice.listAll().size());
+   }
+}

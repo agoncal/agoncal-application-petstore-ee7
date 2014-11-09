@@ -52,7 +52,7 @@ public class OrderLine implements Serializable
    }
 
    // ======================================
-   // = Public Methods =
+   // =          Business methods          =
    // ======================================
 
    public Float getSubTotal()

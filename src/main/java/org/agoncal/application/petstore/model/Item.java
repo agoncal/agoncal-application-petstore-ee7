@@ -82,7 +82,7 @@ public class Item implements Serializable
    public static final String FIND_ALL = "Item.findAll";
 
    // ======================================
-   // = Constructors =
+   // =            Constructors            =
    // ======================================
 
    public Item()
