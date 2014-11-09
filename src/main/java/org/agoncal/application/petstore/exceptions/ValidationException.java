@@ -13,7 +13,13 @@ public class ValidationException extends RuntimeException
     // =            Constructors            =
     // ======================================
 
-    public ValidationException(String message) {
-        super(message);
-    }
+   public ValidationException()
+   {
+      super();
+   }
+
+   public ValidationException(String message)
+   {
+      super(message);
+   }
 }

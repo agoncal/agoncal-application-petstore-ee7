@@ -47,21 +47,12 @@ public class Customer implements Serializable
    @Column(name = "version")
    private int version;
 
-   @Column(nullable = false, length = 10)
-   @Login
-   private String login;
-
-   @Column(nullable = false, length = 256)
-   @NotNull
-   @Size(min = 1, max = 256)
-   private String password;
-
-   @Column(length = 50, nullable = false, name = "first_name")
+   @Column(length = 50, name = "first_name", nullable = false)
    @NotNull
    @Size(min = 2, max = 50)
    private String firstName;
 
-   @Column(length = 50, nullable = false, name = "last_name")
+   @Column(length = 50, name = "last_name", nullable = false)
    @NotNull
    @Size(min = 2, max = 50)
    private String lastName;
@@ -72,6 +63,15 @@ public class Customer implements Serializable
    @Column
    @Email
    private String email;
+
+   @Column(length = 10, nullable = false)
+   @Login
+   private String login;
+
+   @Column(length = 256, nullable = false)
+   @NotNull
+   @Size(min = 1, max = 256)
+   private String password;
 
    @Column(name = "date_of_birth")
    @Temporal(TemporalType.DATE)

@@ -53,12 +53,9 @@ constraint-new-annotation --named Price ;
 #  Country entity
 #  ############
 jpa-new-entity --named Country ;
-#--nullable
-jpa-new-field --named isoCode --length 2 --columnName iso_code ;
-#--nullable
-jpa-new-field --named name --length 80 ;
-#--nullable
-jpa-new-field --named printableName --length 80 --columnName printable_name ;
+jpa-new-field --named isoCode --length 2 --columnName iso_code --not-nullable ;
+jpa-new-field --named name --length 80 --not-nullable ;
+jpa-new-field --named printableName --length 80 --columnName printable_name --not-nullable ;
 jpa-new-field --named iso3 --length 3 ;
 jpa-new-field --named numcode --length 3 ;
 # Constraints
@@ -79,14 +76,11 @@ java-add-annotation --annotation javax.persistence.Cacheable ;
 #  Address embeddable
 #  ############
 jpa-new-embeddable --named Address ;
-#--nullable
-jpa-new-field --named street1 --length 50 ;
+jpa-new-field --named street1 --length 50 --not-nullable ;
 jpa-new-field --named street2 ;
-#--nullable
-jpa-new-field --named city  --length 50 ;
+jpa-new-field --named city  --length 50 --not-nullable ;
 jpa-new-field --named state ;
-#--nullable
-jpa-new-field --named zipcode --columnName zip_code --length 10 ;
+jpa-new-field --named zipcode --columnName zip_code --length 10 --not-nullable ;
 # Relationships
 jpa-new-field --named country --type org.agoncal.application.petstore.model.Country --relationshipType Many-to-One
 # Constraints
@@ -101,16 +95,12 @@ constraint-add --onProperty zipcode --constraint NotNull ;
 #  Customer entity
 #  ############
 jpa-new-entity --named Customer ;
-#--nullable
-jpa-new-field --named login --length 10 ;
-#--nullable
-jpa-new-field --named password --length 256 ;
-#--nullable
-jpa-new-field --named firstName --length 50 --columnName first_name ;
-#--nullable
-jpa-new-field --named lastName --length 50 --columnName last_name ;
+jpa-new-field --named firstName --length 50 --columnName first_name --not-nullable ;
+jpa-new-field --named lastName --length 50 --columnName last_name --not-nullable ;
 jpa-new-field --named telephone ;
 jpa-new-field --named email ;
+jpa-new-field --named login --length 10 --not-nullable ;
+jpa-new-field --named password --length 256 --not-nullable ;
 jpa-new-field --named dateOfBirth --type java.util.Date --temporalType DATE --columnName date_of_birth ;
 jpa-new-field --named age --type java.lang.Integer --transient ;
 # Address embeddable
@@ -118,7 +108,9 @@ jpa-new-field --named street1 --length 50 ;
 jpa-new-field --named street2 ;
 jpa-new-field --named city --length 50 ;
 jpa-new-field --named state ;
-jpa-new-field --named zipcode --length 10 ;
+jpa-new-field --named zipcode --columnName zip_code --length 10 ;
+# Relationships
+jpa-new-field --named country --type org.agoncal.application.petstore.model.Country --relationshipType Many-to-One ;
 # Constraints
 constraint-add --onProperty password --constraint NotNull ;
 constraint-add --onProperty password --constraint Size --min 1 --max 256 ;
@@ -132,10 +124,8 @@ constraint-add --onProperty dateOfBirth --constraint Past ;
 #  Category entity
 #  ############
 jpa-new-entity  --named Category ;
-#--nullable
-jpa-new-field --named name --length 30 ;
-#--nullable
-jpa-new-field --named description --length 3000 ;
+jpa-new-field --named name --length 30 --not-nullable ;
+jpa-new-field --named description --length 3000 --not-nullable ;
 # Constraints
 constraint-add --onProperty name --constraint NotNull ;
 constraint-add --onProperty name --constraint Size --min 1 --max 30 ;
@@ -148,10 +138,8 @@ java-add-annotation --annotation javax.persistence.Cacheable ;
 #  Product entity
 #  ############
 jpa-new-entity --named Product ;
-#--nullable
-jpa-new-field --named name --length 30 ;
-#--nullable
-jpa-new-field --named description --length 3000 ;
+jpa-new-field --named name --length 30 --not-nullable ;
+jpa-new-field --named description --length 3000 --not-nullable ;
 # Relationships
 jpa-new-field --named category --type org.agoncal.application.petstore.model.Category --relationshipType Many-to-One ;
 # Constraints
@@ -166,12 +154,10 @@ java-add-annotation --annotation javax.persistence.Cacheable ;
 #  Item entity
 #  ############
 jpa-new-entity --named Item ;
-#--nullable
-jpa-new-field --named name --length 30 ;
-#--nullable
-jpa-new-field --named description --length 3000 ;
+jpa-new-field --named name --length 30 --not-nullable ;
+jpa-new-field --named description --length 3000 --not-nullable ;
 jpa-new-field --named imagePath --columnName image_path ;
-jpa-new-field --named unitCost --type java.lang.Float --columnName unit_cost ;
+jpa-new-field --named unitCost --type java.lang.Float --columnName unit_cost --not-nullable ;
 # Relationships
 jpa-new-field --named product --type org.agoncal.application.petstore.model.Product --relationshipType Many-to-One ;
 # Constraints
@@ -199,11 +185,9 @@ java-new-class --named CreditCardConverter --targetPackage org.agoncal.applicati
 # CreditCard embeddable
 # ############
 jpa-new-embeddable --named CreditCard ;
-#--nullable
-jpa-new-field --named creditCardNumber --columnName credit_card_number --length 30 ;
+jpa-new-field --named creditCardNumber --columnName credit_card_number --length 30 --not-nullable ;
 jpa-new-field --named creditCardType --type org.agoncal.application.petstore.model.CreditCardType --columnName credit_card_type ;
-#--nullable
-jpa-new-field --named creditCardExpDate --columnName credit_card_expiry_date --length 5 ;
+jpa-new-field --named creditCardExpDate --columnName credit_card_expiry_date --length 5 --not-nullable ;
 # Constraints
 constraint-add --onProperty creditCardNumber --constraint NotNull ;
 constraint-add --onProperty creditCardNumber --constraint Size --min 1 --max 30 ;
@@ -215,16 +199,17 @@ constraint-add --onProperty creditCardExpDate --constraint Size --min 1 --max 5 
 #  OrderLine entity
 #  ############
 jpa-new-entity --named OrderLine --tableName order_line ;
-#--nullable
-jpa-new-field --named quantity --type java.lang.Integer ;
+jpa-new-field --named quantity --type java.lang.Integer --not-nullable;
 # Relationships
 jpa-new-field --named item --type org.agoncal.application.petstore.model.Item --relationshipType Many-to-One ;
+# Constraints
+constraint-add --onProperty quantity --constraint Min --value 1 ;
 
 
 #  PurchaseOrder entity
 #  ############
 jpa-new-entity --named PurchaseOrder --tableName purchase_order ;
-jpa-new-field --named orderDate --type java.util.Date --temporalType DATE --columnName order_date ;
+jpa-new-field --named orderDate --type java.util.Date --temporalType DATE --columnName order_date --not-updatable ;
 jpa-new-field --named totalWithoutVat --type java.lang.Float ;
 jpa-new-field --named vatRate --type java.lang.Float --columnName vat_rate ;
 jpa-new-field --named vat --type java.lang.Float ;
@@ -237,7 +222,9 @@ jpa-new-field --named street1 --length 50 ;
 jpa-new-field --named street2 ;
 jpa-new-field --named city --length 50 ;
 jpa-new-field --named state ;
-jpa-new-field --named zipcode --length 10 ;
+jpa-new-field --named zipcode --columnName zip_code --length 10 ;
+# Relationships
+jpa-new-field --named country --type org.agoncal.application.petstore.model.Country --relationshipType Many-to-One ;
 # Credit card embeddable
 jpa-new-field --named creditCardNumber --columnName credit_card_number ;
 jpa-new-field --named creditCardType --type org.agoncal.application.petstore.model.CreditCardType --columnName credit_card_type ;
@@ -264,8 +251,7 @@ constraint-add --constraint Size --min 5 --max 5 --onProperty creditCardExpDate 
 #  Creates utility classes  #
 #  #######################  #
 
-# TODO java-new-exception --named ValidationException --targetPackage org.agoncal.application.petstore.exceptions ;
-java-new-class --named ValidationException --targetPackage org.agoncal.application.petstore.exceptions ;
+java-new-exception --named ValidationException --targetPackage org.agoncal.application.petstore.exceptions ;
 java-new-class --named LoginContextProducer --targetPackage org.agoncal.application.petstore.security ;
 java-new-class --named SimpleCallbackHandler --targetPackage org.agoncal.application.petstore.security ;
 java-new-class --named SimpleLoginModule --targetPackage org.agoncal.application.petstore.security ;
@@ -300,9 +286,9 @@ cdi-new-qualifier --named Discount --targetPackage org.agoncal.application.petst
 java-new-class --named NumberProducer --targetPackage org.agoncal.application.petstore.util ;
 
 java-new-field --named vatRate --type java.lang.Float --generateGetter=false --generateSetter=false --updateToString=false ;
-java-add-annotation --annotation javax.enterprise.inject.Produces --onProperty vat ;
-java-add-annotation --annotation org.agoncal.application.petstore.util.Vat --onProperty vat ;
-java-add-annotation --annotation javax.inject.Named --onProperty vat ;
+java-add-annotation --annotation javax.enterprise.inject.Produces --onProperty vatRate ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Vat --onProperty vatRate ;
+java-add-annotation --annotation javax.inject.Named --onProperty vatRate ;
 
 java-new-field --named discountRate --type java.lang.Float --generateGetter=false --generateSetter=false --updateToString=false ;
 java-add-annotation --annotation javax.enterprise.inject.Produces --onProperty discountRate ;
@@ -326,6 +312,7 @@ ejb-new-bean --named OrderLineService ;
 java-new-class --named InventoryService --targetPackage org.agoncal.application.petstore.service ;
 java-new-class --named ShippingService --targetPackage org.agoncal.application.petstore.service ;
 java-new-class --named StatisticService --targetPackage org.agoncal.application.petstore.service ;
+java-new-interface --named ComputablePurchaseOrder --targetPackage org.agoncal.application.petstore.service ;
 cdi-new-decorator --named PurchaseOrderDecorator --delegate org.agoncal.application.petstore.service.ComputablePurchaseOrder --targetPackage org.agoncal.application.petstore.service ;
 
 
@@ -363,9 +350,10 @@ faces-new-bean --named ShoppingCartBean --targetPackage org.agoncal.application.
 # java-add-annotation --annotation javax.enterprise.context.ConversationScoped ;
 
 java-new-class --named ShoppingCartItem --targetPackage org.agoncal.application.petstore.view.shopping ;
-java-new-field --named book --type org.agoncal.application.petstore.model.Book ;
-constraint-add --constraint NotNull --onProperty book ;
+java-new-field --named item --type org.agoncal.application.petstore.model.Item ;
 java-new-field --named quantity --type java.lang.Integer ;
+# Constraints
+constraint-add --constraint NotNull --onProperty item ;
 constraint-add --constraint NotNull --onProperty quantity ;
 constraint-add --constraint Min --onProperty quantity --value 1 ;
 
@@ -379,7 +367,7 @@ constraint-add --constraint Min --onProperty quantity --value 1 ;
 #  ############
 java-new-class --named FacesProducer --targetPackage org.agoncal.application.petstore.view.util ;
 java-new-field --named facesContext --type javax.faces.context.FacesContext --generateGetter=false --generateSetter=false --updateToString=false ;
-java-add-annotation --annotation javax.inject.Inject --onProperty facesContext ;
+java-add-annotation --annotation javax.enterprise.inject.Produces --onProperty facesContext ;
 
 #  Exception
 #  ############
@@ -459,6 +447,7 @@ project-remove-managed-dependencies org.jboss.spec:jboss-javaee-6.0:pom::3.0.2.F
 
 #  Adding Java EE and Web Jars dependencies
 #  ############################
+project-add-dependencies org.apache.logging.log4j:log4j-core:2.0.2 ;
 project-add-dependencies org.webjars:bootstrap:2.3.2 ;
 project-add-dependencies org.primefaces:primefaces:5.1 ;
 project-add-dependencies org.jboss.spec:jboss-javaee-7.0:1.0.1.Final:provided:pom ;

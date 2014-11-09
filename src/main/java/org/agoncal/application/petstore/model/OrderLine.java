@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "order_line")
@@ -30,6 +31,7 @@ public class OrderLine implements Serializable
    private int version;
 
    @Column(nullable = false)
+   @Min(1)
    private Integer quantity;
 
    @ManyToOne

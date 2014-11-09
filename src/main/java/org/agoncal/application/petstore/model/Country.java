@@ -31,17 +31,17 @@ public class Country implements Serializable
    @Column(name = "version")
    private int version;
 
-   @Column(nullable = true, length = 2, name = "iso_code")
+   @Column(length = 2, name = "iso_code", nullable = false)
    @NotNull
    @Size(min = 2, max = 2)
    private String isoCode;
 
-   @Column(nullable = false, length = 80)
+   @Column(length = 80, nullable = false)
    @NotNull
    @Size(min = 2, max = 80)
    private String name;
 
-   @Column(nullable = false, length = 80, name ="printable_name")
+   @Column(length = 80, name = "printable_name", nullable = false)
    @NotNull
    @Size(min = 2, max = 80)
    private String printableName;

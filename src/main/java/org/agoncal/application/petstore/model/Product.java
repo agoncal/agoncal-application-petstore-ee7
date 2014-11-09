@@ -43,12 +43,12 @@ public class Product implements Serializable
    @Column(name = "version")
    private int version;
 
-   @Column(nullable = false, length = 30)
+   @Column(length = 30, nullable = false)
    @NotNull
    @Size(min = 1, max = 30)
    private String name;
 
-   @Column(nullable = false, length = 3000)
+   @Column(length = 3000, nullable = false)
    @NotNull
    @Size(max = 3000)
    private String description;

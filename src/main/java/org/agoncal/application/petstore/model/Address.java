@@ -22,7 +22,7 @@ public class Address implements Serializable
    // = Attributes =
    // ======================================
 
-   @Column(nullable = false, length = 50)
+   @Column(length = 50, nullable = false)
    @Size(min = 5, max = 50)
    @NotNull
    private String street1;
@@ -30,7 +30,7 @@ public class Address implements Serializable
    @Column
    private String street2;
 
-   @Column(nullable = false, length = 50)
+   @Column(length = 50, nullable = false)
    @Size(min = 2, max = 50)
    @NotNull
    private String city;
@@ -38,7 +38,7 @@ public class Address implements Serializable
    @Column
    private String state;
 
-   @Column(length = 10, nullable = false, name = "zip_code")
+   @Column(length = 10, name = "zip_code", nullable = false)
    @Size(min = 1, max = 10)
    @NotNull
    private String zipcode;
