@@ -1,6 +1,7 @@
 package org.agoncal.application.petstore.model;
 
-import java.io.Serializable;
+import org.agoncal.application.petstore.constraints.NotEmpty;
+import org.agoncal.application.petstore.constraints.Price;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -17,9 +18,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
-import org.agoncal.application.petstore.constraints.NotEmpty;
-import org.agoncal.application.petstore.constraints.Price;
+import java.io.Serializable;
 
 /**
  * @author Antonio Goncalves
@@ -29,17 +28,17 @@ import org.agoncal.application.petstore.constraints.Price;
 
 @Entity
 @Cacheable
-@NamedQueries({
-         @NamedQuery(name = Item.FIND_BY_PRODUCT_ID, query = "SELECT i FROM Item i WHERE i.product.id = :productId"),
-         @NamedQuery(name = Item.SEARCH, query = "SELECT i FROM Item i WHERE UPPER(i.name) LIKE :keyword OR UPPER(i.product.name) LIKE :keyword ORDER BY i.product.category.name, i.product.name"),
-         @NamedQuery(name = Item.FIND_ALL, query = "SELECT i FROM Item i")
+@NamedQueries( {
+      @NamedQuery(name = Item.FIND_BY_PRODUCT_ID, query = "SELECT i FROM Item i WHERE i.product.id = :productId"),
+      @NamedQuery(name = Item.SEARCH, query = "SELECT i FROM Item i WHERE UPPER(i.name) LIKE :keyword OR UPPER(i.product.name) LIKE :keyword ORDER BY i.product.category.name, i.product.name"),
+      @NamedQuery(name = Item.FIND_ALL, query = "SELECT i FROM Item i")
 })
 @XmlRootElement
 public class Item implements Serializable
 {
 
    // ======================================
-   // = Attributes =
+   // =             Attributes             =
    // ======================================
 
    @Id
@@ -75,7 +74,7 @@ public class Item implements Serializable
    private Product product;
 
    // ======================================
-   // = Constants =
+   // =             Constants              =
    // ======================================
 
    public static final String FIND_BY_PRODUCT_ID = "Item.findByProductId";
@@ -100,7 +99,7 @@ public class Item implements Serializable
    }
 
    // ======================================
-   // = Getters & setters =
+   // =         Getters & setters          =
    // ======================================
 
    public Long getId()
@@ -174,7 +173,7 @@ public class Item implements Serializable
    }
 
    // ======================================
-   // = Methods hash, equals, toString =
+   // =   Methods hash, equals, toString   =
    // ======================================
 
    @Override

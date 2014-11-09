@@ -1,6 +1,7 @@
 package org.agoncal.application.petstore.rest;
 
-import java.util.List;
+import org.agoncal.application.petstore.model.Product;
+import org.agoncal.application.petstore.util.Loggable;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -20,8 +21,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
-import org.agoncal.application.petstore.model.Product;
-import org.agoncal.application.petstore.util.Loggable;
+import java.util.List;
 
 /**
  * @author Antonio Goncalves
@@ -47,7 +47,7 @@ public class ProductEndpoint
    // ======================================
 
    @POST
-   @Consumes({ "application/xml", "application/json" })
+   @Consumes( {"application/xml", "application/json"})
    public Response create(Product entity)
    {
       em.persist(entity);
@@ -69,7 +69,7 @@ public class ProductEndpoint
 
    @GET
    @Path("/{id:[0-9][0-9]*}")
-   @Produces({ "application/xml", "application/json" })
+   @Produces( {"application/xml", "application/json"})
    public Response findById(@PathParam("id") Long id)
    {
       TypedQuery<Product> findByIdQuery = em.createQuery("SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.category WHERE p.id = :entityId ORDER BY p.id", Product.class);
@@ -91,7 +91,7 @@ public class ProductEndpoint
    }
 
    @GET
-   @Produces({ "application/xml", "application/json" })
+   @Produces( {"application/xml", "application/json"})
    public List<Product> listAll(@QueryParam("start") Integer startPosition, @QueryParam("max") Integer maxResult)
    {
       TypedQuery<Product> findAllQuery = em.createQuery("SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.category ORDER BY p.id", Product.class);
@@ -109,7 +109,7 @@ public class ProductEndpoint
 
    @PUT
    @Path("/{id:[0-9][0-9]*}")
-   @Consumes({ "application/xml", "application/json" })
+   @Consumes( {"application/xml", "application/json"})
    public Response update(Product entity)
    {
       try

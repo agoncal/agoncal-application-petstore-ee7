@@ -1,12 +1,11 @@
 package org.agoncal.application.petstore.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * @author Antonio Goncalves
@@ -19,7 +18,7 @@ public class Address implements Serializable
 {
 
    // ======================================
-   // = Attributes =
+   // =             Attributes             =
    // ======================================
 
    @Column(length = 50, nullable = false)
@@ -47,7 +46,7 @@ public class Address implements Serializable
    private Country country;
 
    // ======================================
-   // = Constructors =
+   // =            Constructors            =
    // ======================================
 
    public Address()
@@ -63,7 +62,7 @@ public class Address implements Serializable
    }
 
    // ======================================
-   // = Getters & setters =
+   // =         Getters & setters          =
    // ======================================
 
    public String getStreet1()
@@ -127,7 +126,7 @@ public class Address implements Serializable
    }
 
    // ======================================
-   // = Methods hash, equals, toString =
+   // =   Methods hash, equals, toString   =
    // ======================================
 
    @Override

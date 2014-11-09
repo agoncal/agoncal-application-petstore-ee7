@@ -1,7 +1,5 @@
 package org.agoncal.application.petstore.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,22 +15,23 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
 
 @Entity
 @Cacheable
-@NamedQueries({
-         // TODO fetch doesn't work with GlassFish
-         // @NamedQuery(name = Product.FIND_BY_CATEGORY_NAME, query =
-         // "SELECT p FROM Product p LEFT JOIN FETCH p.items LEFT JOIN FETCH p.category WHERE p.category.name = :pname"),
-         @NamedQuery(name = Product.FIND_BY_CATEGORY_NAME, query = "SELECT p FROM Product p WHERE p.category.name = :pname"),
-         @NamedQuery(name = Product.FIND_ALL, query = "SELECT p FROM Product p")
+@NamedQueries( {
+      // TODO fetch doesn't work with GlassFish
+      // @NamedQuery(name = Product.FIND_BY_CATEGORY_NAME, query =
+      // "SELECT p FROM Product p LEFT JOIN FETCH p.items LEFT JOIN FETCH p.category WHERE p.category.name = :pname"),
+      @NamedQuery(name = Product.FIND_BY_CATEGORY_NAME, query = "SELECT p FROM Product p WHERE p.category.name = :pname"),
+      @NamedQuery(name = Product.FIND_ALL, query = "SELECT p FROM Product p")
 })
 @XmlRootElement
 public class Product implements Serializable
 {
 
    // ======================================
-   // = Attributes =
+   // =             Attributes             =
    // ======================================
 
    @Id
@@ -59,14 +58,14 @@ public class Product implements Serializable
    private Category category;
 
    // ======================================
-   // = Constants =
+   // =             Constants              =
    // ======================================
 
    public static final String FIND_BY_CATEGORY_NAME = "Product.findByCategoryName";
    public static final String FIND_ALL = "Product.findAll";
 
    // ======================================
-   // = Constructors =
+   // =            Constructors            =
    // ======================================
 
    public Product()
@@ -81,7 +80,7 @@ public class Product implements Serializable
    }
 
    // ======================================
-   // = Getters & setters =
+   // =         Getters & setters          =
    // ======================================
 
    public Long getId()
@@ -135,7 +134,7 @@ public class Product implements Serializable
    }
 
    // ======================================
-   // = Methods hash, equals, toString =
+   // =   Methods hash, equals, toString   =
    // ======================================
 
    @Override

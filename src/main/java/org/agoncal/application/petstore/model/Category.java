@@ -1,7 +1,5 @@
 package org.agoncal.application.petstore.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +12,7 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  * @author Antonio Goncalves
@@ -23,19 +22,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Cacheable
-@NamedQueries({
-         // TODO fetch doesn't work with GlassFIsh
-         // @NamedQuery(name = Category.FIND_BY_NAME, query =
-         // "SELECT c FROM Category c LEFT JOIN FETCH c.products WHERE c.name = :pname"),
-         @NamedQuery(name = Category.FIND_BY_NAME, query = "SELECT c FROM Category c WHERE c.name = :pname"),
-         @NamedQuery(name = Category.FIND_ALL, query = "SELECT c FROM Category c")
+@NamedQueries( {
+      // TODO fetch doesn't work with GlassFIsh
+      // @NamedQuery(name = Category.FIND_BY_NAME, query =
+      // "SELECT c FROM Category c LEFT JOIN FETCH c.products WHERE c.name = :pname"),
+      @NamedQuery(name = Category.FIND_BY_NAME, query = "SELECT c FROM Category c WHERE c.name = :pname"),
+      @NamedQuery(name = Category.FIND_ALL, query = "SELECT c FROM Category c")
 })
 @XmlRootElement
 public class Category implements Serializable
 {
 
    // ======================================
-   // = Attributes =
+   // =             Attributes             =
    // ======================================
 
    @Id
@@ -57,14 +56,14 @@ public class Category implements Serializable
    private String description;
 
    // ======================================
-   // = Constants =
+   // =             Constants              =
    // ======================================
 
    public static final String FIND_BY_NAME = "Category.findByName";
    public static final String FIND_ALL = "Category.findAll";
 
    // ======================================
-   // = Constructors =
+   // =            Constructors            =
    // ======================================
 
    public Category()
@@ -78,7 +77,7 @@ public class Category implements Serializable
    }
 
    // ======================================
-   // = Getters & setters =
+   // =         Getters & setters          =
    // ======================================
 
    public Long getId()
@@ -122,7 +121,7 @@ public class Category implements Serializable
    }
 
    // ======================================
-   // = Methods hash, equals, toString =
+   // =   Methods hash, equals, toString   =
    // ======================================
 
    @Override

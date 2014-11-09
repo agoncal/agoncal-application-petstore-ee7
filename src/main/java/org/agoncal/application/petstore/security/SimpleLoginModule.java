@@ -24,84 +24,99 @@ import java.util.Map;
  *         Time: 11:59
  */
 
-public class SimpleLoginModule implements LoginModule {
+public class SimpleLoginModule implements LoginModule
+{
 
-    // ======================================
-    // =             Attributes             =
-    // ======================================
+   // ======================================
+   // =             Attributes             =
+   // ======================================
 
-    private CallbackHandler callbackHandler;
+   private CallbackHandler callbackHandler;
 
-    private CustomerService customerService;
+   private CustomerService customerService;
 
-    private BeanManager beanManager;
+   private BeanManager beanManager;
 
-    // ======================================
-    // =          Business methods          =
-    // ======================================
+   // ======================================
+   // =          Business methods          =
+   // ======================================
 
-    private CustomerService getCustomerService() {
-        if (customerService != null) {
-            return customerService;
-        }
-        try {
-            Context context = new InitialContext();
-            beanManager = (BeanManager) context.lookup("java:comp/BeanManager");
-            Bean<?> bean = beanManager.getBeans(CustomerService.class).iterator().next();
-            CreationalContext cc = beanManager.createCreationalContext(bean);
-            customerService = (CustomerService) beanManager.getReference(bean, CustomerService.class, cc);
+   private CustomerService getCustomerService()
+   {
+      if (customerService != null)
+      {
+         return customerService;
+      }
+      try
+      {
+         Context context = new InitialContext();
+         beanManager = (BeanManager) context.lookup("java:comp/BeanManager");
+         Bean<?> bean = beanManager.getBeans(CustomerService.class).iterator().next();
+         CreationalContext cc = beanManager.createCreationalContext(bean);
+         customerService = (CustomerService) beanManager.getReference(bean, CustomerService.class, cc);
 
-        } catch (NamingException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+      }
+      catch (NamingException e)
+      {
+         e.printStackTrace();
+         throw new RuntimeException(e);
+      }
 
-        return customerService;
+      return customerService;
 
-    }
+   }
 
-    @Override
-    public void initialize(Subject subject, CallbackHandler callbackHandler, Map<String, ?> stringMap, Map<String, ?> stringMap1) {
-        this.callbackHandler = callbackHandler;
-        getCustomerService();
-    }
+   @Override
+   public void initialize(Subject subject, CallbackHandler callbackHandler, Map<String, ?> stringMap, Map<String, ?> stringMap1)
+   {
+      this.callbackHandler = callbackHandler;
+      getCustomerService();
+   }
 
-    @Override
-    public boolean login() throws LoginException {
+   @Override
+   public boolean login() throws LoginException
+   {
 
-        NameCallback nameCallback = new NameCallback("Name : ");
-        PasswordCallback passwordCallback = new PasswordCallback("Password : ", false);
-        try {
-            callbackHandler.handle(new Callback[]{nameCallback, passwordCallback});
-            String username = nameCallback.getName();
-            String password = new String(passwordCallback.getPassword());
-            nameCallback.setName("");
-            passwordCallback.clearPassword();
-            Customer customer = customerService.findCustomer(username, password);
+      NameCallback nameCallback = new NameCallback("Name : ");
+      PasswordCallback passwordCallback = new PasswordCallback("Password : ", false);
+      try
+      {
+         callbackHandler.handle(new Callback[]{nameCallback, passwordCallback});
+         String username = nameCallback.getName();
+         String password = new String(passwordCallback.getPassword());
+         nameCallback.setName("");
+         passwordCallback.clearPassword();
+         Customer customer = customerService.findCustomer(username, password);
 
-            if (customer == null) {
-                throw new LoginException("Authentication failed");
-            }
+         if (customer == null)
+         {
+            throw new LoginException("Authentication failed");
+         }
 
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new LoginException(e.getMessage());
-        }
-    }
+         return true;
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+         throw new LoginException(e.getMessage());
+      }
+   }
 
-    @Override
-    public boolean commit() throws LoginException {
-        return true;
-    }
+   @Override
+   public boolean commit() throws LoginException
+   {
+      return true;
+   }
 
-    @Override
-    public boolean abort() throws LoginException {
-        return true;
-    }
+   @Override
+   public boolean abort() throws LoginException
+   {
+      return true;
+   }
 
-    @Override
-    public boolean logout() throws LoginException {
-        return true;
-    }
+   @Override
+   public boolean logout() throws LoginException
+   {
+      return true;
+   }
 }

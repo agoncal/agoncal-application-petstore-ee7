@@ -1,25 +1,24 @@
 package org.agoncal.application.petstore.model;
 
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.xml.bind.annotation.XmlRootElement;
-
 @Entity
 @Table(name = "purchase_order")
 @XmlRootElement
-@NamedQueries({
-         @NamedQuery(name = PurchaseOrder.FIND_ALL, query = "SELECT o FROM PurchaseOrder o")
+@NamedQueries( {
+      @NamedQuery(name = PurchaseOrder.FIND_ALL, query = "SELECT o FROM PurchaseOrder o")
 })
 public class PurchaseOrder implements Serializable
 {
 
    // ======================================
-   // = Attributes =
+   // =             Attributes             =
    // ======================================
 
    @Id
@@ -61,8 +60,8 @@ public class PurchaseOrder implements Serializable
 
    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
    @JoinTable(name = "t_order_order_line",
-            joinColumns = { @JoinColumn(name = "order_fk") },
-            inverseJoinColumns = { @JoinColumn(name = "order_line_fk") })
+         joinColumns = {@JoinColumn(name = "order_fk")},
+         inverseJoinColumns = {@JoinColumn(name = "order_line_fk")})
    private Set<OrderLine> orderLines = new HashSet<OrderLine>();
 
    @Embedded
@@ -74,13 +73,13 @@ public class PurchaseOrder implements Serializable
    private CreditCard creditCard = new CreditCard();
 
    // ======================================
-   // = Constants =
+   // =             Constants              =
    // ======================================
 
    public static final String FIND_ALL = "Order.findAll";
 
    // ======================================
-   // = Constructors =
+   // =            Constructors            =
    // ======================================
 
    public PurchaseOrder()
@@ -105,7 +104,7 @@ public class PurchaseOrder implements Serializable
    }
 
    // ======================================
-   // = Public Methods =
+   // =         Getters & setters          =
    // ======================================
 
    public Long getId()
@@ -229,7 +228,7 @@ public class PurchaseOrder implements Serializable
    }
 
    // ======================================
-   // = Methods hash, equals, toString =
+   // =   Methods hash, equals, toString   =
    // ======================================
 
    @Override

@@ -1,10 +1,9 @@
 package org.agoncal.application.petstore.model;
 
-import java.io.Serializable;
-import java.security.MessageDigest;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import org.agoncal.application.petstore.constraints.Email;
+import org.agoncal.application.petstore.constraints.Login;
+import org.agoncal.application.petstore.exceptions.ValidationException;
+import sun.misc.BASE64Encoder;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -12,12 +11,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.agoncal.application.petstore.constraints.Email;
-import org.agoncal.application.petstore.constraints.Login;
-import org.agoncal.application.petstore.exceptions.ValidationException;
-
-import sun.misc.BASE64Encoder;
+import java.io.Serializable;
+import java.security.MessageDigest;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * @author Antonio Goncalves
@@ -26,17 +24,17 @@ import sun.misc.BASE64Encoder;
  */
 
 @Entity
-@NamedQueries({
-         @NamedQuery(name = Customer.FIND_BY_LOGIN, query = "SELECT c FROM Customer c WHERE c.login = :login"),
-         @NamedQuery(name = Customer.FIND_BY_LOGIN_PASSWORD, query = "SELECT c FROM Customer c WHERE c.login = :login AND c.password = :password"),
-         @NamedQuery(name = Customer.FIND_ALL, query = "SELECT c FROM Customer c")
+@NamedQueries( {
+      @NamedQuery(name = Customer.FIND_BY_LOGIN, query = "SELECT c FROM Customer c WHERE c.login = :login"),
+      @NamedQuery(name = Customer.FIND_BY_LOGIN_PASSWORD, query = "SELECT c FROM Customer c WHERE c.login = :login AND c.password = :password"),
+      @NamedQuery(name = Customer.FIND_ALL, query = "SELECT c FROM Customer c")
 })
 @XmlRootElement
 public class Customer implements Serializable
 {
 
    // ======================================
-   // = Attributes =
+   // =             Attributes             =
    // ======================================
 
    @Id
@@ -86,7 +84,7 @@ public class Customer implements Serializable
    private Address homeAddress = new Address();
 
    // ======================================
-   // = Constants =
+   // =             Constants              =
    // ======================================
 
    public static final String FIND_BY_LOGIN = "Customer.findByLogin";
@@ -94,7 +92,7 @@ public class Customer implements Serializable
    public static final String FIND_ALL = "Customer.findAll";
 
    // ======================================
-   // = Constructors =
+   // =            Constructors            =
    // ======================================
 
    public Customer()
@@ -102,7 +100,7 @@ public class Customer implements Serializable
    }
 
    public Customer(String firstName, String lastName, String login, String plainTextPassword, String email,
-            Address address)
+                   Address address)
    {
       this.firstName = firstName;
       this.lastName = lastName;
@@ -151,7 +149,6 @@ public class Customer implements Serializable
     * Digest password with <code>SHA-256</code> then encode it with Base64.
     *
     * @param plainTextPassword the password to digest and encode
-    *
     * @return digested password
     */
    public String digestPassword(String plainTextPassword)
@@ -187,7 +184,7 @@ public class Customer implements Serializable
    }
 
    // ======================================
-   // = Getters & setters =
+   // =         Getters & setters          =
    // ======================================
 
    public Long getId()
@@ -296,7 +293,7 @@ public class Customer implements Serializable
    }
 
    // ======================================
-   // = Methods hash, equals, toString =
+   // =   Methods hash, equals, toString   =
    // ======================================
 
    @Override

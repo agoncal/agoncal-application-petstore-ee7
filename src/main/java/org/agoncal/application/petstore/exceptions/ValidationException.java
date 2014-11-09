@@ -9,9 +9,9 @@ package org.agoncal.application.petstore.exceptions;
 
 public class ValidationException extends RuntimeException
 {
-    // ======================================
-    // =            Constructors            =
-    // ======================================
+   // ======================================
+   // =            Constructors            =
+   // ======================================
 
    public ValidationException()
    {

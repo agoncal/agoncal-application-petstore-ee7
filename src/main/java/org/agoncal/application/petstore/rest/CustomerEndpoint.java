@@ -1,6 +1,7 @@
 package org.agoncal.application.petstore.rest;
 
-import java.util.List;
+import org.agoncal.application.petstore.model.Customer;
+import org.agoncal.application.petstore.util.Loggable;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -20,8 +21,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
-import org.agoncal.application.petstore.model.Customer;
-import org.agoncal.application.petstore.util.Loggable;
+import java.util.List;
 
 /**
  * @author Antonio Goncalves
@@ -47,7 +47,7 @@ public class CustomerEndpoint
    // ======================================
 
    @POST
-   @Consumes({ "application/xml", "application/json" })
+   @Consumes( {"application/xml", "application/json"})
    public Response create(Customer entity)
    {
       em.persist(entity);
@@ -69,7 +69,7 @@ public class CustomerEndpoint
 
    @GET
    @Path("/{id:[0-9][0-9]*}")
-   @Produces({ "application/xml", "application/json" })
+   @Produces( {"application/xml", "application/json"})
    public Response findById(@PathParam("id") Long id)
    {
       TypedQuery<Customer> findByIdQuery = em.createQuery("SELECT DISTINCT c FROM Customer c LEFT JOIN FETCH c.homeAddress.country WHERE c.id = :entityId ORDER BY c.id", Customer.class);
@@ -91,7 +91,7 @@ public class CustomerEndpoint
    }
 
    @GET
-   @Produces({ "application/xml", "application/json" })
+   @Produces( {"application/xml", "application/json"})
    public List<Customer> listAll(@QueryParam("start") Integer startPosition, @QueryParam("max") Integer maxResult)
    {
       TypedQuery<Customer> findAllQuery = em.createQuery("SELECT DISTINCT c FROM Customer c LEFT JOIN FETCH c.homeAddress.country ORDER BY c.id", Customer.class);
@@ -109,7 +109,7 @@ public class CustomerEndpoint
 
    @PUT
    @Path("/{id:[0-9][0-9]*}")
-   @Consumes({ "application/xml", "application/json" })
+   @Consumes( {"application/xml", "application/json"})
    public Response update(Customer entity)
    {
       try

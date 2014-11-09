@@ -31,12 +31,16 @@ public class LoggingInterceptor implements Serializable {
     // ======================================
 
     @AroundInvoke
-    public Object logMethod(InvocationContext ic) throws Exception {
+    private Object intercept(InvocationContext ic) throws Exception
+    {
         logger.entering(ic.getTarget().getClass().getName(), ic.getMethod().getName());
         logger.info(">>> " + ic.getTarget().getClass().getName() + "-" + ic.getMethod().getName());
-        try {
+        try 
+        {
             return ic.proceed();
-        } finally {
+        } 
+        finally 
+        {
             logger.exiting(ic.getTarget().getClass().getName(), ic.getMethod().getName());
             logger.info("<<< " + ic.getTarget().getClass().getName() + "-" + ic.getMethod().getName());
         }

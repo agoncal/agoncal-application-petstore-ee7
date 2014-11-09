@@ -19,7 +19,7 @@ public class CreditCard implements Serializable
 {
 
    // ======================================
-   // = Attributes =
+   // =             Attributes             =
    // ======================================
 
    @Column(length = 30, name = "credit_card_number", nullable = true)
@@ -38,7 +38,7 @@ public class CreditCard implements Serializable
    private String creditCardExpDate;
 
    // ======================================
-   // = Constructors =
+   // =            Constructors            =
    // ======================================
 
    public CreditCard()
@@ -53,7 +53,7 @@ public class CreditCard implements Serializable
    }
 
    // ======================================
-   // = Getters & setters =
+   // =         Getters & setters          =
    // ======================================
 
    public String getCreditCardNumber()
@@ -87,7 +87,7 @@ public class CreditCard implements Serializable
    }
 
    // ======================================
-   // = Methods hash, equals, toString =
+   // =   Methods hash, equals, toString   =
    // ======================================
 
    @Override

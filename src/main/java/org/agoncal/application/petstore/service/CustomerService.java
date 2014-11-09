@@ -9,8 +9,12 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,72 +25,134 @@ import java.util.List;
 
 @Stateless
 @Loggable
-public class CustomerService implements Serializable {
+public class CustomerService extends AbstractService<Customer> implements Serializable
+{
 
-    // ======================================
-    // =             Attributes             =
-    // ======================================
+   // ======================================
+   // =            Constructors            =
+   // ======================================
 
-    @Inject
-    private EntityManager em;
+   public CustomerService()
+   {
+      super(Customer.class);
+   }
 
-    // ======================================
-    // =              Public Methods        =
-    // ======================================
+   // ======================================
+   // =             Attributes             =
+   // ======================================
 
-    public boolean doesLoginAlreadyExist(@NotNull String login) {
+   @Inject
+   private EntityManager em;
 
-        // Login has to be unique
-        TypedQuery<Customer> typedQuery = em.createNamedQuery(Customer.FIND_BY_LOGIN, Customer.class);
-        typedQuery.setParameter("login", login);
-        try {
-            typedQuery.getSingleResult();
-            return true;
-        } catch (NoResultException e) {
-            return false;
-        }
-    }
+   // ======================================
+   // =              Public Methods        =
+   // ======================================
 
-    public Customer createCustomer(@NotNull Customer customer) {
-        em.persist(customer);
-        return customer;
-    }
+   public boolean doesLoginAlreadyExist(@NotNull String login)
+   {
 
-    public Customer findCustomer(@NotNull String login) {
-        TypedQuery<Customer> typedQuery = em.createNamedQuery(Customer.FIND_BY_LOGIN, Customer.class);
-        typedQuery.setParameter("login", login);
+      // Login has to be unique
+      TypedQuery<Customer> typedQuery = em.createNamedQuery(Customer.FIND_BY_LOGIN, Customer.class);
+      typedQuery.setParameter("login", login);
+      try
+      {
+         typedQuery.getSingleResult();
+         return true;
+      }
+      catch (NoResultException e)
+      {
+         return false;
+      }
+   }
 
-        try {
-            return typedQuery.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
+   public Customer createCustomer(@NotNull Customer customer)
+   {
+      em.persist(customer);
+      return customer;
+   }
 
-    public Customer findCustomer(@NotNull String login, @NotNull String password) {
-        TypedQuery<Customer> typedQuery = em.createNamedQuery(Customer.FIND_BY_LOGIN_PASSWORD, Customer.class);
-        typedQuery.setParameter("login", login);
-        typedQuery.setParameter("password", password);
+   public Customer findCustomer(@NotNull String login)
+   {
+      TypedQuery<Customer> typedQuery = em.createNamedQuery(Customer.FIND_BY_LOGIN, Customer.class);
+      typedQuery.setParameter("login", login);
 
-        return typedQuery.getSingleResult();
-    }
+      try
+      {
+         return typedQuery.getSingleResult();
+      }
+      catch (NoResultException e)
+      {
+         return null;
+      }
+   }
 
-    public List<Customer> findAllCustomers() {
-        TypedQuery<Customer> typedQuery = em.createNamedQuery(Customer.FIND_ALL, Customer.class);
-        return typedQuery.getResultList();
-    }
+   public Customer findCustomer(@NotNull String login, @NotNull String password)
+   {
+      TypedQuery<Customer> typedQuery = em.createNamedQuery(Customer.FIND_BY_LOGIN_PASSWORD, Customer.class);
+      typedQuery.setParameter("login", login);
+      typedQuery.setParameter("password", password);
 
-    public Customer updateCustomer(@NotNull Customer customer) {
-        em.merge(customer);
-        return customer;
-    }
+      return typedQuery.getSingleResult();
+   }
 
-    public void removeCustomer(@NotNull Customer customer) {
-        em.remove(em.merge(customer));
-    }
+   public List<Customer> findAllCustomers()
+   {
+      TypedQuery<Customer> typedQuery = em.createNamedQuery(Customer.FIND_ALL, Customer.class);
+      return typedQuery.getResultList();
+   }
 
-    public Country findCountry(@NotNull Long countryId) {
-        return em.find(Country.class, countryId);
-    }
+   public Customer updateCustomer(@NotNull Customer customer)
+   {
+      em.merge(customer);
+      return customer;
+   }
 
+   public void removeCustomer(@NotNull Customer customer)
+   {
+      em.remove(em.merge(customer));
+   }
+
+   public Country findCountry(@NotNull Long countryId)
+   {
+      return em.find(Country.class, countryId);
+   }
+
+   // ======================================
+   // =         Protected methods          =
+   // ======================================
+
+   @Override
+   protected Predicate[] getSearchPredicates(Root<Customer> root, Customer example)
+   {
+      CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+      List<Predicate> predicatesList = new ArrayList<Predicate>();
+
+      String firstName = example.getFirstName();
+      if (firstName != null && !"".equals(firstName))
+      {
+         predicatesList.add(builder.like(builder.lower(root.<String>get("firstName")), '%' + firstName.toLowerCase() + '%'));
+      }
+      String lastName = example.getLastName();
+      if (lastName != null && !"".equals(lastName))
+      {
+         predicatesList.add(builder.like(builder.lower(root.<String>get("lastName")), '%' + lastName.toLowerCase() + '%'));
+      }
+      String telephone = example.getTelephone();
+      if (telephone != null && !"".equals(telephone))
+      {
+         predicatesList.add(builder.like(builder.lower(root.<String>get("telephone")), '%' + telephone.toLowerCase() + '%'));
+      }
+      String email = example.getEmail();
+      if (email != null && !"".equals(email))
+      {
+         predicatesList.add(builder.like(builder.lower(root.<String>get("email")), '%' + email.toLowerCase() + '%'));
+      }
+      String login = example.getLogin();
+      if (login != null && !"".equals(login))
+      {
+         predicatesList.add(builder.like(builder.lower(root.<String>get("login")), '%' + login.toLowerCase() + '%'));
+      }
+
+      return predicatesList.toArray(new Predicate[predicatesList.size()]);
+   }
 }

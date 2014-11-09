@@ -1,7 +1,5 @@
 package org.agoncal.application.petstore.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +10,7 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @Entity
 @Cacheable
@@ -20,7 +19,7 @@ public class Country implements Serializable
 {
 
    // ======================================
-   // = Attributes =
+   // =             Attributes             =
    // ======================================
 
    @Id
@@ -57,7 +56,7 @@ public class Country implements Serializable
    private String numcode;
 
    // ======================================
-   // = Constructors =
+   // =            Constructors            =
    // ======================================
 
    public Country()
@@ -72,7 +71,7 @@ public class Country implements Serializable
    }
 
    // ======================================
-   // = Getters & setters =
+   // =         Getters & setters          =
    // ======================================
 
    public Long getId()
@@ -146,7 +145,7 @@ public class Country implements Serializable
    }
 
    // ======================================
-   // = Methods hash, equals, toString =
+   // =   Methods hash, equals, toString   =
    // ======================================
 
    @Override

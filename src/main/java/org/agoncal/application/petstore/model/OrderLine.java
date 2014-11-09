@@ -1,7 +1,5 @@
 package org.agoncal.application.petstore.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.Min;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "order_line")
@@ -19,7 +18,7 @@ public class OrderLine implements Serializable
 {
 
    // ======================================
-   // = Attributes =
+   // =             Attributes             =
    // ======================================
 
    @Id
@@ -39,7 +38,7 @@ public class OrderLine implements Serializable
    private Item item;
 
    // ======================================
-   // = Constructors =
+   // =            Constructors            =
    // ======================================
 
    public OrderLine()
@@ -62,7 +61,7 @@ public class OrderLine implements Serializable
    }
 
    // ======================================
-   // = Getters & setters =
+   // =         Getters & setters          =
    // ======================================
 
    public Long getId()
@@ -106,7 +105,7 @@ public class OrderLine implements Serializable
    }
 
    // ======================================
-   // = Methods hash, equals, toString =
+   // =   Methods hash, equals, toString   =
    // ======================================
 
    @Override
