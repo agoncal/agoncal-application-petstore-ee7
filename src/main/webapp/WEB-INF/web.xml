@@ -4,7 +4,20 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <!-- To let Mojarra auto start it needs some JSF annotation (@ManagedBean) instead of CDI @Named) -->
+<display-name>agoncal-application-petstore-ee7</display-name>
+  <session-config>
+  <session-timeout>30</session-timeout>
+  </session-config>
+  <mime-mapping>
+  <extension>ico</extension>
+    <mime-type>image/x-icon</mime-type>
+  </mime-mapping>
+  <context-param>
+  <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
+        <!-- To let Mojarra auto start it needs some JSF annotation (@ManagedBean) instead of CDI @Named) -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -24,5 +37,13 @@
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/faces/error.xhtml</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/faces/error.xhtml</location>
+  </error-page>
 
 </web-app>

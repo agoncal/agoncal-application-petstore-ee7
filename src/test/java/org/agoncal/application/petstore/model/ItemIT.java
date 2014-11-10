@@ -50,7 +50,7 @@ public class ItemIT {
         // Creates an object
         Category category = new Category("Fish", "Any of numerous cold-blooded aquatic vertebrates characteristically having fins, gills, and a streamlined body");
         Product product = new Product("Bulldog", "Friendly dog from England", category);
-        Item item = new Item("Thootless fish", 10f, "fish1.gif", product, "desc");
+        Item item = new Item("Thootless fish", 10f, "fish1.gif", "desc", product);
 
         // Checks the object is valid
         assertEquals("Should have not constraint violation", 0, validator.validate(item).size());
@@ -62,7 +62,7 @@ public class ItemIT {
         // Creates an object
         Category category = new Category("Fish", "Any of numerous cold-blooded aquatic vertebrates characteristically having fins, gills, and a streamlined body");
         Product product = new Product("Bulldog", "Friendly dog from England", category);
-        Item item = new Item("Thootless fish", 10f, "fish1.gif", product, "desc");
+        Item item = new Item("Thootless fish", 10f, "fish1.gif", "desc", product);
 
         // Marshalls it to XML
         StringWriter writer = new StringWriter();

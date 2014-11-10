@@ -45,7 +45,7 @@ public class AddressIT {
     public void shouldCreateAValidAddress() {
 
         // Creates an object
-        Country country = new Country("33", "France", "France");
+        Country country = new Country("DV", "Dummy value", "Dummy value", "DMV", "DMV");
         Address address = new Address("Street1", "City", "Zipcode", country);
 
         // Checks the object is valid

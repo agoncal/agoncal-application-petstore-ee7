@@ -1,6 +1,9 @@
 package org.agoncal.application.petstore.service;
 
+import org.agoncal.application.petstore.model.Category;
+import org.agoncal.application.petstore.model.Item;
 import org.agoncal.application.petstore.model.OrderLine;
+import org.agoncal.application.petstore.model.Product;
 import org.agoncal.application.petstore.service.OrderLineService;
 import javax.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -28,6 +31,9 @@ public class OrderLineServiceTest
             .addClass(AbstractService.class)
             .addClass(OrderLineService.class)
             .addClass(OrderLine.class)
+            .addClass(Category.class)
+            .addClass(Product.class)
+            .addClass(Item.class)
             .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
    }
@@ -45,8 +51,10 @@ public class OrderLineServiceTest
       int initialSize = orderlineservice.listAll().size();
 
       // Creates an object
-      OrderLine orderLine = new OrderLine();
-      orderLine.setQuantity(77);
+      Category category = new Category("Dummy value", "Dummy value");
+      Product product = new Product("Dummy value", "Dummy value", category);
+      Item item = new Item("Dummy value", 10f, "Dummy value", "Dummy value", product);
+      OrderLine orderLine = new OrderLine(77, item);
 
       // Inserts the object into the database
       orderLine = orderlineservice.persist(orderLine);

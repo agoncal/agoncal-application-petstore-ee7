@@ -41,8 +41,6 @@ public class CustomerService extends AbstractService<Customer> implements Serial
    // =             Attributes             =
    // ======================================
 
-   @Inject
-   private EntityManager em;
 
    // ======================================
    // =              Public Methods        =
@@ -52,7 +50,7 @@ public class CustomerService extends AbstractService<Customer> implements Serial
    {
 
       // Login has to be unique
-      TypedQuery<Customer> typedQuery = em.createNamedQuery(Customer.FIND_BY_LOGIN, Customer.class);
+      TypedQuery<Customer> typedQuery = entityManager.createNamedQuery(Customer.FIND_BY_LOGIN, Customer.class);
       typedQuery.setParameter("login", login);
       try
       {
@@ -67,13 +65,13 @@ public class CustomerService extends AbstractService<Customer> implements Serial
 
    public Customer createCustomer(@NotNull Customer customer)
    {
-      em.persist(customer);
+      entityManager.persist(customer);
       return customer;
    }
 
    public Customer findCustomer(@NotNull String login)
    {
-      TypedQuery<Customer> typedQuery = em.createNamedQuery(Customer.FIND_BY_LOGIN, Customer.class);
+      TypedQuery<Customer> typedQuery = entityManager.createNamedQuery(Customer.FIND_BY_LOGIN, Customer.class);
       typedQuery.setParameter("login", login);
 
       try
@@ -88,7 +86,7 @@ public class CustomerService extends AbstractService<Customer> implements Serial
 
    public Customer findCustomer(@NotNull String login, @NotNull String password)
    {
-      TypedQuery<Customer> typedQuery = em.createNamedQuery(Customer.FIND_BY_LOGIN_PASSWORD, Customer.class);
+      TypedQuery<Customer> typedQuery = entityManager.createNamedQuery(Customer.FIND_BY_LOGIN_PASSWORD, Customer.class);
       typedQuery.setParameter("login", login);
       typedQuery.setParameter("password", password);
 
@@ -97,24 +95,24 @@ public class CustomerService extends AbstractService<Customer> implements Serial
 
    public List<Customer> findAllCustomers()
    {
-      TypedQuery<Customer> typedQuery = em.createNamedQuery(Customer.FIND_ALL, Customer.class);
+      TypedQuery<Customer> typedQuery = entityManager.createNamedQuery(Customer.FIND_ALL, Customer.class);
       return typedQuery.getResultList();
    }
 
    public Customer updateCustomer(@NotNull Customer customer)
    {
-      em.merge(customer);
+      entityManager.merge(customer);
       return customer;
    }
 
    public void removeCustomer(@NotNull Customer customer)
    {
-      em.remove(em.merge(customer));
+      entityManager.remove(entityManager.merge(customer));
    }
 
    public Country findCountry(@NotNull Long countryId)
    {
-      return em.find(Country.class, countryId);
+      return entityManager.find(Country.class, countryId);
    }
 
    // ======================================

@@ -1,5 +1,6 @@
 package org.agoncal.application.petstore.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
@@ -42,7 +43,7 @@ public class Address implements Serializable
    @NotNull
    private String zipcode;
 
-   @ManyToOne
+   @ManyToOne(cascade = CascadeType.PERSIST)
    private Country country;
 
    // ======================================

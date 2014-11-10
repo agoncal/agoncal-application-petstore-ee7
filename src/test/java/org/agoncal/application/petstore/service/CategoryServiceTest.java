@@ -48,6 +48,7 @@ public class CategoryServiceTest
       // Creates an object
       Category category = new Category();
       category.setName("Dummy value");
+      category.setDescription("Dummy value");
 
       // Inserts the object into the database
       category = categoryservice.persist(category);

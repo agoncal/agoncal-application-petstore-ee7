@@ -1,5 +1,8 @@
 package org.agoncal.application.petstore.service;
 
+import org.agoncal.application.petstore.exceptions.ValidationException;
+import org.agoncal.application.petstore.model.Address;
+import org.agoncal.application.petstore.model.Country;
 import org.agoncal.application.petstore.model.Customer;
 import org.agoncal.application.petstore.service.CustomerService;
 import javax.inject.Inject;
@@ -28,6 +31,9 @@ public class CustomerServiceTest
             .addClass(AbstractService.class)
             .addClass(CustomerService.class)
             .addClass(Customer.class)
+            .addClass(Address.class)
+            .addClass(Country.class)
+            .addClass(ValidationException.class)
             .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
    }
@@ -45,8 +51,9 @@ public class CustomerServiceTest
       int initialSize = customerservice.listAll().size();
 
       // Creates an object
-      Customer customer = new Customer();
-      customer.setFirstName("Dummy value");
+      Country country = new Country("DV", "Dummy value", "Dummy value", "DMV", "DMV");
+      Address address = new Address("Dummy value", "Dummy value", "DV", country);
+      Customer customer = new Customer("Dummy value", "Dummy value", "Dummy", "Dummy value", "Dummy value", address);
 
       // Inserts the object into the database
       customer = customerservice.persist(customer);

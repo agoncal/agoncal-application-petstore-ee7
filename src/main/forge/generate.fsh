@@ -82,7 +82,7 @@ jpa-new-field --named city  --length 50 --not-nullable ;
 jpa-new-field --named state ;
 jpa-new-field --named zipcode --columnName zip_code --length 10 --not-nullable ;
 # Relationships
-jpa-new-field --named country --type org.agoncal.application.petstore.model.Country --relationshipType Many-to-One
+jpa-new-field --named country --type org.agoncal.application.petstore.model.Country --relationshipType Many-to-One --cascadeType PERSIST ;
 # Constraints
 constraint-add --onProperty street1 --constraint Size --min 5 --max 50 ;
 constraint-add --onProperty street1 --constraint NotNull ;
@@ -112,6 +112,7 @@ jpa-new-field --named zipcode --columnName zip_code --length 10 ;
 # Relationships
 jpa-new-field --named country --type org.agoncal.application.petstore.model.Country --relationshipType Many-to-One ;
 # Constraints
+# TODO constraint-add --onProperty login --constraint Login ;
 constraint-add --onProperty password --constraint NotNull ;
 constraint-add --onProperty password --constraint Size --min 1 --max 256 ;
 constraint-add --onProperty firstName --constraint NotNull ;
@@ -141,7 +142,7 @@ jpa-new-entity --named Product ;
 jpa-new-field --named name --length 30 --not-nullable ;
 jpa-new-field --named description --length 3000 --not-nullable ;
 # Relationships
-jpa-new-field --named category --type org.agoncal.application.petstore.model.Category --relationshipType Many-to-One ;
+jpa-new-field --named category --type org.agoncal.application.petstore.model.Category --relationshipType Many-to-One --cascadeType PERSIST ;
 # Constraints
 constraint-add --onProperty name --constraint NotNull ;
 constraint-add --onProperty name --constraint Size --min 1 --max 30 ;
@@ -159,7 +160,7 @@ jpa-new-field --named description --length 3000 --not-nullable ;
 jpa-new-field --named imagePath --columnName image_path ;
 jpa-new-field --named unitCost --type java.lang.Float --columnName unit_cost --not-nullable ;
 # Relationships
-jpa-new-field --named product --type org.agoncal.application.petstore.model.Product --relationshipType Many-to-One ;
+jpa-new-field --named product --type org.agoncal.application.petstore.model.Product --relationshipType Many-to-One --cascadeType PERSIST ;
 # Constraints
 constraint-add --onProperty name --constraint NotNull ;
 constraint-add --onProperty name --constraint Size --min 1 --max 30 ;
@@ -201,7 +202,7 @@ constraint-add --onProperty creditCardExpDate --constraint Size --min 1 --max 5 
 jpa-new-entity --named OrderLine --tableName order_line ;
 jpa-new-field --named quantity --type java.lang.Integer --not-nullable;
 # Relationships
-jpa-new-field --named item --type org.agoncal.application.petstore.model.Item --relationshipType Many-to-One ;
+jpa-new-field --named item --type org.agoncal.application.petstore.model.Item --relationshipType Many-to-One --cascadeType PERSIST ;
 # Constraints
 constraint-add --onProperty quantity --constraint Min --value 1 ;
 
@@ -450,4 +451,5 @@ project-remove-managed-dependencies org.jboss.spec:jboss-javaee-6.0:pom::3.0.2.F
 project-add-dependencies org.apache.logging.log4j:log4j-core:2.0.2 ;
 project-add-dependencies org.webjars:bootstrap:2.3.2 ;
 project-add-dependencies org.primefaces:primefaces:5.1 ;
+project-add-dependencies org.primefaces.themes:all-themes:1.0.10 ;
 project-add-dependencies org.jboss.spec:jboss-javaee-7.0:1.0.1.Final:provided:pom ;

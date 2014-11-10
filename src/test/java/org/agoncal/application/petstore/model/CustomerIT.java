@@ -45,7 +45,7 @@ public class CustomerIT {
     public void shouldCreateAValidCustomer() {
 
         // Creates an object
-        Country country = new Country("33", "France", "France");
+        Country country = new Country("DV", "Dummy value", "Dummy value", "DMV", "DMV");
         Address address = new Address("78 Gnu Rd", "Texas", "666", country);
         Customer customer = new Customer("Paul", "Mc Cartney", "pmac", "pmac", "paul@beales.com", address);
 

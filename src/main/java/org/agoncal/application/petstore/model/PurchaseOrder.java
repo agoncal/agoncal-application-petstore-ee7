@@ -58,7 +58,7 @@ public class PurchaseOrder implements Serializable
    @JoinColumn(name = "customer_fk", nullable = false)
    private Customer customer;
 
-   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @OneToMany//TODO (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
    @JoinTable(name = "t_order_order_line",
          joinColumns = {@JoinColumn(name = "order_fk")},
          inverseJoinColumns = {@JoinColumn(name = "order_line_fk")})

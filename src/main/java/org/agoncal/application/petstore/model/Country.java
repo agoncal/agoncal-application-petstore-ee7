@@ -63,11 +63,13 @@ public class Country implements Serializable
    {
    }
 
-   public Country(String isoCode, String name, String printableName)
+   public Country(String isoCode, String name, String printableName, String iso3, String numcode)
    {
       this.isoCode = isoCode;
       this.name = name;
       this.printableName = printableName;
+      this.iso3 = iso3;
+      this.numcode = numcode;
    }
 
    // ======================================

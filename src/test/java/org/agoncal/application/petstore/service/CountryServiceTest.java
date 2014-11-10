@@ -45,8 +45,7 @@ public class CountryServiceTest
       int initialSize = countryservice.listAll().size();
 
       // Creates an object
-      Country country = new Country();
-      country.setName("Dummy value");
+      Country country = new Country("DV", "Dummy value", "Dummy value", "DMV", "DMV");
 
       // Inserts the object into the database
       country = countryservice.persist(country);

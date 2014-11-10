@@ -1,5 +1,6 @@
 package org.agoncal.application.petstore.service;
 
+import org.agoncal.application.petstore.model.Category;
 import org.agoncal.application.petstore.model.Item;
 import org.agoncal.application.petstore.model.Product;
 import org.agoncal.application.petstore.service.ProductService;
@@ -29,6 +30,7 @@ public class ProductServiceTest
             .addClass(AbstractService.class)
             .addClass(ProductService.class)
             .addClass(Product.class)
+            .addClass(Category.class)
             .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
    }
@@ -46,8 +48,8 @@ public class ProductServiceTest
       int initialSize = productservice.listAll().size();
 
       // Creates an object
-      Product product = new Product();
-      product.setName("Dummy value");
+      Category category = new Category("Dummy value", "Dummy value");
+      Product product = new Product("Dummy value", "Dummy value", category);
 
       // Inserts the object into the database
       product = productservice.persist(product);

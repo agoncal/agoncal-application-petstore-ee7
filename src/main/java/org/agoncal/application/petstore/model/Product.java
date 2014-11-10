@@ -1,6 +1,7 @@
 package org.agoncal.application.petstore.model;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,7 +53,7 @@ public class Product implements Serializable
    @Size(max = 3000)
    private String description;
 
-   @ManyToOne
+   @ManyToOne(cascade = CascadeType.PERSIST)
    @JoinColumn(name = "category_fk", nullable = false)
    @XmlTransient
    private Category category;

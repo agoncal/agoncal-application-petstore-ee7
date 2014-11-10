@@ -1,5 +1,6 @@
 package org.agoncal.application.petstore.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ public class OrderLine implements Serializable
    @Min(1)
    private Integer quantity;
 
-   @ManyToOne
+   @ManyToOne(cascade = CascadeType.PERSIST)
    @JoinColumn(name = "item_fk", nullable = false)
    private Item item;
 

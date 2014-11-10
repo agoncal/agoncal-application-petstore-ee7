@@ -37,8 +37,6 @@ public class PurchaseOrderService extends AbstractService<PurchaseOrder>implemen
    // =             Attributes             =
    // ======================================
 
-   @Inject
-   private EntityManager em;
 
    // ======================================
    // =              Public Methods        =
@@ -52,37 +50,37 @@ public class PurchaseOrderService extends AbstractService<PurchaseOrder>implemen
          throw new ValidationException("Shopping cart is empty"); // TODO exception bean validation
 
       // Creating the order
-      PurchaseOrder order = new PurchaseOrder(em.merge(customer), creditCard, customer.getHomeAddress());
+      PurchaseOrder order = new PurchaseOrder(entityManager.merge(customer), creditCard, customer.getHomeAddress());
 
       // From the shopping cart we create the order lines
       Set<OrderLine> orderLines = new HashSet<>();
 
       for (ShoppingCartItem cartItem : cartItems)
       {
-         orderLines.add(new OrderLine(cartItem.getQuantity(), em.merge(cartItem.getItem())));
+         orderLines.add(new OrderLine(cartItem.getQuantity(), entityManager.merge(cartItem.getItem())));
       }
       order.setOrderLines(orderLines);
 
       // Persists the object to the database
-      em.persist(order);
+      entityManager.persist(order);
 
       return order;
    }
 
    public PurchaseOrder findOrder(@NotNull Long orderId)
    {
-      return em.find(PurchaseOrder.class, orderId);
+      return entityManager.find(PurchaseOrder.class, orderId);
    }
 
    public List<PurchaseOrder> findAllOrders()
    {
-      TypedQuery<PurchaseOrder> typedQuery = em.createNamedQuery(PurchaseOrder.FIND_ALL, PurchaseOrder.class);
+      TypedQuery<PurchaseOrder> typedQuery = entityManager.createNamedQuery(PurchaseOrder.FIND_ALL, PurchaseOrder.class);
       return typedQuery.getResultList();
    }
 
    public void removeOrder(@NotNull PurchaseOrder order)
    {
-      em.remove(em.merge(order));
+      entityManager.remove(entityManager.merge(order));
    }
 
    // ======================================

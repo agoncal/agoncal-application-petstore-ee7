@@ -4,6 +4,7 @@ import org.agoncal.application.petstore.constraints.NotEmpty;
 import org.agoncal.application.petstore.constraints.Price;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -68,7 +69,7 @@ public class Item implements Serializable
    @Price
    private Float unitCost;
 
-   @ManyToOne
+   @ManyToOne(cascade = CascadeType.PERSIST)
    @JoinColumn(name = "product_fk", nullable = false)
    @XmlTransient
    private Product product;
@@ -89,13 +90,13 @@ public class Item implements Serializable
    {
    }
 
-   public Item(String name, Float unitCost, String imagePath, Product product, String description)
+   public Item(String name, Float unitCost, String imagePath, String description, Product product)
    {
       this.name = name;
       this.unitCost = unitCost;
       this.imagePath = imagePath;
-      this.product = product;
       this.description = description;
+      this.product = product;
    }
 
    // ======================================
