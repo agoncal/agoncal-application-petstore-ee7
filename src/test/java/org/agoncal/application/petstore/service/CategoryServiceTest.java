@@ -19,8 +19,16 @@ import static org.junit.Assert.assertNotNull;
 public class CategoryServiceTest
 {
 
+   // ======================================
+   // =             Attributes             =
+   // ======================================
+
    @Inject
    private CategoryService categoryservice;
+
+   // ======================================
+   // =             Deployment             =
+   // ======================================
 
    @Deployment
    public static JavaArchive createDeployment()
@@ -32,6 +40,10 @@ public class CategoryServiceTest
             .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
    }
+
+   // ======================================
+   // =             Test Cases             =
+   // ======================================
 
    @Test
    public void should_be_deployed()

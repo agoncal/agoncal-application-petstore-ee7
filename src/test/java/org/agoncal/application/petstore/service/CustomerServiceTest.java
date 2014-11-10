@@ -21,8 +21,16 @@ import static org.hamcrest.core.Is.*;
 public class CustomerServiceTest
 {
 
+   // ======================================
+   // =             Attributes             =
+   // ======================================
+
    @Inject
    private CustomerService customerservice;
+
+   // ======================================
+   // =             Deployment             =
+   // ======================================
 
    @Deployment
    public static JavaArchive createDeployment()
@@ -37,6 +45,10 @@ public class CustomerServiceTest
             .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
    }
+
+   // ======================================
+   // =             Test Cases             =
+   // ======================================
 
    @Test
    public void should_be_deployed()

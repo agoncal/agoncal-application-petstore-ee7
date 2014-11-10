@@ -397,31 +397,31 @@ rest-generate-endpoints-from-entities --targets org.agoncal.application.petstore
 
 # JSF Beacking Beans
 # ##################
-arquillian-create-test --targets org.agoncal.application.petstore.view.CountryBean ;
-arquillian-create-test --targets org.agoncal.application.petstore.view.CustomerBean ;
-arquillian-create-test --targets org.agoncal.application.petstore.view.CategoryBean ;
-arquillian-create-test --targets org.agoncal.application.petstore.view.ProductBean ;
-arquillian-create-test --targets org.agoncal.application.petstore.view.ItemBean ;
-arquillian-create-test --targets org.agoncal.application.petstore.view.OrderLineBean ;
-arquillian-create-test --targets org.agoncal.application.petstore.view.PurchaseOrderBean ;
+arquillian-create-test --targets org.agoncal.application.petstore.view.CountryBean --enableJPA ;
+arquillian-create-test --targets org.agoncal.application.petstore.view.CustomerBean --enableJPA ;
+arquillian-create-test --targets org.agoncal.application.petstore.view.CategoryBean --enableJPA ;
+arquillian-create-test --targets org.agoncal.application.petstore.view.ProductBean --enableJPA ;
+arquillian-create-test --targets org.agoncal.application.petstore.view.ItemBean --enableJPA ;
+arquillian-create-test --targets org.agoncal.application.petstore.view.OrderLineBean --enableJPA ;
+arquillian-create-test --targets org.agoncal.application.petstore.view.PurchaseOrderBean --enableJPA ;
 
 # REST Endpoints
 # ##############
-arquillian-create-test --targets org.agoncal.application.petstore.rest.CountryEndpoint ;
-arquillian-create-test --targets org.agoncal.application.petstore.rest.CustomerEndpoint ;
-arquillian-create-test --targets org.agoncal.application.petstore.rest.CategoryEndpoint ;
-arquillian-create-test --targets org.agoncal.application.petstore.rest.ProductEndpoint ;
-arquillian-create-test --targets org.agoncal.application.petstore.rest.ItemEndpoint ;
+arquillian-create-test --targets org.agoncal.application.petstore.rest.CountryEndpoint --enableJPA --archiveType WAR ;
+arquillian-create-test --targets org.agoncal.application.petstore.rest.CustomerEndpoint --enableJPA --archiveType WAR ;
+arquillian-create-test --targets org.agoncal.application.petstore.rest.CategoryEndpoint --enableJPA --archiveType WAR ;
+arquillian-create-test --targets org.agoncal.application.petstore.rest.ProductEndpoint --enableJPA --archiveType WAR ;
+arquillian-create-test --targets org.agoncal.application.petstore.rest.ItemEndpoint --enableJPA --archiveType WAR ;
 
 # Services
 # ##############
-arquillian-create-test --targets org.agoncal.application.petstore.service.CountryService ;
-arquillian-create-test --targets org.agoncal.application.petstore.service.CustomerService ;
-arquillian-create-test --targets org.agoncal.application.petstore.service.CategoryService ;
-arquillian-create-test --targets org.agoncal.application.petstore.service.ProductService ;
-arquillian-create-test --targets org.agoncal.application.petstore.service.ItemService ;
-arquillian-create-test --targets org.agoncal.application.petstore.service.PurchaseOrderService ;
-arquillian-create-test --targets org.agoncal.application.petstore.service.OrderLineService ;
+arquillian-create-test --targets org.agoncal.application.petstore.service.CountryService --enableJPA ;
+arquillian-create-test --targets org.agoncal.application.petstore.service.CustomerService --enableJPA ;
+arquillian-create-test --targets org.agoncal.application.petstore.service.CategoryService --enableJPA ;
+arquillian-create-test --targets org.agoncal.application.petstore.service.ProductService --enableJPA ;
+arquillian-create-test --targets org.agoncal.application.petstore.service.ItemService --enableJPA ;
+arquillian-create-test --targets org.agoncal.application.petstore.service.PurchaseOrderService --enableJPA ;
+arquillian-create-test --targets org.agoncal.application.petstore.service.OrderLineService --enableJPA ;
 
 
 

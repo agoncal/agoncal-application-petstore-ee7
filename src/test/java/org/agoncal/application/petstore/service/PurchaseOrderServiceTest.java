@@ -36,8 +36,16 @@ import static org.hamcrest.core.Is.*;
 public class PurchaseOrderServiceTest
 {
 
+   // ======================================
+   // =             Attributes             =
+   // ======================================
+
    @Inject
    private PurchaseOrderService purchaseorderservice;
+
+   // ======================================
+   // =             Deployment             =
+   // ======================================
 
    @Deployment
    public static JavaArchive createDeployment()
@@ -60,6 +68,10 @@ public class PurchaseOrderServiceTest
             .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
    }
+
+   // ======================================
+   // =             Test Cases             =
+   // ======================================
 
    @Test
    public void should_be_deployed()

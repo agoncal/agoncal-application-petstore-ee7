@@ -18,8 +18,16 @@ import static org.hamcrest.core.Is.*;
 public class CountryServiceTest
 {
 
+   // ======================================
+   // =             Attributes             =
+   // ======================================
+
    @Inject
    private CountryService countryservice;
+
+   // ======================================
+   // =             Deployment             =
+   // ======================================
 
    @Deployment
    public static JavaArchive createDeployment()
@@ -31,6 +39,10 @@ public class CountryServiceTest
             .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
    }
+
+   // ======================================
+   // =             Test Cases             =
+   // ======================================
 
    @Test
    public void should_be_deployed()
