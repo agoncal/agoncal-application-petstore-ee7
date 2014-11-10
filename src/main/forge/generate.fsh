@@ -449,7 +449,7 @@ project-remove-managed-dependencies org.jboss.spec:jboss-javaee-6.0:pom::3.0.2.F
 #  Adding Java EE and Web Jars dependencies
 #  ############################
 project-add-dependencies org.apache.logging.log4j:log4j-core:2.0.2 ;
-project-add-dependencies org.webjars:bootstrap:2.3.2 ;
+project-add-dependencies org.webjars:bootstrap:3.3.0 ;
 project-add-dependencies org.primefaces:primefaces:5.1 ;
 project-add-dependencies org.primefaces.themes:all-themes:1.0.10 ;
 project-add-dependencies org.jboss.spec:jboss-javaee-7.0:1.0.1.Final:provided:pom ;

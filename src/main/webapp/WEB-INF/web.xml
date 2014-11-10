@@ -4,46 +4,46 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-<display-name>agoncal-application-petstore-ee7</display-name>
+  <display-name>agoncal-application-petstore-ee7</display-name>
   <session-config>
-  <session-timeout>30</session-timeout>
+    <session-timeout>30</session-timeout>
   </session-config>
   <mime-mapping>
-  <extension>ico</extension>
+    <extension>ico</extension>
     <mime-type>image/x-icon</mime-type>
   </mime-mapping>
   <context-param>
-  <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+    <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
     <param-value>true</param-value>
   </context-param>
 
-        <!-- To let Mojarra auto start it needs some JSF annotation (@ManagedBean) instead of CDI @Named) -->
-    <servlet>
-        <servlet-name>Faces Servlet</servlet-name>
-        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.xhtml</url-pattern>
-    </servlet-mapping>
+  <!-- To let Mojarra auto start it needs some JSF annotation (@ManagedBean) instead of CDI @Named) -->
+  <servlet>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
 
-    <!-- PrimeFaces Theme -->
-    <context-param>
-        <param-name>primefaces.THEME</param-name>
-        <param-value>bootstrap</param-value>
-    </context-param>
+  <!-- PrimeFaces Theme -->
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>bootstrap</param-value>
+  </context-param>
 
-    <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
-    </welcome-file-list>
-  <error-page>
-    <error-code>404</error-code>
-    <location>/faces/error.xhtml</location>
-  </error-page>
-  <error-page>
-    <error-code>500</error-code>
-    <location>/faces/error.xhtml</location>
-  </error-page>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  <!--<error-page>-->
+    <!--<error-code>404</error-code>-->
+    <!--<location>/faces/error.xhtml</location>-->
+  <!--</error-page>-->
+  <!--<error-page>-->
+    <!--<error-code>500</error-code>-->
+    <!--<location>/faces/error.xhtml</location>-->
+  <!--</error-page>-->
 
 </web-app>

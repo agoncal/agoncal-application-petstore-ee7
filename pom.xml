@@ -28,7 +28,7 @@
     <version.glassfish>4.0</version.glassfish>
     <version.maven.embedded.glassfish.plugin>4.0-SNAPSHOT</version.maven.embedded.glassfish.plugin>
     <!-- UI (WebJar, Bootstrap, JQuery...) -->
-    <version.bootstrap>3.0.3</version.bootstrap>
+    <version.bootstrap>3.3.0</version.bootstrap>
     <version.jquery>2.0.3</version.jquery>
     <version.primefaces>4.0</version.primefaces>
     <version.primefaces-themes>1.0.10</version.primefaces-themes>
@@ -54,6 +54,12 @@
         <scope>import</scope>
       </dependency>
       <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${version.junit}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-core</artifactId>
         <version>2.0.2</version>
@@ -61,7 +67,7 @@
       <dependency>
         <groupId>org.webjars</groupId>
         <artifactId>bootstrap</artifactId>
-        <version>2.3.2</version>
+        <version>${version.bootstrap}</version>
       </dependency>
       <dependency>
         <groupId>org.primefaces</groupId>
@@ -92,8 +98,6 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>${version.junit}</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
