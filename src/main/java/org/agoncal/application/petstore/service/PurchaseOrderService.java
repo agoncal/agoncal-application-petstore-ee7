@@ -9,6 +9,7 @@ import org.agoncal.application.petstore.model.ShoppingCartItem;
 import org.agoncal.application.petstore.util.Loggable;
 
 import javax.ejb.Stateless;
+import javax.ejb.LocalBean;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -29,6 +30,7 @@ import java.util.Set;
  */
 
 @Stateless
+@LocalBean
 @Loggable
 public class PurchaseOrderService extends AbstractService<PurchaseOrder>implements Serializable
 {

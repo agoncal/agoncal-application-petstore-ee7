@@ -303,16 +303,27 @@ java-add-annotation --annotation javax.inject.Named --onProperty discountRate ;
 #  #####################  #
 
 java-new-class --named AbstractService --targetPackage org.agoncal.application.petstore.service ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable ;
 ejb-new-bean --named CountryService ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable ;
 ejb-new-bean --named CustomerService ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable ;
 ejb-new-bean --named CategoryService ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable ;
 ejb-new-bean --named ProductService ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable ;
 ejb-new-bean --named ItemService ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable ;
 ejb-new-bean --named PurchaseOrderService ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable ;
 ejb-new-bean --named OrderLineService ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable ;
 java-new-class --named InventoryService --targetPackage org.agoncal.application.petstore.service ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable ;
 java-new-class --named ShippingService --targetPackage org.agoncal.application.petstore.service ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable ;
 java-new-class --named StatisticService --targetPackage org.agoncal.application.petstore.service ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable ;
 java-new-interface --named ComputablePurchaseOrder --targetPackage org.agoncal.application.petstore.service ;
 cdi-new-decorator --named PurchaseOrderDecorator --delegate org.agoncal.application.petstore.service.ComputablePurchaseOrder --targetPackage org.agoncal.application.petstore.service ;
 
@@ -322,13 +333,21 @@ cdi-new-decorator --named PurchaseOrderDecorator --delegate org.agoncal.applicat
 #  Generates JSF beans and pages  #
 #  #############################  #
 
+scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.Category ;
 scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.Country ;
 scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.Customer ;
-scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.Category ;
-scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.Product ;
 scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.Item ;
 scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.OrderLine ;
+scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.Product ;
 scaffold-generate --webRoot /admin --targets org.agoncal.application.petstore.model.PurchaseOrder ;
+
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.view.CategoryBean ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.view.CountryBean ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.view.CustomerBean ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.view.ItemBean ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.view.OrderLineBean ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.view.ProductBean ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.view.PurchaseOrderBean ;
 
 #  AbstractBean
 #  ############
@@ -383,11 +402,17 @@ java-add-annotation --annotation javax.inject.Inject --onProperty logger ;
 #  Generates REST endpoints  #
 #  ########################  #
 
+rest-generate-endpoints-from-entities --targets org.agoncal.application.petstore.model.Category --contentType application/xml application/json ;
 rest-generate-endpoints-from-entities --targets org.agoncal.application.petstore.model.Country --contentType application/xml application/json ;
 rest-generate-endpoints-from-entities --targets org.agoncal.application.petstore.model.Customer --contentType application/xml application/json ;
-rest-generate-endpoints-from-entities --targets org.agoncal.application.petstore.model.Category --contentType application/xml application/json ;
-rest-generate-endpoints-from-entities --targets org.agoncal.application.petstore.model.Product --contentType application/xml application/json ;
 rest-generate-endpoints-from-entities --targets org.agoncal.application.petstore.model.Item --contentType application/xml application/json ;
+rest-generate-endpoints-from-entities --targets org.agoncal.application.petstore.model.Product --contentType application/xml application/json ;
+
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.rest.CategoryEndpoint ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.rest.CountryEndpoint ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.rest.CustomerEndpoint ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.rest.ItemEndpoint ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.rest.ProductEndpoint ;
 
 
 
@@ -422,7 +447,6 @@ arquillian-create-test --targets org.agoncal.application.petstore.service.Produc
 arquillian-create-test --targets org.agoncal.application.petstore.service.ItemService --enableJPA ;
 arquillian-create-test --targets org.agoncal.application.petstore.service.PurchaseOrderService --enableJPA ;
 arquillian-create-test --targets org.agoncal.application.petstore.service.OrderLineService --enableJPA ;
-
 
 
 #  ##################  #

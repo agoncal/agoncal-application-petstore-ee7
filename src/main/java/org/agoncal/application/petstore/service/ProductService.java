@@ -11,9 +11,11 @@ import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.agoncal.application.petstore.util.Loggable;
 
 @Stateless
 @LocalBean
+@Loggable
 public class ProductService extends AbstractService<Product> implements Serializable
 {
 

@@ -22,7 +22,7 @@ public class CreditCard implements Serializable
    // =             Attributes             =
    // ======================================
 
-   @Column(length = 30, name = "credit_card_number", nullable = true)
+   @Column(length = 30, name = "credit_card_number", nullable = false)
    @NotNull
    @Size(min = 1, max = 30)
    private String creditCardNumber;

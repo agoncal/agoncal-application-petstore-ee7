@@ -5,6 +5,7 @@ import org.agoncal.application.petstore.model.Customer;
 import org.agoncal.application.petstore.util.Loggable;
 
 import javax.ejb.Stateless;
+import javax.ejb.LocalBean;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -24,6 +25,7 @@ import java.util.List;
  */
 
 @Stateless
+@LocalBean
 @Loggable
 public class CustomerService extends AbstractService<Customer> implements Serializable
 {

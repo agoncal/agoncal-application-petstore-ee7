@@ -1,7 +1,6 @@
 package org.agoncal.application.petstore.rest;
 
-import org.agoncal.application.petstore.model.Country;
-import org.agoncal.application.petstore.util.Loggable;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,7 +20,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
-import java.util.List;
+import org.agoncal.application.petstore.model.Country;
+import org.agoncal.application.petstore.util.Loggable;
 
 /**
  * @author Antonio Goncalves
@@ -29,9 +29,9 @@ import java.util.List;
  *         --
  */
 
-@Loggable
 @Stateless
 @Path("/countries")
+@Loggable
 public class CountryEndpoint
 {
 

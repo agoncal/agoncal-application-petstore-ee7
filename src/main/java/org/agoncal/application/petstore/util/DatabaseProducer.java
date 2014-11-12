@@ -10,7 +10,8 @@ import javax.persistence.PersistenceContext;
  *         --
  */
 
-public class DatabaseProducer {
+public class DatabaseProducer 
+{
 
     // ======================================
     // =             Attributes             =
