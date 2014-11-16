@@ -1,6 +1,8 @@
 package org.agoncal.application.petstore.view.admin;
 
-import org.agoncal.application.petstore.model.Country;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -21,9 +23,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.agoncal.application.petstore.model.Country;
+import org.agoncal.application.petstore.util.Loggable;
 
 /**
  * Backing bean for Country entities.
@@ -38,265 +40,305 @@ import java.util.List;
 @Named
 @Stateful
 @ConversationScoped
-public class CountryBean implements Serializable {
+@Loggable
+public class CountryBean implements Serializable
+{
 
-    // ======================================
-    // =             Attributes             =
-    // ======================================
-
-    private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
    /*
     * Support creating and retrieving Country entities
     */
 
-    private Long id;
-    private Country country;
+   private Long id;
 
-   /*
-    * Support searching Country entities with pagination
-    */
-    private int page;
-    private long count;
-    private List<Country> pageItems;
+   public Long getId()
+   {
+      return this.id;
+   }
 
-    private Country example = new Country();
+   public void setId(Long id)
+   {
+      this.id = id;
+   }
 
-    @Inject
-    private Conversation conversation;
+   private Country country;
 
-    @PersistenceContext(type = PersistenceContextType.EXTENDED)
-    private EntityManager entityManager;
+   public Country getCountry()
+   {
+      return this.country;
+   }
 
-   /*
-    * Support listing and POSTing back Category entities (e.g. from inside an
-    * HtmlSelectOneMenu)
-    */
+   public void setCountry(Country country)
+   {
+      this.country = country;
+   }
 
-    @Resource
-    private SessionContext sessionContext;
+   @Inject
+   private Conversation conversation;
 
-   /*
-    * Support adding children to bidirectional, one-to-many tables
-    */
+   @PersistenceContext(unitName = "applicationPetstorePU", type = PersistenceContextType.EXTENDED)
+   private EntityManager entityManager;
 
-    private Country add = new Country();
+   public String create()
+   {
 
-    // ======================================
-    // =              Public Methods        =
-    // ======================================
+      this.conversation.begin();
+      this.conversation.setTimeout(1800000L);
+      return "create?faces-redirect=true";
+   }
 
-    public String create() {
+   public void retrieve()
+   {
 
-        this.conversation.begin();
-        return "create?faces-redirect=true";
-    }
+      if (FacesContext.getCurrentInstance().isPostback())
+      {
+         return;
+      }
 
-    public void retrieve() {
+      if (this.conversation.isTransient())
+      {
+         this.conversation.begin();
+         this.conversation.setTimeout(1800000L);
+      }
 
-        if (FacesContext.getCurrentInstance().isPostback()) {
-            return;
-        }
+      if (this.id == null)
+      {
+         this.country = this.example;
+      }
+      else
+      {
+         this.country = findById(getId());
+      }
+   }
 
-        if (this.conversation.isTransient()) {
-            this.conversation.begin();
-        }
+   public Country findById(Long id)
+   {
 
-        if (this.id == null) {
-            this.country = this.example;
-        } else {
-            this.country = findById(getId());
-        }
-    }
-
-    public Country findById(Long id) {
-
-        return this.entityManager.find(Country.class, id);
-    }
+      return this.entityManager.find(Country.class, id);
+   }
 
    /*
     * Support updating and deleting Country entities
     */
 
-    public String update() {
-        this.conversation.end();
+   public String update()
+   {
+      this.conversation.end();
 
-        try {
-            if (this.id == null) {
-                this.entityManager.persist(this.country);
-                return "search?faces-redirect=true";
-            } else {
-                this.entityManager.merge(this.country);
-                return "view?faces-redirect=true&id=" + this.country.getId();
-            }
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-            return null;
-        }
-    }
-
-    public String delete() {
-        this.conversation.end();
-
-        try {
-            Country deletableEntity = findById(getId());
-
-            this.entityManager.remove(deletableEntity);
-            this.entityManager.flush();
+      try
+      {
+         if (this.id == null)
+         {
+            this.entityManager.persist(this.country);
             return "search?faces-redirect=true";
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-            return null;
-        }
-    }
+         }
+         else
+         {
+            this.entityManager.merge(this.country);
+            return "view?faces-redirect=true&id=" + this.country.getId();
+         }
+      }
+      catch (Exception e)
+      {
+         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+         return null;
+      }
+   }
 
-    public void search() {
-        this.page = 0;
-    }
+   public String delete()
+   {
+      this.conversation.end();
 
-    public void paginate() {
+      try
+      {
+         Country deletableEntity = findById(getId());
 
-        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+         this.entityManager.remove(deletableEntity);
+         this.entityManager.flush();
+         return "search?faces-redirect=true";
+      }
+      catch (Exception e)
+      {
+         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+         return null;
+      }
+   }
 
-        // Populate this.count
+   /*
+    * Support searching Country entities with pagination
+    */
 
-        CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
-        Root<Country> root = countCriteria.from(Country.class);
-        countCriteria = countCriteria.select(builder.count(root)).where(
-                getSearchPredicates(root));
-        this.count = this.entityManager.createQuery(countCriteria)
-                .getSingleResult();
+   private int page;
+   private long count;
+   private List<Country> pageItems;
 
-        // Populate this.pageItems
+   private Country example = new Country();
 
-        CriteriaQuery<Country> criteria = builder.createQuery(Country.class);
-        root = criteria.from(Country.class);
-        TypedQuery<Country> query = this.entityManager.createQuery(criteria
-                .select(root).where(getSearchPredicates(root)));
-        query.setFirstResult(this.page * getPageSize()).setMaxResults(
-                getPageSize());
-        this.pageItems = query.getResultList();
-    }
+   public int getPage()
+   {
+      return this.page;
+   }
 
-    private Predicate[] getSearchPredicates(Root<Country> root) {
+   public void setPage(int page)
+   {
+      this.page = page;
+   }
 
-        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-        List<Predicate> predicatesList = new ArrayList<Predicate>();
+   public int getPageSize()
+   {
+      return 10;
+   }
 
-        String isoCode = this.example.getIsoCode();
-        if (isoCode != null && !"".equals(isoCode)) {
-            predicatesList.add(builder.like(root.<String>get("isoCode"), '%' + isoCode + '%'));
-        }
-        String name = this.example.getName();
-        if (name != null && !"".equals(name)) {
-            predicatesList.add(builder.like(root.<String>get("name"), '%' + name + '%'));
-        }
-        String printableName = this.example.getPrintableName();
-        if (printableName != null && !"".equals(printableName)) {
-            predicatesList.add(builder.like(root.<String>get("printableName"), '%' + printableName + '%'));
-        }
-        String iso3 = this.example.getIso3();
-        if (iso3 != null && !"".equals(iso3)) {
-            predicatesList.add(builder.like(root.<String>get("iso3"), '%' + iso3 + '%'));
-        }
-        String numcode = this.example.getNumcode();
-        if (numcode != null && !"".equals(numcode)) {
-            predicatesList.add(builder.like(root.<String>get("numcode"), '%' + numcode + '%'));
-        }
+   public Country getExample()
+   {
+      return this.example;
+   }
 
-        return predicatesList.toArray(new Predicate[predicatesList.size()]);
-    }
+   public void setExample(Country example)
+   {
+      this.example = example;
+   }
 
-    public List<Country> getAll() {
+   public String search()
+   {
+      this.page = 0;
+      return null;
+   }
 
-        CriteriaQuery<Country> criteria = this.entityManager
-                .getCriteriaBuilder().createQuery(Country.class);
-        return this.entityManager.createQuery(
-                criteria.select(criteria.from(Country.class))).getResultList();
-    }
+   public void paginate()
+   {
 
-    // ======================================
-    // =         Getters & setters          =
-    // ======================================
+      CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
 
-    public Long getId() {
-        return this.id;
-    }
+      // Populate this.count
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+      CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
+      Root<Country> root = countCriteria.from(Country.class);
+      countCriteria = countCriteria.select(builder.count(root)).where(
+            getSearchPredicates(root));
+      this.count = this.entityManager.createQuery(countCriteria)
+            .getSingleResult();
 
-    public Country getCountry() {
-        return this.country;
-    }
+      // Populate this.pageItems
 
-    public int getPage() {
-        return this.page;
-    }
+      CriteriaQuery<Country> criteria = builder.createQuery(Country.class);
+      root = criteria.from(Country.class);
+      TypedQuery<Country> query = this.entityManager.createQuery(criteria
+            .select(root).where(getSearchPredicates(root)));
+      query.setFirstResult(this.page * getPageSize()).setMaxResults(
+            getPageSize());
+      this.pageItems = query.getResultList();
+   }
 
-    public void setPage(int page) {
-        this.page = page;
-    }
+   private Predicate[] getSearchPredicates(Root<Country> root)
+   {
 
-    public int getPageSize() {
-        return 10;
-    }
+      CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+      List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-    public Country getExample() {
-        return this.example;
-    }
+      String isoCode = this.example.getIsoCode();
+      if (isoCode != null && !"".equals(isoCode))
+      {
+         predicatesList.add(builder.like(builder.lower(root.<String> get("isoCode")), '%' + isoCode.toLowerCase() + '%'));
+      }
+      String name = this.example.getName();
+      if (name != null && !"".equals(name))
+      {
+         predicatesList.add(builder.like(builder.lower(root.<String> get("name")), '%' + name.toLowerCase() + '%'));
+      }
+      String printableName = this.example.getPrintableName();
+      if (printableName != null && !"".equals(printableName))
+      {
+         predicatesList.add(builder.like(builder.lower(root.<String> get("printableName")), '%' + printableName.toLowerCase() + '%'));
+      }
+      String iso3 = this.example.getIso3();
+      if (iso3 != null && !"".equals(iso3))
+      {
+         predicatesList.add(builder.like(builder.lower(root.<String> get("iso3")), '%' + iso3.toLowerCase() + '%'));
+      }
+      String numcode = this.example.getNumcode();
+      if (numcode != null && !"".equals(numcode))
+      {
+         predicatesList.add(builder.like(builder.lower(root.<String> get("numcode")), '%' + numcode.toLowerCase() + '%'));
+      }
 
-    public void setExample(Country example) {
-        this.example = example;
-    }
+      return predicatesList.toArray(new Predicate[predicatesList.size()]);
+   }
 
-    public List<Country> getPageItems() {
-        return this.pageItems;
-    }
+   public List<Country> getPageItems()
+   {
+      return this.pageItems;
+   }
 
-    public long getCount() {
-        return this.count;
-    }
+   public long getCount()
+   {
+      return this.count;
+   }
 
+   /*
+    * Support listing and POSTing back Country entities (e.g. from inside an
+    * HtmlSelectOneMenu)
+    */
 
-    public Country getAdd() {
-        return this.add;
-    }
+   public List<Country> getAll()
+   {
 
-    public Country getAdded() {
-        Country added = this.add;
-        this.add = new Country();
-        return added;
-    }
+      CriteriaQuery<Country> criteria = this.entityManager
+            .getCriteriaBuilder().createQuery(Country.class);
+      return this.entityManager.createQuery(
+            criteria.select(criteria.from(Country.class))).getResultList();
+   }
 
-    // ======================================
-    // =            Inner Class             =
-    // ======================================
+   @Resource
+   private SessionContext sessionContext;
 
-    public Converter getConverter() {
+   public Converter getConverter()
+   {
 
-        final CountryBean ejbProxy = this.sessionContext.getBusinessObject(CountryBean.class);
+      final CountryBean ejbProxy = this.sessionContext.getBusinessObject(CountryBean.class);
 
-        return new Converter() {
+      return new Converter()
+      {
 
-            @Override
-            public Object getAsObject(FacesContext context,
-                                      UIComponent component, String value) {
+         @Override
+         public Object getAsObject(FacesContext context,
+               UIComponent component, String value)
+         {
 
-                return ejbProxy.findById(Long.valueOf(value));
+            return ejbProxy.findById(Long.valueOf(value));
+         }
+
+         @Override
+         public String getAsString(FacesContext context,
+               UIComponent component, Object value)
+         {
+
+            if (value == null)
+            {
+               return "";
             }
 
-            @Override
-            public String getAsString(FacesContext context,
-                                      UIComponent component, Object value) {
+            return String.valueOf(((Country) value).getId());
+         }
+      };
+   }
 
-                if (value == null) {
-                    return "";
-                }
+   /*
+    * Support adding children to bidirectional, one-to-many tables
+    */
 
-                return String.valueOf(((Country) value).getId());
-            }
-        };
-    }
+   private Country add = new Country();
+
+   public Country getAdd()
+   {
+      return this.add;
+   }
+
+   public Country getAdded()
+   {
+      Country added = this.add;
+      this.add = new Country();
+      return added;
+   }
 }

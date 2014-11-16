@@ -15,7 +15,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.net.URI;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(Arquillian.class)
 @RunAsClient
@@ -37,6 +44,7 @@ public class CustomerEndpointTest
    public static WebArchive createDeployment()
    {
       return ShrinkWrap.create(WebArchive.class)
+            .addClass(RestApplication.class)
             .addClass(CustomerEndpoint.class)
             .addClass(Customer.class)
             .addClass(Address.class)
@@ -53,6 +61,24 @@ public class CustomerEndpointTest
    @Test
    public void should_be_deployed()
    {
-      Assert.assertNotNull(baseURL);
+      Client client = ClientBuilder.newClient();
+      WebTarget target = client.target(baseURL).path("rest").path("customers");
+      assertEquals(Response.Status.OK.getStatusCode(), target.request(MediaType.APPLICATION_XML).get().getStatus());
+   }
+
+   @Test
+   public void should_produce_json()
+   {
+      Client client = ClientBuilder.newClient();
+      WebTarget target = client.target(baseURL).path("rest").path("customers");
+      assertEquals(Response.Status.OK.getStatusCode(), target.request(MediaType.APPLICATION_JSON).get().getStatus());
+   }
+
+   @Test
+   public void should_produce_xml()
+   {
+      Client client = ClientBuilder.newClient();
+      WebTarget target = client.target(baseURL).path("rest").path("customers");
+      assertEquals(Response.Status.OK.getStatusCode(), target.request(MediaType.APPLICATION_XML).get().getStatus());
    }
 }

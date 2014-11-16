@@ -1,4 +1,6 @@
-package org.agoncal.application.petstore.model;
+package org.agoncal.application.petstore.view.shopping;
+
+import org.agoncal.application.petstore.model.Item;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

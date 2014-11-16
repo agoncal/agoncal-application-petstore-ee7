@@ -227,6 +227,26 @@ public class PurchaseOrder implements Serializable
       this.orderLines = orderLines;
    }
 
+   public Address getDeliveryAddress()
+   {
+      return deliveryAddress;
+   }
+
+   public void setDeliveryAddress(Address deliveryAddress)
+   {
+      this.deliveryAddress = deliveryAddress;
+   }
+
+   public CreditCard getCreditCard()
+   {
+      return creditCard;
+   }
+
+   public void setCreditCard(CreditCard creditCard)
+   {
+      this.creditCard = creditCard;
+   }
+
    // ======================================
    // =   Methods hash, equals, toString   =
    // ======================================

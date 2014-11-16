@@ -34,7 +34,7 @@ public abstract class AbstractBean {
     private String getMessage(FacesContext facesContext, String msgKey, Object... args) {
         Locale locale = facesContext.getViewRoot().getLocale();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        ResourceBundle bundle = ResourceBundle.getBundle("messages", locale, classLoader);
+        ResourceBundle bundle = ResourceBundle.getBundle("Messages", locale, classLoader);
         String msgValue = bundle.getString(msgKey);
         return MessageFormat.format(msgValue, args);
     }

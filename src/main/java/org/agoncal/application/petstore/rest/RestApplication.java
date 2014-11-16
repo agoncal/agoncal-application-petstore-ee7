@@ -19,15 +19,15 @@ public class RestApplication extends Application
    // ======================================
 
    // TODO Not sure this is still needed for portability in EE 7
-   @Override
-   public Set<Class<?>> getClasses()
-   {
-      Set<Class<?>> classes = new HashSet<>();
-      classes.add(CategoryEndpoint.class);
-      classes.add(CountryEndpoint.class);
-      classes.add(CustomerEndpoint.class);
-      classes.add(ItemEndpoint.class);
-      classes.add(ProductEndpoint.class);
-      return classes;
-   }
+//   @Override
+//   public Set<Class<?>> getClasses()
+//   {
+//      Set<Class<?>> classes = new HashSet<>();
+//      classes.add(CategoryEndpoint.class);
+//      classes.add(CountryEndpoint.class);
+//      classes.add(CustomerEndpoint.class);
+//      classes.add(ItemEndpoint.class);
+//      classes.add(ProductEndpoint.class);
+//      return classes;
+//   }
 }

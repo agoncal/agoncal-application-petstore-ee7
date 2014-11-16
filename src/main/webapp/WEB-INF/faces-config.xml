@@ -6,7 +6,7 @@
             <default-locale>en</default-locale>
         </locale-config>
         <resource-bundle>
-            <base-name>messages</base-name>
+            <base-name>Messages</base-name>
             <var>i18n</var>
         </resource-bundle>
     </application>

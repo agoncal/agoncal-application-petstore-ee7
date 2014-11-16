@@ -2,6 +2,7 @@ package org.agoncal.application.petstore.service;
 
 import org.agoncal.application.petstore.model.Category;
 
+import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.criteria.CriteriaBuilder;

@@ -5,12 +5,11 @@ import org.agoncal.application.petstore.model.CreditCard;
 import org.agoncal.application.petstore.model.Customer;
 import org.agoncal.application.petstore.model.OrderLine;
 import org.agoncal.application.petstore.model.PurchaseOrder;
-import org.agoncal.application.petstore.model.ShoppingCartItem;
+import org.agoncal.application.petstore.view.shopping.ShoppingCartItem;
 import org.agoncal.application.petstore.util.Loggable;
 
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;

@@ -349,6 +349,14 @@ java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable 
 java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.view.ProductBean ;
 java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.view.PurchaseOrderBean ;
 
+java-add-annotation --annotation org.agoncal.application.petstore.view.CatchException --targetClass org.agoncal.application.petstore.view.CategoryBean ;
+java-add-annotation --annotation org.agoncal.application.petstore.view.CatchException --targetClass org.agoncal.application.petstore.view.CountryBean ;
+java-add-annotation --annotation org.agoncal.application.petstore.view.CatchException --targetClass org.agoncal.application.petstore.view.CustomerBean ;
+java-add-annotation --annotation org.agoncal.application.petstore.view.CatchException --targetClass org.agoncal.application.petstore.view.ItemBean ;
+java-add-annotation --annotation org.agoncal.application.petstore.view.CatchException --targetClass org.agoncal.application.petstore.view.OrderLineBean ;
+java-add-annotation --annotation org.agoncal.application.petstore.view.CatchException --targetClass org.agoncal.application.petstore.view.ProductBean ;
+java-add-annotation --annotation org.agoncal.application.petstore.view.CatchException --targetClass org.agoncal.application.petstore.view.PurchaseOrderBean ;
+
 #  AbstractBean
 #  ############
 faces-new-bean --named AbstractBean --targetPackage org.agoncal.application.petstore.view ;
@@ -358,16 +366,24 @@ faces-new-bean --named AbstractBean --targetPackage org.agoncal.application.pets
 faces-new-bean --named DebugBean --targetPackage org.agoncal.application.petstore.view.util ;
 faces-new-bean --named LocalBean --targetPackage org.agoncal.application.petstore.view.util ;
 
-#  CredentialsBean and AccountBean
+#  Credentials
 #  ############
-faces-new-bean --named AccountBean --targetPackage org.agoncal.application.petstore.view.credentials ;
-faces-new-bean --named CredentialsBean --targetPackage org.agoncal.application.petstore.view.credentials ;
 cdi-new-interceptor-binding --named LoggedIn --targetPackage org.agoncal.application.petstore.view.credentials ;
+
+faces-new-bean --named AccountBean --targetPackage org.agoncal.application.petstore.view.credentials ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.view.AccountBean ;
+java-add-annotation --annotation org.agoncal.application.petstore.view.CatchException --targetClass org.agoncal.application.petstore.view.AccountBean ;
+
+faces-new-bean --named CredentialsBean --targetPackage org.agoncal.application.petstore.view.credentials ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.view.CredentialsBean ;
+java-add-annotation --annotation org.agoncal.application.petstore.view.CatchException --targetClass org.agoncal.application.petstore.view.CredentialsBean ;
 
 #  ShoppingCartBean
 #  ############
 faces-new-bean --named ShoppingCartBean --targetPackage org.agoncal.application.petstore.view.shopping ;
-# java-add-annotation --annotation javax.enterprise.context.ConversationScoped ;
+java-add-annotation --annotation javax.enterprise.context.SessionScoped --targetPackage org.agoncal.application.petstore.view.shopping ;
+java-add-annotation --annotation org.agoncal.application.petstore.util.Loggable --targetClass org.agoncal.application.petstore.view.ShoppingCartBean ;
+java-add-annotation --annotation org.agoncal.application.petstore.view.CatchException --targetClass org.agoncal.application.petstore.view.ShoppingCartBean ;
 
 java-new-class --named ShoppingCartItem --targetPackage org.agoncal.application.petstore.view.shopping ;
 java-new-field --named item --type org.agoncal.application.petstore.model.Item ;
@@ -477,3 +493,7 @@ project-add-dependencies org.webjars:bootstrap:3.3.0 ;
 project-add-dependencies org.primefaces:primefaces:5.1 ;
 project-add-dependencies org.primefaces.themes:all-themes:1.0.10 ;
 project-add-dependencies org.jboss.spec:jboss-javaee-7.0:1.0.1.Final:provided:pom ;
+
+#  Adding External repositories
+#  ############################
+project-add-repository --named primefaces --url http://repository.primefaces.org/
