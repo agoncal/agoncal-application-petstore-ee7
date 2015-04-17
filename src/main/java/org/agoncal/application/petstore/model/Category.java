@@ -1,18 +1,15 @@
 package org.agoncal.application.petstore.model;
 
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Version;
+import java.io.Serializable;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * @author Antonio Goncalves
@@ -22,12 +19,12 @@ import java.io.Serializable;
 
 @Entity
 @Cacheable
-@NamedQueries( {
-      // TODO fetch doesn't work with GlassFIsh
-      // @NamedQuery(name = Category.FIND_BY_NAME, query =
-      // "SELECT c FROM Category c LEFT JOIN FETCH c.products WHERE c.name = :pname"),
-      @NamedQuery(name = Category.FIND_BY_NAME, query = "SELECT c FROM Category c WHERE c.name = :pname"),
-      @NamedQuery(name = Category.FIND_ALL, query = "SELECT c FROM Category c")
+@NamedQueries({
+         // TODO fetch doesn't work with GlassFIsh
+         // @NamedQuery(name = Category.FIND_BY_NAME, query =
+         // "SELECT c FROM Category c LEFT JOIN FETCH c.products WHERE c.name = :pname"),
+         @NamedQuery(name = Category.FIND_BY_NAME, query = "SELECT c FROM Category c WHERE c.name = :pname"),
+         @NamedQuery(name = Category.FIND_ALL, query = "SELECT c FROM Category c")
 })
 @XmlRootElement
 public class Category implements Serializable
@@ -56,7 +53,7 @@ public class Category implements Serializable
    private String description;
 
    // ======================================
-   // =             Constants              =
+   // = Constants =
    // ======================================
 
    public static final String FIND_BY_NAME = "Category.findByName";
@@ -125,47 +122,42 @@ public class Category implements Serializable
    // ======================================
 
    @Override
-   public boolean equals(Object obj)
+   public final boolean equals(Object o)
    {
-      if (this == obj)
-      {
-         return true;
-      }
-      if (!(obj instanceof Category))
+      if (!(o instanceof Category))
       {
          return false;
       }
-      Category other = (Category) obj;
-      if (id != null)
-      {
-         if (!id.equals(other.id))
-         {
-            return false;
-         }
-      }
-      return true;
+
+      Category category = (Category) o;
+
+      return new EqualsBuilder()
+               .append(version, category.version)
+               .append(id, category.id)
+               .append(name, category.name)
+               .append(description, category.description)
+               .isEquals();
    }
 
    @Override
-   public int hashCode()
+   public final int hashCode()
    {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + ((id == null) ? 0 : id.hashCode());
-      return result;
+      return new HashCodeBuilder(17, 37)
+               .append(id)
+               .append(version)
+               .append(name)
+               .append(description)
+               .toHashCode();
    }
 
    @Override
    public String toString()
    {
-      String result = getClass().getSimpleName() + " ";
-      if (id != null)
-         result += "id: " + id;
-      result += ", version: " + version;
-      if (name != null && !name.trim().isEmpty())
-         result += ", name: " + name;
-      if (description != null && !description.trim().isEmpty())
-         result += ", description: " + description;
-      return result;
+      return new ToStringBuilder(this)
+               .append("id", id)
+               .append("version", version)
+               .append("name", name)
+               .append("description", description)
+               .toString();
    }
 }

@@ -60,6 +60,11 @@
         <scope>test</scope>
       </dependency>
       <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.4</version>
+      </dependency>
+      <dependency>
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-core</artifactId>
         <version>2.0.2</version>
@@ -92,6 +97,12 @@
         <version>3.0.8.Final</version>
         <scope>test</scope>
       </dependency>
+      <dependency>
+        <groupId>nl.jqno.equalsverifier</groupId>
+        <artifactId>equalsverifier</artifactId>
+        <version>1.7.2</version>
+        <scope>test</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
@@ -103,6 +114,14 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>nl.jqno.equalsverifier</groupId>
+      <artifactId>equalsverifier</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>

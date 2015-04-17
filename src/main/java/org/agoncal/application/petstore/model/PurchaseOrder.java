@@ -1,12 +1,17 @@
 package org.agoncal.application.petstore.model;
 
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "purchase_order")
@@ -252,59 +257,72 @@ public class PurchaseOrder implements Serializable
    // ======================================
 
    @Override
-   public boolean equals(Object obj)
+   public final boolean equals(Object o)
    {
-      if (this == obj)
-      {
-         return true;
-      }
-      if (!(obj instanceof PurchaseOrder))
+      if (!(o instanceof PurchaseOrder))
       {
          return false;
       }
-      PurchaseOrder other = (PurchaseOrder) obj;
-      if (id != null)
-      {
-         if (!id.equals(other.id))
-         {
-            return false;
-         }
-      }
-      return true;
+
+      PurchaseOrder that = (PurchaseOrder) o;
+
+      return new EqualsBuilder()
+               .append(version, that.version)
+               .append(id, that.id)
+               .append(orderDate, that.orderDate)
+               .append(totalWithoutVat, that.totalWithoutVat)
+               .append(vatRate, that.vatRate)
+               .append(vat, that.vat)
+               .append(totalWithVat, that.totalWithVat)
+               .append(discountRate, that.discountRate)
+               .append(discount, that.discount)
+               .append(total, that.total)
+               .append(customer, that.customer)
+               .append(orderLines, that.orderLines)
+               .append(deliveryAddress, that.deliveryAddress)
+               .append(creditCard, that.creditCard)
+               .isEquals();
    }
 
    @Override
-   public int hashCode()
+   public final int hashCode()
    {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + ((id == null) ? 0 : id.hashCode());
-      return result;
+      return new HashCodeBuilder(17, 37)
+               .append(id)
+               .append(version)
+               .append(orderDate)
+               .append(totalWithoutVat)
+               .append(vatRate)
+               .append(vat)
+               .append(totalWithVat)
+               .append(discountRate)
+               .append(discount)
+               .append(total)
+               .append(customer)
+               .append(orderLines)
+               .append(deliveryAddress)
+               .append(creditCard)
+               .toHashCode();
    }
 
    @Override
    public String toString()
    {
-      String result = getClass().getSimpleName() + " ";
-      if (id != null)
-         result += "id: " + id;
-      result += ", version: " + version;
-      if (orderDate != null)
-         result += ", orderDate: " + orderDate;
-      if (totalWithoutVat != null)
-         result += ", totalWithoutVat: " + totalWithoutVat;
-      if (vatRate != null)
-         result += ", vatRate: " + vatRate;
-      if (vat != null)
-         result += ", vat: " + vat;
-      if (totalWithVat != null)
-         result += ", totalWithVat: " + totalWithVat;
-      if (discountRate != null)
-         result += ", discountRate: " + discountRate;
-      if (discount != null)
-         result += ", discount: " + discount;
-      if (total != null)
-         result += ", total: " + total;
-      return result;
+      return new ToStringBuilder(this)
+               .append("id", id)
+               .append("version", version)
+               .append("orderDate", orderDate)
+               .append("totalWithoutVat", totalWithoutVat)
+               .append("vatRate", vatRate)
+               .append("vat", vat)
+               .append("totalWithVat", totalWithVat)
+               .append("discountRate", discountRate)
+               .append("discount", discount)
+               .append("total", total)
+               .append("customer", customer)
+               .append("orderLines", orderLines)
+               .append("deliveryAddress", deliveryAddress)
+               .append("creditCard", creditCard)
+               .toString();
    }
 }

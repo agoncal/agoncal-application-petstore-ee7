@@ -1,9 +1,10 @@
 package org.agoncal.application.petstore.model;
 
-import org.agoncal.application.petstore.constraints.Email;
-import org.agoncal.application.petstore.constraints.Login;
-import org.agoncal.application.petstore.exceptions.ValidationException;
-import sun.misc.BASE64Encoder;
+import java.io.Serializable;
+import java.security.MessageDigest;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -11,11 +12,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
-import java.security.MessageDigest;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+
+import org.agoncal.application.petstore.constraints.Email;
+import org.agoncal.application.petstore.constraints.Login;
+import org.agoncal.application.petstore.exceptions.ValidationException;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import sun.misc.BASE64Encoder;
 
 /**
  * @author Antonio Goncalves
@@ -297,59 +302,61 @@ public class Customer implements Serializable
    // ======================================
 
    @Override
-   public boolean equals(Object obj)
+   public final boolean equals(Object o)
    {
-      if (this == obj)
-      {
-         return true;
-      }
-      if (!(obj instanceof Customer))
+      if (!(o instanceof Customer))
       {
          return false;
       }
-      Customer other = (Customer) obj;
-      if (id != null)
-      {
-         if (!id.equals(other.id))
-         {
-            return false;
-         }
-      }
-      return true;
+
+      Customer customer = (Customer) o;
+
+      return new EqualsBuilder()
+               .append(version, customer.version)
+               .append(id, customer.id)
+               .append(firstName, customer.firstName)
+               .append(lastName, customer.lastName)
+               .append(telephone, customer.telephone)
+               .append(email, customer.email)
+               .append(login, customer.login)
+               .append(password, customer.password)
+               .append(dateOfBirth, customer.dateOfBirth)
+               .append(homeAddress, customer.homeAddress)
+               .isEquals();
    }
 
    @Override
-   public int hashCode()
+   public final int hashCode()
    {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + ((id == null) ? 0 : id.hashCode());
-      return result;
+      return new HashCodeBuilder(17, 37)
+               .append(id)
+               .append(version)
+               .append(firstName)
+               .append(lastName)
+               .append(telephone)
+               .append(email)
+               .append(login)
+               .append(password)
+               .append(dateOfBirth)
+               .append(homeAddress)
+               .toHashCode();
    }
 
    @Override
    public String toString()
    {
-      String result = getClass().getSimpleName() + " ";
-      if (id != null)
-         result += "id: " + id;
-      result += ", version: " + version;
-      if (login != null && !login.trim().isEmpty())
-         result += ", login: " + login;
-      if (password != null && !password.trim().isEmpty())
-         result += ", password: " + password;
-      if (firstName != null && !firstName.trim().isEmpty())
-         result += ", firstName: " + firstName;
-      if (lastName != null && !lastName.trim().isEmpty())
-         result += ", lastName: " + lastName;
-      if (telephone != null && !telephone.trim().isEmpty())
-         result += ", telephone: " + telephone;
-      if (email != null && !email.trim().isEmpty())
-         result += ", email: " + email;
-      if (dateOfBirth != null)
-         result += ", dateOfBirth: " + dateOfBirth;
-      if (age != null)
-         result += ", age: " + age;
-      return result;
+      return new ToStringBuilder(this)
+               .append("id", id)
+               .append("version", version)
+               .append("firstName", firstName)
+               .append("lastName", lastName)
+               .append("telephone", telephone)
+               .append("email", email)
+               .append("login", login)
+               .append("password", password)
+               .append("dateOfBirth", dateOfBirth)
+               .append("age", age)
+               .append("homeAddress", homeAddress)
+               .toString();
    }
 }

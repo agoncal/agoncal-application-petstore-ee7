@@ -8,10 +8,12 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
- * @author Antonio Goncalves
- *         http://www.antoniogoncalves.org
- *         --
+ * @author Antonio Goncalves http://www.antoniogoncalves.org --
  */
 
 @Embeddable
@@ -91,15 +93,39 @@ public class CreditCard implements Serializable
    // ======================================
 
    @Override
+   public final boolean equals(Object o)
+   {
+      if (!(o instanceof CreditCard))
+      {
+         return false;
+      }
+
+      CreditCard that = (CreditCard) o;
+
+      return new EqualsBuilder()
+               .append(creditCardNumber, that.creditCardNumber)
+               .append(creditCardType, that.creditCardType)
+               .append(creditCardExpDate, that.creditCardExpDate)
+               .isEquals();
+   }
+
+   @Override
+   public final int hashCode()
+   {
+      return new HashCodeBuilder(17, 37)
+               .append(creditCardNumber)
+               .append(creditCardType)
+               .append(creditCardExpDate)
+               .toHashCode();
+   }
+
+   @Override
    public String toString()
    {
-      String result = getClass().getSimpleName() + " ";
-      if (creditCardNumber != null && !creditCardNumber.trim().isEmpty())
-         result += "creditCardNumber: " + creditCardNumber;
-      if (creditCardType != null)
-         result += ", creditCardType: " + creditCardType;
-      if (creditCardExpDate != null && !creditCardExpDate.trim().isEmpty())
-         result += ", creditCardExpDate: " + creditCardExpDate;
-      return result;
+      return new ToStringBuilder(this)
+               .append("creditCardNumber", creditCardNumber)
+               .append("creditCardType", creditCardType)
+               .append("creditCardExpDate", creditCardExpDate)
+               .toString();
    }
 }
