@@ -5,6 +5,11 @@ import org.agoncal.application.petstore.model.Item;
 import org.agoncal.application.petstore.model.Product;
 import org.agoncal.application.petstore.service.ItemService;
 import javax.inject.Inject;
+
+import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.builder.Builder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -40,6 +45,7 @@ public class ItemServiceTest
             .addClass(Item.class)
             .addClass(Product.class)
             .addClass(Category.class)
+            .addClasses(HashCodeBuilder.class, Builder.class, Validate.class, EqualsBuilder.class)
             .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
    }
