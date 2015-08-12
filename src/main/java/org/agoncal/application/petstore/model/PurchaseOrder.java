@@ -3,27 +3,24 @@ package org.agoncal.application.petstore.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 @Entity
 @Table(name = "purchase_order")
 @XmlRootElement
-@NamedQueries( {
-      @NamedQuery(name = PurchaseOrder.FIND_ALL, query = "SELECT o FROM PurchaseOrder o")
+@NamedQueries({
+         @NamedQuery(name = PurchaseOrder.FIND_ALL, query = "SELECT o FROM PurchaseOrder o")
 })
 public class PurchaseOrder implements Serializable
 {
 
    // ======================================
-   // =             Attributes             =
+   // = Attributes =
    // ======================================
 
    @Id
@@ -63,10 +60,9 @@ public class PurchaseOrder implements Serializable
    @JoinColumn(name = "customer_fk", nullable = false)
    private Customer customer;
 
-   @OneToMany//TODO (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-   @JoinTable(name = "t_order_order_line",
-         joinColumns = {@JoinColumn(name = "order_fk")},
-         inverseJoinColumns = {@JoinColumn(name = "order_line_fk")})
+   @OneToMany // TODO (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @JoinTable(name = "t_order_order_line", joinColumns = { @JoinColumn(name = "order_fk") }, inverseJoinColumns = {
+            @JoinColumn(name = "order_line_fk") })
    private Set<OrderLine> orderLines = new HashSet<OrderLine>();
 
    @Embedded
@@ -78,13 +74,13 @@ public class PurchaseOrder implements Serializable
    private CreditCard creditCard = new CreditCard();
 
    // ======================================
-   // =             Constants              =
+   // = Constants =
    // ======================================
 
    public static final String FIND_ALL = "Order.findAll";
 
    // ======================================
-   // =            Constructors            =
+   // = Constructors =
    // ======================================
 
    public PurchaseOrder()
@@ -99,7 +95,7 @@ public class PurchaseOrder implements Serializable
    }
 
    // ======================================
-   // =         Lifecycle Methods          =
+   // = Lifecycle Methods =
    // ======================================
 
    @PrePersist
@@ -109,7 +105,7 @@ public class PurchaseOrder implements Serializable
    }
 
    // ======================================
-   // =         Getters & setters          =
+   // = Getters & setters =
    // ======================================
 
    public Long getId()
@@ -253,76 +249,45 @@ public class PurchaseOrder implements Serializable
    }
 
    // ======================================
-   // =   Methods hash, equals, toString   =
+   // = Methods hash, equals, toString =
    // ======================================
 
    @Override
    public final boolean equals(Object o)
    {
-      if (!(o instanceof PurchaseOrder))
-      {
-         return false;
-      }
-
+      if (this == o)
+         return true;
+       if (!(o instanceof PurchaseOrder))
+           return false;
       PurchaseOrder that = (PurchaseOrder) o;
-
-      return new EqualsBuilder()
-               .append(version, that.version)
-               .append(id, that.id)
-               .append(orderDate, that.orderDate)
-               .append(totalWithoutVat, that.totalWithoutVat)
-               .append(vatRate, that.vatRate)
-               .append(vat, that.vat)
-               .append(totalWithVat, that.totalWithVat)
-               .append(discountRate, that.discountRate)
-               .append(discount, that.discount)
-               .append(total, that.total)
-               .append(customer, that.customer)
-               .append(orderLines, that.orderLines)
-               .append(deliveryAddress, that.deliveryAddress)
-               .append(creditCard, that.creditCard)
-               .isEquals();
+      return Objects.equals(orderDate, that.orderDate) &&
+               Objects.equals(customer, that.customer);
    }
 
    @Override
    public final int hashCode()
    {
-      return new HashCodeBuilder(17, 37)
-               .append(id)
-               .append(version)
-               .append(orderDate)
-               .append(totalWithoutVat)
-               .append(vatRate)
-               .append(vat)
-               .append(totalWithVat)
-               .append(discountRate)
-               .append(discount)
-               .append(total)
-               .append(customer)
-               .append(orderLines)
-               .append(deliveryAddress)
-               .append(creditCard)
-               .toHashCode();
+      return Objects.hash(orderDate, customer);
    }
 
    @Override
    public String toString()
    {
-      return new ToStringBuilder(this)
-               .append("id", id)
-               .append("version", version)
-               .append("orderDate", orderDate)
-               .append("totalWithoutVat", totalWithoutVat)
-               .append("vatRate", vatRate)
-               .append("vat", vat)
-               .append("totalWithVat", totalWithVat)
-               .append("discountRate", discountRate)
-               .append("discount", discount)
-               .append("total", total)
-               .append("customer", customer)
-               .append("orderLines", orderLines)
-               .append("deliveryAddress", deliveryAddress)
-               .append("creditCard", creditCard)
-               .toString();
+      return "PurchaseOrder{" +
+               "id=" + id +
+               ", version=" + version +
+               ", orderDate=" + orderDate +
+               ", totalWithoutVat=" + totalWithoutVat +
+               ", vatRate=" + vatRate +
+               ", vat=" + vat +
+               ", totalWithVat=" + totalWithVat +
+               ", discountRate=" + discountRate +
+               ", discount=" + discount +
+               ", total=" + total +
+               ", customer=" + customer +
+               ", orderLines=" + orderLines +
+               ", deliveryAddress=" + deliveryAddress +
+               ", creditCard=" + creditCard +
+               '}';
    }
 }

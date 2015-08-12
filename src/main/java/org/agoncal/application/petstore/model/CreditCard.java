@@ -1,16 +1,13 @@
 package org.agoncal.application.petstore.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * @author Antonio Goncalves http://www.antoniogoncalves.org --
@@ -21,7 +18,7 @@ public class CreditCard implements Serializable
 {
 
    // ======================================
-   // =             Attributes             =
+   // = Attributes =
    // ======================================
 
    @Column(length = 30, name = "credit_card_number", nullable = false)
@@ -40,7 +37,7 @@ public class CreditCard implements Serializable
    private String creditCardExpDate;
 
    // ======================================
-   // =            Constructors            =
+   // = Constructors =
    // ======================================
 
    public CreditCard()
@@ -55,7 +52,7 @@ public class CreditCard implements Serializable
    }
 
    // ======================================
-   // =         Getters & setters          =
+   // = Getters & setters =
    // ======================================
 
    public String getCreditCardNumber()
@@ -89,43 +86,35 @@ public class CreditCard implements Serializable
    }
 
    // ======================================
-   // =   Methods hash, equals, toString   =
+   // = Methods hash, equals, toString =
    // ======================================
 
    @Override
    public final boolean equals(Object o)
    {
+      if (this == o)
+         return true;
       if (!(o instanceof CreditCard))
-      {
          return false;
-      }
-
       CreditCard that = (CreditCard) o;
-
-      return new EqualsBuilder()
-               .append(creditCardNumber, that.creditCardNumber)
-               .append(creditCardType, that.creditCardType)
-               .append(creditCardExpDate, that.creditCardExpDate)
-               .isEquals();
+      return Objects.equals(creditCardNumber, that.creditCardNumber) &&
+               Objects.equals(creditCardType, that.creditCardType) &&
+               Objects.equals(creditCardExpDate, that.creditCardExpDate);
    }
 
    @Override
    public final int hashCode()
    {
-      return new HashCodeBuilder(17, 37)
-               .append(creditCardNumber)
-               .append(creditCardType)
-               .append(creditCardExpDate)
-               .toHashCode();
+      return Objects.hash(creditCardNumber, creditCardType, creditCardExpDate);
    }
 
    @Override
    public String toString()
    {
-      return new ToStringBuilder(this)
-               .append("creditCardNumber", creditCardNumber)
-               .append("creditCardType", creditCardType)
-               .append("creditCardExpDate", creditCardExpDate)
-               .toString();
+      return "CreditCard{" +
+               "creditCardNumber='" + creditCardNumber + '\'' +
+               ", creditCardType=" + creditCardType +
+               ", creditCardExpDate='" + creditCardExpDate + '\'' +
+               '}';
    }
 }

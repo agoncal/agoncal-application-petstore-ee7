@@ -1,20 +1,15 @@
 package org.agoncal.application.petstore.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 /**
- * @author Antonio Goncalves
- *         http://www.antoniogoncalves.org
- *         --
+ * @author Antonio Goncalves http://www.antoniogoncalves.org --
  */
 
 @Entity
@@ -31,7 +26,7 @@ public class Category implements Serializable
 {
 
    // ======================================
-   // =             Attributes             =
+   // = Attributes =
    // ======================================
 
    @Id
@@ -60,7 +55,7 @@ public class Category implements Serializable
    public static final String FIND_ALL = "Category.findAll";
 
    // ======================================
-   // =            Constructors            =
+   // = Constructors =
    // ======================================
 
    public Category()
@@ -74,7 +69,7 @@ public class Category implements Serializable
    }
 
    // ======================================
-   // =         Getters & setters          =
+   // = Getters & setters =
    // ======================================
 
    public Long getId()
@@ -118,46 +113,28 @@ public class Category implements Serializable
    }
 
    // ======================================
-   // =   Methods hash, equals, toString   =
+   // = Methods hash, equals, toString =
    // ======================================
 
    @Override
    public final boolean equals(Object o)
    {
+      if (this == o)
+         return true;
       if (!(o instanceof Category))
-      {
          return false;
-      }
-
       Category category = (Category) o;
-
-      return new EqualsBuilder()
-               .append(version, category.version)
-               .append(id, category.id)
-               .append(name, category.name)
-               .append(description, category.description)
-               .isEquals();
+      return Objects.equals(name, category.name);
    }
 
    @Override
    public final int hashCode()
    {
-      return new HashCodeBuilder(17, 37)
-               .append(id)
-               .append(version)
-               .append(name)
-               .append(description)
-               .toHashCode();
+      return Objects.hash(name);
    }
 
    @Override
-   public String toString()
-   {
-      return new ToStringBuilder(this)
-               .append("id", id)
-               .append("version", version)
-               .append("name", name)
-               .append("description", description)
-               .toString();
+   public String toString() {
+      return name;
    }
 }

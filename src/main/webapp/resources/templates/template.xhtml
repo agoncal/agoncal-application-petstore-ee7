@@ -16,7 +16,7 @@
         <link rel="icon" href="#{resource['favicon.gif']}"/>
 
         <!-- Bootstrap core CSS -->
-        <h:outputStylesheet library="webjars/bootstrap/3.3.0/css" name="bootstrap.css"/>
+        <h:outputStylesheet library="webjars/bootstrap/3.3.5/css" name="bootstrap.css"/>
 
         <!-- Custom styles for this template -->
         <h:outputStylesheet name="css/style.css"/>
@@ -42,7 +42,7 @@
                                 <span class="icon-bar"></span>
                             </button>
                             <h:link class="navbar-brand" outcome="/shopping/main" value="Yaps Petstore EE 7">
-                                <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
+                                <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
                             </h:link>
                         </div>
 
@@ -78,7 +78,7 @@
                                     <h:link outcome="/shopping/showaccount"
                                             value="#{i18n.welcome} #{accountBean.loggedinCustomer.firstName}"
                                             rendered="#{accountBean.loggedIn}">
-                                        <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
+                                        <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
                                     </h:link>
                                 </li>
                                 <li>
@@ -92,14 +92,14 @@
                                     <!--<i class="icon-eye-open icon-white"></i>-->
                                     <h:link outcome="/shopping/signon" value="#{i18n.logIn}"
                                             rendered="#{!accountBean.loggedIn}">
-                                        <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
+                                        <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
                                     </h:link>
                                 </li>
                                 <li>
                                     <!--<i class="icon-shopping-cart icon-white"></i>-->
                                     <h:link outcome="/shopping/showcart" value="#{i18n.shoppingCart}"
                                             rendered="#{!shoppingCartBean.shoppingCartIsEmpty()}">
-                                        <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
+                                        <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
                                     </h:link>
                                 </li>
 
@@ -153,7 +153,7 @@
                 <div class="col-md-8"/>
                 <div class="col-md-2 centered-text">
                     <h:link outcome="/debug" value="Debug">
-                        <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
+                        <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
                     </h:link>
                     <br/>
                     <h:outputText value="Conversation [#{shoppingCartBean.conversation.id}]"/>
@@ -165,8 +165,8 @@
         <!-- Bootstrap core JavaScript
        ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <h:outputScript library="webjars/jquery/2.0.3" name="jquery.min.js"/>
-        <h:outputScript library="webjars/bootstrap/3.0.3/js" name="bootstrap.min.js"/>
+        <h:outputScript library="webjars/jquery/2.1.4" name="jquery.min.js"/>
+        <h:outputScript library="webjars/bootstrap/3.3.5/js" name="bootstrap.min.js"/>
         <h:outputScript target="head">
             // Add the $() function
             $ = jQuery;

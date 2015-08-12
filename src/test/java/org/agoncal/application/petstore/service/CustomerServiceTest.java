@@ -4,13 +4,8 @@ import org.agoncal.application.petstore.exceptions.ValidationException;
 import org.agoncal.application.petstore.model.Address;
 import org.agoncal.application.petstore.model.Country;
 import org.agoncal.application.petstore.model.Customer;
-import org.agoncal.application.petstore.service.CustomerService;
 import javax.inject.Inject;
 
-import org.apache.commons.lang3.Validate;
-import org.apache.commons.lang3.builder.Builder;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -20,7 +15,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
-import static org.hamcrest.core.Is.*;
 
 @RunWith(Arquillian.class)
 public class CustomerServiceTest
@@ -47,7 +41,6 @@ public class CustomerServiceTest
             .addClass(Address.class)
             .addClass(Country.class)
             .addClass(ValidationException.class)
-            .addClasses(HashCodeBuilder.class, Builder.class, Validate.class, EqualsBuilder.class)
             .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
    }

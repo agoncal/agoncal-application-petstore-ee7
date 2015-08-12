@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -16,30 +17,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.agoncal.application.petstore.constraints.Email;
 import org.agoncal.application.petstore.constraints.Login;
 import org.agoncal.application.petstore.exceptions.ValidationException;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import sun.misc.BASE64Encoder;
 
 /**
- * @author Antonio Goncalves
- *         http://www.antoniogoncalves.org
- *         --
+ * @author Antonio Goncalves http://www.antoniogoncalves.org --
  */
 
 @Entity
-@NamedQueries( {
-      @NamedQuery(name = Customer.FIND_BY_LOGIN, query = "SELECT c FROM Customer c WHERE c.login = :login"),
-      @NamedQuery(name = Customer.FIND_BY_LOGIN_PASSWORD, query = "SELECT c FROM Customer c WHERE c.login = :login AND c.password = :password"),
-      @NamedQuery(name = Customer.FIND_ALL, query = "SELECT c FROM Customer c")
+@NamedQueries({
+         @NamedQuery(name = Customer.FIND_BY_LOGIN, query = "SELECT c FROM Customer c WHERE c.login = :login"),
+         @NamedQuery(name = Customer.FIND_BY_LOGIN_PASSWORD, query = "SELECT c FROM Customer c WHERE c.login = :login AND c.password = :password"),
+         @NamedQuery(name = Customer.FIND_ALL, query = "SELECT c FROM Customer c")
 })
 @XmlRootElement
 public class Customer implements Serializable
 {
 
    // ======================================
-   // =             Attributes             =
+   // = Attributes =
    // ======================================
 
    @Id
@@ -89,7 +85,7 @@ public class Customer implements Serializable
    private Address homeAddress = new Address();
 
    // ======================================
-   // =             Constants              =
+   // = Constants =
    // ======================================
 
    public static final String FIND_BY_LOGIN = "Customer.findByLogin";
@@ -97,7 +93,7 @@ public class Customer implements Serializable
    public static final String FIND_ALL = "Customer.findAll";
 
    // ======================================
-   // =            Constructors            =
+   // = Constructors =
    // ======================================
 
    public Customer()
@@ -105,7 +101,7 @@ public class Customer implements Serializable
    }
 
    public Customer(String firstName, String lastName, String login, String plainTextPassword, String email,
-                   Address address)
+            Address address)
    {
       this.firstName = firstName;
       this.lastName = lastName;
@@ -117,7 +113,7 @@ public class Customer implements Serializable
    }
 
    // ======================================
-   // =         Lifecycle Methods          =
+   // = Lifecycle Methods =
    // ======================================
 
    /**
@@ -147,7 +143,7 @@ public class Customer implements Serializable
    }
 
    // ======================================
-   // =          Business methods          =
+   // = Business methods =
    // ======================================
 
    /**
@@ -189,7 +185,7 @@ public class Customer implements Serializable
    }
 
    // ======================================
-   // =         Getters & setters          =
+   // = Getters & setters =
    // ======================================
 
    public Long getId()
@@ -298,65 +294,29 @@ public class Customer implements Serializable
    }
 
    // ======================================
-   // =   Methods hash, equals, toString   =
+   // = Methods hash, equals, toString =
    // ======================================
 
    @Override
    public final boolean equals(Object o)
    {
+      if (this == o)
+         return true;
       if (!(o instanceof Customer))
-      {
          return false;
-      }
-
       Customer customer = (Customer) o;
-
-      return new EqualsBuilder()
-               .append(version, customer.version)
-               .append(id, customer.id)
-               .append(firstName, customer.firstName)
-               .append(lastName, customer.lastName)
-               .append(telephone, customer.telephone)
-               .append(email, customer.email)
-               .append(login, customer.login)
-               .append(password, customer.password)
-               .append(dateOfBirth, customer.dateOfBirth)
-               .append(homeAddress, customer.homeAddress)
-               .isEquals();
+      return Objects.equals(login, customer.login);
    }
 
    @Override
    public final int hashCode()
    {
-      return new HashCodeBuilder(17, 37)
-               .append(id)
-               .append(version)
-               .append(firstName)
-               .append(lastName)
-               .append(telephone)
-               .append(email)
-               .append(login)
-               .append(password)
-               .append(dateOfBirth)
-               .append(homeAddress)
-               .toHashCode();
+      return Objects.hash(login);
    }
 
    @Override
    public String toString()
    {
-      return new ToStringBuilder(this)
-               .append("id", id)
-               .append("version", version)
-               .append("firstName", firstName)
-               .append("lastName", lastName)
-               .append("telephone", telephone)
-               .append("email", email)
-               .append("login", login)
-               .append("password", password)
-               .append("dateOfBirth", dateOfBirth)
-               .append("age", age)
-               .append("homeAddress", homeAddress)
-               .toString();
+      return firstName + ' ' + lastName + " (" + login + ")";
    }
 }

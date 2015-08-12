@@ -1,6 +1,7 @@
 package org.agoncal.application.petstore.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,29 +11,24 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.agoncal.application.petstore.constraints.NotEmpty;
 import org.agoncal.application.petstore.constraints.Price;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * @author Antonio Goncalves
- *         http://www.antoniogoncalves.org
- *         --
+ * @author Antonio Goncalves http://www.antoniogoncalves.org --
  */
 
 @Entity
 @Cacheable
-@NamedQueries( {
-      @NamedQuery(name = Item.FIND_BY_PRODUCT_ID, query = "SELECT i FROM Item i WHERE i.product.id = :productId"),
-      @NamedQuery(name = Item.SEARCH, query = "SELECT i FROM Item i WHERE UPPER(i.name) LIKE :keyword OR UPPER(i.product.name) LIKE :keyword ORDER BY i.product.category.name, i.product.name"),
-      @NamedQuery(name = Item.FIND_ALL, query = "SELECT i FROM Item i")
+@NamedQueries({
+         @NamedQuery(name = Item.FIND_BY_PRODUCT_ID, query = "SELECT i FROM Item i WHERE i.product.id = :productId"),
+         @NamedQuery(name = Item.SEARCH, query = "SELECT i FROM Item i WHERE UPPER(i.name) LIKE :keyword OR UPPER(i.product.name) LIKE :keyword ORDER BY i.product.category.name, i.product.name"),
+         @NamedQuery(name = Item.FIND_ALL, query = "SELECT i FROM Item i")
 })
 @XmlRootElement
 public class Item implements Serializable
 {
 
    // ======================================
-   // =             Attributes             =
+   // = Attributes =
    // ======================================
 
    @Id
@@ -68,7 +64,7 @@ public class Item implements Serializable
    private Product product;
 
    // ======================================
-   // =             Constants              =
+   // = Constants =
    // ======================================
 
    public static final String FIND_BY_PRODUCT_ID = "Item.findByProductId";
@@ -76,7 +72,7 @@ public class Item implements Serializable
    public static final String FIND_ALL = "Item.findAll";
 
    // ======================================
-   // =            Constructors            =
+   // = Constructors =
    // ======================================
 
    public Item()
@@ -93,7 +89,7 @@ public class Item implements Serializable
    }
 
    // ======================================
-   // =         Getters & setters          =
+   // = Getters & setters =
    // ======================================
 
    public Long getId()
@@ -167,55 +163,38 @@ public class Item implements Serializable
    }
 
    // ======================================
-   // =   Methods hash, equals, toString   =
+   // = Methods hash, equals, toString =
    // ======================================
 
    @Override
    public final boolean equals(Object o)
    {
+      if (this == o)
+         return true;
       if (!(o instanceof Item))
-      {
          return false;
-      }
-
       Item item = (Item) o;
-
-      return new EqualsBuilder()
-               .append(version, item.version)
-               .append(id, item.id)
-               .append(name, item.name)
-               .append(description, item.description)
-               .append(imagePath, item.imagePath)
-               .append(unitCost, item.unitCost)
-               .append(product, item.product)
-               .isEquals();
+      return Objects.equals(name, item.name) &&
+               Objects.equals(description, item.description);
    }
 
    @Override
    public final int hashCode()
    {
-      return new HashCodeBuilder(17, 37)
-               .append(id)
-               .append(version)
-               .append(name)
-               .append(description)
-               .append(imagePath)
-               .append(unitCost)
-               .append(product)
-               .toHashCode();
+      return Objects.hash(name, description);
    }
 
    @Override
    public String toString()
    {
-      return new ToStringBuilder(this)
-               .append("id", id)
-               .append("version", version)
-               .append("name", name)
-               .append("description", description)
-               .append("imagePath", imagePath)
-               .append("unitCost", unitCost)
-               .append("product", product)
-               .toString();
+      return "Item{" +
+               "id=" + id +
+               ", version=" + version +
+               ", name='" + name + '\'' +
+               ", description='" + description + '\'' +
+               ", imagePath='" + imagePath + '\'' +
+               ", unitCost=" + unitCost +
+               ", product=" + product +
+               '}';
    }
 }

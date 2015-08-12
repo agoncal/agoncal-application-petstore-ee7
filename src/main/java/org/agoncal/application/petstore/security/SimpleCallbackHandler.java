@@ -27,7 +27,7 @@ public class SimpleCallbackHandler implements CallbackHandler
    // ======================================
 
    @Inject
-   @RequestScoped
+   //@RequestScoped
    private CredentialsBean credentials;
 
    // ======================================

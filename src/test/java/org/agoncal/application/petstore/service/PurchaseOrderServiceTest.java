@@ -15,10 +15,6 @@ import org.agoncal.application.petstore.view.shopping.ShoppingCartItem;
 
 import javax.inject.Inject;
 
-import org.apache.commons.lang3.Validate;
-import org.apache.commons.lang3.builder.Builder;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -67,7 +63,6 @@ public class PurchaseOrderServiceTest
             .addClass(Item.class)
             .addClass(ShoppingCartItem.class)
             .addClass(ValidationException.class)
-            .addClasses(HashCodeBuilder.class, Builder.class, Validate.class, EqualsBuilder.class)
             .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
    }
@@ -93,7 +88,7 @@ public class PurchaseOrderServiceTest
       Address address = new Address("78 Gnu Rd", "Texas", "666", country);
       Customer customer = new Customer("Paul", "Mc Cartney", "pmac", "pmac", "paul@beales.com", address);
       CreditCard creditCard = new CreditCard("1234", CreditCardType.MASTER_CARD, "10/12");
-      Set<OrderLine> orderLines = new HashSet<OrderLine>();
+      Set<OrderLine> orderLines = new HashSet<>();
       PurchaseOrder purchaseOrder = new PurchaseOrder(customer, creditCard, address);
       purchaseOrder.setOrderLines(orderLines);
       purchaseOrder.setDiscount(12.5F);

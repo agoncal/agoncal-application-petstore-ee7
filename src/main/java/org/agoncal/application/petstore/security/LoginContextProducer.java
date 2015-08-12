@@ -34,7 +34,7 @@ public class LoginContextProducer
                                            @ConfigProperty("loginModuleName") String loginModuleName) throws LoginException, URISyntaxException
    {
 
-      System.setProperty("java.security.auth.login.config", new File(LoginContextProducer.class.getResource(loginConfigFileName).toURI()).getPath());
+      //System.setProperty("java.security.auth.login.config", new File(LoginContextProducer.class.getResource(loginConfigFileName).toURI()).getPath());
 
       try
       {

@@ -1,13 +1,10 @@
 package org.agoncal.application.petstore.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "order_line")
@@ -15,7 +12,7 @@ public class OrderLine implements Serializable
 {
 
    // ======================================
-   // =             Attributes             =
+   // = Attributes =
    // ======================================
 
    @Id
@@ -35,7 +32,7 @@ public class OrderLine implements Serializable
    private Item item;
 
    // ======================================
-   // =            Constructors            =
+   // = Constructors =
    // ======================================
 
    public OrderLine()
@@ -49,7 +46,7 @@ public class OrderLine implements Serializable
    }
 
    // ======================================
-   // =          Business methods          =
+   // = Business methods =
    // ======================================
 
    public Float getSubTotal()
@@ -58,7 +55,7 @@ public class OrderLine implements Serializable
    }
 
    // ======================================
-   // =         Getters & setters          =
+   // = Getters & setters =
    // ======================================
 
    public Long getId()
@@ -102,46 +99,35 @@ public class OrderLine implements Serializable
    }
 
    // ======================================
-   // =   Methods hash, equals, toString   =
+   // = Methods hash, equals, toString =
    // ======================================
 
    @Override
    public final boolean equals(Object o)
    {
+      if (this == o)
+         return true;
       if (!(o instanceof OrderLine))
-      {
          return false;
-      }
-
       OrderLine orderLine = (OrderLine) o;
-
-      return new EqualsBuilder()
-               .append(version, orderLine.version)
-               .append(id, orderLine.id)
-               .append(quantity, orderLine.quantity)
-               .append(item, orderLine.item)
-               .isEquals();
+      return Objects.equals(quantity, orderLine.quantity) &&
+               Objects.equals(item, orderLine.item);
    }
 
    @Override
    public final int hashCode()
    {
-      return new HashCodeBuilder(17, 37)
-               .append(id)
-               .append(version)
-               .append(quantity)
-               .append(item)
-               .toHashCode();
+      return Objects.hash(quantity, item);
    }
 
    @Override
    public String toString()
    {
-      return new ToStringBuilder(this)
-               .append("id", id)
-               .append("version", version)
-               .append("quantity", quantity)
-               .append("item", item)
-               .toString();
+      return "OrderLine{" +
+               "id=" + id +
+               ", version=" + version +
+               ", quantity=" + quantity +
+               ", item=" + item +
+               '}';
    }
 }

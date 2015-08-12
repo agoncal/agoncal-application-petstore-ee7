@@ -1,6 +1,7 @@
 package org.agoncal.application.petstore.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,25 +9,22 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 @Entity
 @Cacheable
-@NamedQueries( {
-      // TODO fetch doesn't work with GlassFish
-      // @NamedQuery(name = Product.FIND_BY_CATEGORY_NAME, query =
-      // "SELECT p FROM Product p LEFT JOIN FETCH p.items LEFT JOIN FETCH p.category WHERE p.category.name = :pname"),
-      @NamedQuery(name = Product.FIND_BY_CATEGORY_NAME, query = "SELECT p FROM Product p WHERE p.category.name = :pname"),
-      @NamedQuery(name = Product.FIND_ALL, query = "SELECT p FROM Product p")
+@NamedQueries({
+         // TODO fetch doesn't work with GlassFish
+         // @NamedQuery(name = Product.FIND_BY_CATEGORY_NAME, query =
+         // "SELECT p FROM Product p LEFT JOIN FETCH p.items LEFT JOIN FETCH p.category WHERE p.category.name =
+         // :pname"),
+         @NamedQuery(name = Product.FIND_BY_CATEGORY_NAME, query = "SELECT p FROM Product p WHERE p.category.name = :pname"),
+         @NamedQuery(name = Product.FIND_ALL, query = "SELECT p FROM Product p")
 })
 @XmlRootElement
 public class Product implements Serializable
 {
 
    // ======================================
-   // =             Attributes             =
+   // = Attributes =
    // ======================================
 
    @Id
@@ -53,14 +51,14 @@ public class Product implements Serializable
    private Category category;
 
    // ======================================
-   // =             Constants              =
+   // = Constants =
    // ======================================
 
    public static final String FIND_BY_CATEGORY_NAME = "Product.findByCategoryName";
    public static final String FIND_ALL = "Product.findAll";
 
    // ======================================
-   // =            Constructors            =
+   // = Constructors =
    // ======================================
 
    public Product()
@@ -75,7 +73,7 @@ public class Product implements Serializable
    }
 
    // ======================================
-   // =         Getters & setters          =
+   // = Getters & setters =
    // ======================================
 
    public Long getId()
@@ -129,49 +127,30 @@ public class Product implements Serializable
    }
 
    // ======================================
-   // =   Methods hash, equals, toString   =
+   // = Methods hash, equals, toString =
    // ======================================
 
    @Override
    public final boolean equals(Object o)
    {
+      if (this == o)
+         return true;
       if (!(o instanceof Product))
-      {
          return false;
-      }
-
       Product product = (Product) o;
-
-      return new EqualsBuilder()
-               .append(version, product.version)
-               .append(id, product.id)
-               .append(name, product.name)
-               .append(description, product.description)
-               .append(category, product.category)
-               .isEquals();
+      return Objects.equals(name, product.name) &&
+               Objects.equals(description, product.description);
    }
 
    @Override
    public final int hashCode()
    {
-      return new HashCodeBuilder(17, 37)
-               .append(id)
-               .append(version)
-               .append(name)
-               .append(description)
-               .append(category)
-               .toHashCode();
+      return Objects.hash(name, description);
    }
 
    @Override
    public String toString()
    {
-      return new ToStringBuilder(this)
-               .append("id", id)
-               .append("version", version)
-               .append("name", name)
-               .append("description", description)
-               .append("category", category)
-               .toString();
+      return name;
    }
 }

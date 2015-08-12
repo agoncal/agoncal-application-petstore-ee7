@@ -1,10 +1,6 @@
 package org.agoncal.application.petstore.service;
 
 import org.agoncal.application.petstore.model.Category;
-import org.apache.commons.lang3.Validate;
-import org.apache.commons.lang3.builder.Builder;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -41,7 +37,6 @@ public class CategoryServiceTest
             .addClass(AbstractService.class)
             .addClass(CategoryService.class)
             .addClass(Category.class)
-            .addClasses(HashCodeBuilder.class, Builder.class, Validate.class, EqualsBuilder.class)
             .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
    }

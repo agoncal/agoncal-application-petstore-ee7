@@ -2,13 +2,8 @@ package org.agoncal.application.petstore.view.admin;
 
 import org.agoncal.application.petstore.model.Category;
 import org.agoncal.application.petstore.model.Product;
-import org.agoncal.application.petstore.view.admin.ProductBean;
 import javax.inject.Inject;
 
-import org.apache.commons.lang3.Validate;
-import org.apache.commons.lang3.builder.Builder;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -18,7 +13,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
-import static org.hamcrest.core.Is.*;
 
 @RunWith(Arquillian.class)
 public class ProductBeanTest
@@ -42,7 +36,6 @@ public class ProductBeanTest
             .addClass(ProductBean.class)
             .addClass(Product.class)
             .addClass(Category.class)
-            .addClasses(HashCodeBuilder.class, Builder.class, Validate.class, EqualsBuilder.class)
             .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
    }

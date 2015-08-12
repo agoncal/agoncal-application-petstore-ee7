@@ -6,6 +6,7 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:forgeview="http://jboss.org/forge/view"
                 template="/resources/templates/templateShopping.xhtml">
 
     <ui:param name="pageTitle" value="#{i18n.createAccount_createYourAccount}"/>
@@ -79,9 +80,13 @@
                         <h:inputText id="zipcode" value="#{accountBean.loggedinCustomer.homeAddress.zipcode}"/>
                         <h:message for="zipcode" style="color: red;"/>
 
-                        <h:outputText value="*#{i18n.address_country}:"/>
-                        <h:inputText id="country" value="#{accountBean.loggedinCustomer.homeAddress.country}"/>
+                        <h:outputText value="* #{i18n.address_country}:"/>
+                        <h:selectOneMenu id="country"  converter="#{countryBean.converter}" value="#{accountBean.loggedinCustomer.homeAddress.country}" class="form-control">
+                            <f:selectItem/>
+                            <f:selectItems itemLabel="#{forgeview:display(_item)}" itemValue="#{_item}" value="#{countryBean.all}" var="_item"/>
+                        </h:selectOneMenu>
                         <h:message for="country" style="color: red;"/>
+
 
                     </h:panelGrid>
                 </div>

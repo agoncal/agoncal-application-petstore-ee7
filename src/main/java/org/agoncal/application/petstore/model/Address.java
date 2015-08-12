@@ -1,6 +1,7 @@
 package org.agoncal.application.petstore.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,14 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 /**
- * @author Antonio Goncalves
- *         http://www.antoniogoncalves.org
- *         --
+ * @author Antonio Goncalves http://www.antoniogoncalves.org --
  */
 
 @Embeddable
@@ -24,7 +19,7 @@ public class Address implements Serializable
 {
 
    // ======================================
-   // =             Attributes             =
+   // = Attributes =
    // ======================================
 
    @Column(length = 50, nullable = false)
@@ -49,10 +44,10 @@ public class Address implements Serializable
    private String zipcode;
 
    @ManyToOne(cascade = CascadeType.PERSIST)
-   private Country country;
+   private Country country = new Country();
 
    // ======================================
-   // =            Constructors            =
+   // = Constructors =
    // ======================================
 
    public Address()
@@ -132,52 +127,40 @@ public class Address implements Serializable
    }
 
    // ======================================
-   // =   Methods hash, equals, toString   =
+   // = Methods hash, equals, toString =
    // ======================================
 
    @Override
    public final boolean equals(Object o)
    {
+      if (this == o)
+         return true;
       if (!(o instanceof Address))
-      {
          return false;
-      }
-
       Address address = (Address) o;
-
-      return new EqualsBuilder()
-               .append(street1, address.street1)
-               .append(street2, address.street2)
-               .append(city, address.city)
-               .append(state, address.state)
-               .append(zipcode, address.zipcode)
-               .append(country, address.country)
-               .isEquals();
+      return Objects.equals(street1, address.street1) &&
+               Objects.equals(city, address.city) &&
+               Objects.equals(state, address.state) &&
+               Objects.equals(zipcode, address.zipcode) &&
+               Objects.equals(country, address.country);
    }
 
    @Override
    public final int hashCode()
    {
-      return new HashCodeBuilder(17, 37)
-               .append(street1)
-               .append(street2)
-               .append(city)
-               .append(state)
-               .append(zipcode)
-               .append(country)
-               .toHashCode();
+      return Objects.hash(street1, city, state, zipcode, country);
    }
 
    @Override
    public String toString()
    {
-      return new ToStringBuilder(this)
-               .append("street1", street1)
-               .append("street2", street2)
-               .append("city", city)
-               .append("state", state)
-               .append("zipcode", zipcode)
-               .append("country", country)
-               .toString();
+      return "Address{" +
+               "street1='" + street1 + '\'' +
+               ", street2='" + street2 + '\'' +
+               ", city='" + city + '\'' +
+               ", state='" + state + '\'' +
+               ", zipcode='" + zipcode + '\'' +
+               ", country=" + country +
+               '}';
    }
 }

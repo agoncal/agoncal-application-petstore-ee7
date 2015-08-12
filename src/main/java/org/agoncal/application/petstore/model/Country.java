@@ -1,15 +1,12 @@
 package org.agoncal.application.petstore.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Cacheable
@@ -18,7 +15,7 @@ public class Country implements Serializable
 {
 
    // ======================================
-   // =             Attributes             =
+   // = Attributes =
    // ======================================
 
    @Id
@@ -55,7 +52,7 @@ public class Country implements Serializable
    private String numcode;
 
    // ======================================
-   // =            Constructors            =
+   // = Constructors =
    // ======================================
 
    public Country()
@@ -146,55 +143,29 @@ public class Country implements Serializable
    }
 
    // ======================================
-   // =   Methods hash, equals, toString   =
+   // = Methods hash, equals, toString =
    // ======================================
 
    @Override
    public final boolean equals(Object o)
    {
+      if (this == o)
+         return true;
       if (!(o instanceof Country))
-      {
          return false;
-      }
-
       Country country = (Country) o;
-
-      return new EqualsBuilder()
-               .append(version, country.version)
-               .append(id, country.id)
-               .append(isoCode, country.isoCode)
-               .append(name, country.name)
-               .append(printableName, country.printableName)
-               .append(iso3, country.iso3)
-               .append(numcode, country.numcode)
-               .isEquals();
+      return Objects.equals(isoCode, country.isoCode);
    }
 
    @Override
    public final int hashCode()
    {
-      return new HashCodeBuilder(17, 37)
-               .append(id)
-               .append(version)
-               .append(isoCode)
-               .append(name)
-               .append(printableName)
-               .append(iso3)
-               .append(numcode)
-               .toHashCode();
+      return Objects.hash(isoCode);
    }
 
    @Override
    public String toString()
    {
-      return new ToStringBuilder(this)
-               .append("id", id)
-               .append("version", version)
-               .append("isoCode", isoCode)
-               .append("name", name)
-               .append("printableName", printableName)
-               .append("iso3", iso3)
-               .append("numcode", numcode)
-               .toString();
+      return name;
    }
 }
