@@ -15,16 +15,12 @@
     <version.derby>10.10.1.1</version.derby>
     <version.junit>4.12</version.junit>
     <version.arquillian_core>1.1.8.Final</version.arquillian_core>
-    <version.arquillian.glassfish>1.0.0.CR4</version.arquillian.glassfish>
     <version.arquillian.jboss>7.2.0.Final</version.arquillian.jboss>
     <!--TomEE-->
     <version.openejb>4.1.0-SNAPSHOT</version.openejb>
     <version.openejb.javaee-api>6.0-4</version.openejb.javaee-api>
     <version.tomee>1.1.0-SNAPSHOT</version.tomee>
     <version.myfaces>2.1.7</version.myfaces>
-    <!--GlassFish-->
-    <version.glassfish>4.0</version.glassfish>
-    <version.maven.embedded.glassfish.plugin>4.0-SNAPSHOT</version.maven.embedded.glassfish.plugin>
     <!-- UI (WebJar, Bootstrap, JQuery...) -->
     <version.bootstrap>3.3.5</version.bootstrap>
     <version.jquery>2.1.4</version.jquery>
