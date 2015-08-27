@@ -24,7 +24,7 @@ rest-setup --jaxrsVersion 2.0 ;
 
 #  Setup Arquillian
 #  ############
-arquillian-setup --arquillianVersion 1.1.5.Final --testFramework junit --testFrameworkVersion 4.11 --containerAdapter wildfly-remote --containerAdapterVersion 8.1.0.Final ;
+arquillian-setup --arquillianVersion 1.1.8.Final --testFramework junit --testFrameworkVersion 4.12 --containerAdapter wildfly-remote --containerAdapterVersion 8.2.0.Final ;
 
 
 
@@ -46,8 +46,15 @@ constraint-new-annotation --named Price ;
 #  TODO Command java-new-package-info to create a new package-info.java class [FORGE-2071]
 #  Package Vetoed
 #  ############
-# java-new-package-info --targetPackage org.agoncal.application.petstore.model ;
-# java-add-annotation --annotation javax.enterprise.inject.Vetoed --targetClass org.agoncal.application.petstore.model.package-info ;
+java-new-package --named org.agoncal.application.petstore.model --createPackageInfo ;
+# java-add-annotation --annotation javax.enterprie.inject.Vetoed --targetClass org.agoncal.application.petstore.model.package-info ;
+
+
+#  User role enumeration
+#  ############
+java-new-enum --named UserRole --targetPackage ~.model ;
+java-new-enum-const USER ;
+java-new-enum-const ADMIN ;
 
 
 #  Country entity
@@ -101,6 +108,8 @@ jpa-new-field --named telephone ;
 jpa-new-field --named email ;
 jpa-new-field --named login --length 10 --not-nullable ;
 jpa-new-field --named password --length 256 --not-nullable ;
+jpa-new-field --named uuid --length 256 ;
+jpa-new-field --named UserRole --type ~.model.UserRole --columnName user_role ;
 jpa-new-field --named dateOfBirth --type java.util.Date --temporalType DATE --columnName date_of_birth ;
 jpa-new-field --named age --type java.lang.Integer --transient ;
 # Address embeddable

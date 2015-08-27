@@ -16,7 +16,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.agoncal.application.petstore.constraints.Email;
 import org.agoncal.application.petstore.constraints.Login;
-import org.agoncal.application.petstore.exceptions.ValidationException;
 
 import sun.misc.BASE64Encoder;
 
@@ -27,7 +26,9 @@ import sun.misc.BASE64Encoder;
 @Entity
 @NamedQueries({
          @NamedQuery(name = Customer.FIND_BY_LOGIN, query = "SELECT c FROM Customer c WHERE c.login = :login"),
+         @NamedQuery(name = Customer.FIND_BY_EMAIL, query = "SELECT c FROM Customer c WHERE c.email = :email"),
          @NamedQuery(name = Customer.FIND_BY_LOGIN_PASSWORD, query = "SELECT c FROM Customer c WHERE c.login = :login AND c.password = :password"),
+         @NamedQuery(name = Customer.FIND_BY_UUID, query = "SELECT c FROM Customer c WHERE c.uuid = :uuid"),
          @NamedQuery(name = Customer.FIND_ALL, query = "SELECT c FROM Customer c")
 })
 @XmlRootElement
@@ -72,6 +73,12 @@ public class Customer implements Serializable
    @Size(min = 1, max = 256)
    private String password;
 
+   @Column(length = 256)
+   @Size(min = 1, max = 256)
+   private String uuid;
+
+   private UserRole role;
+
    @Column(name = "date_of_birth")
    @Temporal(TemporalType.DATE)
    @Past
@@ -91,6 +98,8 @@ public class Customer implements Serializable
    public static final String FIND_BY_LOGIN = "Customer.findByLogin";
    public static final String FIND_BY_LOGIN_PASSWORD = "Customer.findByLoginAndPassword";
    public static final String FIND_ALL = "Customer.findAll";
+   public static final String FIND_BY_EMAIL = "Customer.findByEmail";
+   public static final String FIND_BY_UUID = "Customer.findByUUID";
 
    // ======================================
    // = Constructors =
@@ -142,6 +151,12 @@ public class Customer implements Serializable
       age = now.get(Calendar.YEAR) - birth.get(Calendar.YEAR) + adjust;
    }
 
+   @PrePersist
+   private void digestPassword()
+   {
+      password = digestPassword(password);
+   }
+
    // ======================================
    // = Business methods =
    // ======================================
@@ -165,23 +180,6 @@ public class Customer implements Serializable
       {
          throw new RuntimeException("Exception encoding password", e);
       }
-   }
-
-   /**
-    * Given a password, this method then checks if it matches the user
-    *
-    * @param pwd Password
-    * @throws ValidationException thrown if the password is empty or different than the one store in database
-    */
-   public void matchPassword(String pwd)
-   {
-      if (pwd == null || "".equals(pwd))
-         throw new ValidationException("Invalid password");
-      String digestedPwd = digestPassword(pwd);
-
-      // The password entered by the customer is not the same stored in database
-      if (!digestedPwd.equals(password))
-         throw new ValidationException("Passwords don't match");
    }
 
    // ======================================
@@ -218,6 +216,26 @@ public class Customer implements Serializable
       this.login = login;
    }
 
+   public UserRole getRole()
+   {
+      return role;
+   }
+
+   public void setRole(UserRole role)
+   {
+      this.role = role;
+   }
+
+   public String getUuid()
+   {
+      return uuid;
+   }
+
+   public void setUuid(String uuid)
+   {
+      this.uuid = uuid;
+   }
+
    public String getPassword()
    {
       return password;
@@ -246,6 +264,11 @@ public class Customer implements Serializable
    public void setLastName(String lastName)
    {
       this.lastName = lastName;
+   }
+
+   public String getFullName()
+   {
+      return firstName + " " + lastName;
    }
 
    public String getTelephone()
