@@ -46,7 +46,6 @@
                     = <h:outputText value="#{oneItem.subTotal}"/> $
                 </h:column>
                 <h:column>
-                    &nbsp;
                     <h:commandLink action="#{shoppingCartBean.removeItemFromCart}" styleClass="remove-from-cart">
                         <h:outputText value="#{i18n.remove}"/>
                         <f:param name="itemId" value="#{oneItem.item.id}"/>
@@ -59,7 +58,6 @@
             <div>
                 Total $
                 <h:outputText value="#{shoppingCartBean.total}"/>
-                &nbsp;
                 <h:commandLink action="#{shoppingCartBean.checkout}" value="Check Out"
                                styleClass="checkout-cart"/>
             </div>

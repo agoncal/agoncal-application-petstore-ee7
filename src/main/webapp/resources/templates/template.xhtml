@@ -1,22 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="#{localeBean.language}" xmlns="http://www.w3.org/1999/xhtml">
-<f:view locale="#{localeBean.locale}" xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
         xmlns:h="http://xmlns.jcp.org/jsf/html"
         xmlns:f="http://xmlns.jcp.org/jsf/core"
-        contentType="text/html"
-        encoding="UTF-8">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html" encoding="UTF-8">
 
     <!--HEAD-->
     <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
         <title>#{empty pageTitle ? 'Page Title' : pageTitle}</title>
         <link rel="icon" href="#{resource['favicon.gif']}"/>
+        <link rel="shortcut icon" href="#{resource['favicon.gif']}"/>
 
         <!-- Bootstrap core CSS -->
-        <h:outputStylesheet library="webjars/bootstrap/3.3.5/css" name="bootstrap.css"/>
+        <h:outputStylesheet library="webjars" name="bootstrap/3.3.5/css/bootstrap.min.css"/>
+
 
         <!-- Custom styles for this template -->
         <h:outputStylesheet name="css/style.css"/>
@@ -59,14 +64,14 @@
                                             <h:commandLink action="#{localeBean.setLanguage('fr')}" styleClass="menu-fr"
                                                            immediate="true">
                                                 <f:ajax render="@form"/>
-                                                <h:outputText value="&nbsp;Français"/>
+                                                <h:outputText value="Français"/>
                                             </h:commandLink>
                                         </li>
                                         <li>
                                             <h:commandLink action="#{localeBean.setLanguage('en')}" styleClass="menu-en"
                                                            immediate="true">
                                                 <f:ajax render="@form"/>
-                                                <h:outputText value="&nbsp;English"/>
+                                                <h:outputText value="English"/>
                                             </h:commandLink>
                                         </li>
                                     </ul>
@@ -124,7 +129,7 @@
                 <div class="page-header">
                     <!-- Error messages-->
                     <h:messages globalOnly="true" errorClass="alert alert-error" warnClass="alert"
-                                infoClass="alert alert-info"/>&nbsp;
+                                infoClass="alert alert-info"/>
                 </div>
 
                 <ui:insert name="navigation">Default navigation</ui:insert>
@@ -165,8 +170,8 @@
         <!-- Bootstrap core JavaScript
        ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <h:outputScript library="webjars/jquery/2.1.4" name="jquery.min.js"/>
-        <h:outputScript library="webjars/bootstrap/3.3.5/js" name="bootstrap.min.js"/>
+        <h:outputScript library="webjars" name="jquery/2.1.4/jquery.min.js"/>
+        <h:outputScript library="webjars" name="bootstrap/3.3.5/js/bootstrap.min.js"/>
         <h:outputScript target="head">
             // Add the $() function
             $ = jQuery;
