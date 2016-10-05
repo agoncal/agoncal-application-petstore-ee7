@@ -31,6 +31,10 @@ Launching tests under [WildFly](http://www.wildfly.org/) is straight forward. Yo
 
     mvn clean test -Parquillian-wildfly-remote
 
+Or if you prefer the managed mode :
+
+    mvn clean test -Parquillian-wildfly-managed
+
 ## Execute the sample
 
 Once deployed go to the following URL and start buying some pets: [http://localhost:8080/applicationPetstore](http://localhost:8080/applicationPetstore).

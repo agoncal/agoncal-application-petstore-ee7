@@ -11,26 +11,32 @@
 
   <properties>
     <version.javaee>7.0</version.javaee>
+    <version.jboss-javaee>1.0.3.Final</version.jboss-javaee>
+    <version.log4j>2.6.2</version.log4j>
+    <version.resteasy>3.0.19.Final</version.resteasy>
     <!-- Test -->
     <version.derby>10.10.1.1</version.derby>
     <version.junit>4.12</version.junit>
-    <version.arquillian_core>1.1.8.Final</version.arquillian_core>
-    <version.arquillian.jboss>7.2.0.Final</version.arquillian.jboss>
-    <!--TomEE-->
+    <version.equalsverifier>1.7.3</version.equalsverifier>
+    <version.arquillian_core>1.1.11.Final</version.arquillian_core>
+    <version.arquillian.wildfly>8.2.1.Final</version.arquillian.wildfly>
+    <!-- App servers -->
+    <version.wildfly>10.1.0.Final</version.wildfly>
     <version.openejb>4.1.0-SNAPSHOT</version.openejb>
     <version.openejb.javaee-api>6.0-4</version.openejb.javaee-api>
     <version.tomee>1.1.0-SNAPSHOT</version.tomee>
     <version.myfaces>2.1.7</version.myfaces>
     <!-- UI (WebJar, Bootstrap, JQuery...) -->
-    <version.bootstrap>3.3.5</version.bootstrap>
-    <version.jquery>2.1.4</version.jquery>
-    <version.primefaces>5.2</version.primefaces>
+    <version.bootstrap>3.3.7-1</version.bootstrap>
+    <version.jquery>2.2.4</version.jquery>
+    <version.primefaces>6.0</version.primefaces>
     <version.primefaces-themes>1.0.10</version.primefaces-themes>
     <!--Maven Plugins & co-->
-    <version.maven.war.plugin>2.4</version.maven.war.plugin>
+    <version.maven.war.plugin>3.0.0</version.maven.war.plugin>
     <version.maven.compiler.plugin>3.1</version.maven.compiler.plugin>
-    <version.maven.surefire.plugin>2.16</version.maven.surefire.plugin>
-    <version.maven.failsafe.plugin>2.16</version.maven.failsafe.plugin>
+    <version.maven.dependency.plugin>2.10</version.maven.dependency.plugin>
+    <version.maven.surefire.plugin>2.19.1</version.maven.surefire.plugin>
+    <version.maven.failsafe.plugin>2.19.1</version.maven.failsafe.plugin>
     <version.jrebel>1.1.5</version.jrebel>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -56,7 +62,7 @@
       <dependency>
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-core</artifactId>
-        <version>2.3</version>
+        <version>${version.log4j}</version>
       </dependency>
       <dependency>
         <groupId>org.webjars</groupId>
@@ -81,20 +87,20 @@
       <dependency>
         <groupId>org.jboss.spec</groupId>
         <artifactId>jboss-javaee-7.0</artifactId>
-        <version>1.0.3.Final</version>
+        <version>${version.jboss-javaee}</version>
         <type>pom</type>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>resteasy-client</artifactId>
-        <version>3.0.11.Final</version>
+        <version>${version.resteasy}</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>nl.jqno.equalsverifier</groupId>
         <artifactId>equalsverifier</artifactId>
-        <version>1.7.3</version>
+        <version>${version.equalsverifier}</version>
         <scope>test</scope>
       </dependency>
     </dependencies>
@@ -144,18 +150,20 @@
       <artifactId>resteasy-client</artifactId>
     </dependency>
   </dependencies>
+
   <build>
     <finalName>applicationPetstore</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
-        <version>2.6</version>
+        <version>${version.maven.war.plugin}</version>
         <configuration>
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
     </plugins>
   </build>
+
   <profiles>
     <profile>
       <id>arquillian-wildfly-remote</id>
@@ -163,7 +171,7 @@
         <plugins>
           <plugin>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.18.1</version>
+            <version>${version.maven.surefire.plugin}</version>
             <configuration>
               <systemPropertyVariables>
                 <arquillian.launch>arquillian-wildfly-remote</arquillian.launch>
@@ -176,12 +184,66 @@
         <dependency>
           <groupId>org.wildfly</groupId>
           <artifactId>wildfly-arquillian-container-remote</artifactId>
-          <version>8.2.1.Final</version>
+          <version>${version.arquillian.wildfly}</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
     </profile>
+
+  <profile>
+    <id>arquillian-wildfly-managed</id>
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>${version.maven.dependency.plugin}</version>
+          <executions>
+            <execution>
+              <id>unpack</id>
+              <phase>process-test-classes</phase>
+              <goals>
+                <goal>unpack</goal>
+              </goals>
+              <configuration>
+                <artifactItems>
+                  <artifactItem>
+                    <groupId>org.wildfly</groupId>
+                    <artifactId>wildfly-dist</artifactId>
+                    <version>${version.wildfly}</version>
+                    <type>zip</type>
+                    <overWrite>false</overWrite>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+                  </artifactItem>
+                </artifactItems>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${version.maven.surefire.plugin}</version>
+          <configuration>
+            <skipTests>false</skipTests>
+            <systemPropertyVariables>
+              <arquillian.launch>arquillian-wildfly-managed</arquillian.launch>
+            </systemPropertyVariables>
+          </configuration>
+        </plugin>
+      </plugins>
+    </build>
+    <dependencies>
+      <dependency>
+        <groupId>org.wildfly</groupId>
+        <artifactId>wildfly-arquillian-container-managed</artifactId>
+        <version>${version.arquillian.wildfly}</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </profile>
   </profiles>
+
 
   <repositories>
     <repository>

@@ -4,17 +4,20 @@ import org.agoncal.application.petstore.exceptions.ValidationException;
 import org.agoncal.application.petstore.model.Address;
 import org.agoncal.application.petstore.model.Country;
 import org.agoncal.application.petstore.model.Customer;
-import javax.inject.Inject;
-
+import org.agoncal.application.petstore.model.UserRole;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
+
+import javax.inject.Inject;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(Arquillian.class)
 public class CustomerServiceTest
@@ -40,6 +43,7 @@ public class CustomerServiceTest
             .addClass(Customer.class)
             .addClass(Address.class)
             .addClass(Country.class)
+            .addClass(UserRole.class)
             .addClass(ValidationException.class)
             .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");

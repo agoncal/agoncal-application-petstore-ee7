@@ -1,34 +1,24 @@
 package org.agoncal.application.petstore.service;
 
 import org.agoncal.application.petstore.exceptions.ValidationException;
-import org.agoncal.application.petstore.model.Address;
-import org.agoncal.application.petstore.model.Category;
-import org.agoncal.application.petstore.model.Country;
-import org.agoncal.application.petstore.model.CreditCard;
-import org.agoncal.application.petstore.model.CreditCardType;
-import org.agoncal.application.petstore.model.Customer;
-import org.agoncal.application.petstore.model.Item;
-import org.agoncal.application.petstore.model.OrderLine;
-import org.agoncal.application.petstore.model.Product;
-import org.agoncal.application.petstore.model.PurchaseOrder;
+import org.agoncal.application.petstore.model.*;
 import org.agoncal.application.petstore.view.shopping.ShoppingCartItem;
-
-import javax.inject.Inject;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.inject.Inject;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(Arquillian.class)
 public class PurchaseOrderServiceTest
@@ -62,6 +52,7 @@ public class PurchaseOrderServiceTest
             .addClass(Product.class)
             .addClass(Item.class)
             .addClass(ShoppingCartItem.class)
+            .addClass(UserRole.class)
             .addClass(ValidationException.class)
             .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
