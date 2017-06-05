@@ -20,7 +20,7 @@
         <link rel="shortcut icon" href="#{resource['favicon.gif']}"/>
 
         <!-- Bootstrap core CSS -->
-        <h:outputStylesheet library="webjars" name="bootstrap/3.3.5/css/bootstrap.min.css"/>
+        <h:outputStylesheet library="webjars" name="bootstrap/3.3.7-1/css/bootstrap.min.css"/>
 
 
         <!-- Custom styles for this template -->
@@ -157,9 +157,7 @@
                 </div>
                 <div class="col-md-8"/>
                 <div class="col-md-2 centered-text">
-                    <h:link outcome="/debug" value="Debug">
-                        <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
-                    </h:link>
+                    <a href="/applicationPetstore/swagger.json">Swagger Contract</a>
                     <br/>
                     <h:outputText value="Conversation [#{shoppingCartBean.conversation.id}]"/>
                 </div>
@@ -170,8 +168,8 @@
         <!-- Bootstrap core JavaScript
        ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <h:outputScript library="webjars" name="jquery/2.1.4/jquery.min.js"/>
-        <h:outputScript library="webjars" name="bootstrap/3.3.5/js/bootstrap.min.js"/>
+        <h:outputScript library="webjars" name="jquery/2.2.4/jquery.min.js"/>
+        <h:outputScript library="webjars" name="bootstrap/3.3.7-1/js/bootstrap.min.js"/>
         <h:outputScript target="head">
             // Add the $() function
             $ = jQuery;

@@ -49,6 +49,8 @@ You can also get a JSON representation as follow :
 
 * `curl -X GET -H "accept: application/json" http://localhost:8080/applicationPetstore/rs/catalog/items`
 
+Check the Swagger contract on :
+
 ## Test this application on CloudBees
 
 <a href="https://grandcentral.cloudbees.com/?CB_clickstart=https://raw.github.com/cyrille-leclerc/agoncal-application-petstore-ee7/master/clickstart.json"><img src="https://d3ko533tu1ozfq.cloudfront.net/clickstart/deployInstantly.png"/></a>
