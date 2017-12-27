@@ -4,10 +4,8 @@ import org.agoncal.application.petstore.model.Country;
 import org.agoncal.application.petstore.model.Customer;
 import org.agoncal.application.petstore.util.Loggable;
 
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
+import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -67,6 +65,8 @@ public class CustomerService extends AbstractService<Customer> implements Serial
 
    public Customer createCustomer(@NotNull Customer customer)
    {
+      Country country = entityManager.getReference(Country.class, customer.getHomeAddress().getCountry().getId());
+      customer.getHomeAddress().setCountry(country);
       entityManager.persist(customer);
       return customer;
    }
