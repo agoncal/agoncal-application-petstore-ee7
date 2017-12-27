@@ -96,15 +96,6 @@
 						<h:outputText id="itemZipcode" value="#{_item.deliveryAddress.zipcode}"/>
 					</h:link>
 				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Credit Card Number"/>
-					</f:facet>
-					<h:link outcome="/admin/purchaseOrder/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemCreditCardNumber" value="#{_item.creditCardNumber}"/>
-					</h:link>
-				</h:column>
 			</h:dataTable>
 			<ui:include src="/resources/templates/paginator.xhtml">
 				<ui:param name="paginatorBean" value="#{purchaseOrderBean}"/>

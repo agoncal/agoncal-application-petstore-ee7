@@ -1,16 +1,12 @@
 package org.agoncal.application.petstore.service;
 
 import org.agoncal.application.petstore.exceptions.ValidationException;
-import org.agoncal.application.petstore.model.CreditCard;
-import org.agoncal.application.petstore.model.Customer;
-import org.agoncal.application.petstore.model.OrderLine;
-import org.agoncal.application.petstore.model.PurchaseOrder;
-import org.agoncal.application.petstore.view.shopping.ShoppingCartItem;
+import org.agoncal.application.petstore.model.*;
 import org.agoncal.application.petstore.util.Loggable;
+import org.agoncal.application.petstore.view.shopping.ShoppingCartItem;
 
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
-import javax.persistence.EntityManager;
+import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
@@ -51,7 +47,10 @@ public class PurchaseOrderService extends AbstractService<PurchaseOrder>implemen
          throw new ValidationException("Shopping cart is empty"); // TODO exception bean validation
 
       // Creating the order
-      PurchaseOrder order = new PurchaseOrder(entityManager.merge(customer), creditCard, customer.getHomeAddress());
+      Address deliveryAddress = customer.getHomeAddress();
+      Country country = entityManager.getReference(Country.class, customer.getHomeAddress().getCountry().getId());
+      deliveryAddress.setCountry(country);
+      PurchaseOrder order = new PurchaseOrder(entityManager.merge(customer), creditCard, deliveryAddress);
 
       // From the shopping cart we create the order lines
       Set<OrderLine> orderLines = new HashSet<>();
