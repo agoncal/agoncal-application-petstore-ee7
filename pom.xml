@@ -30,6 +30,7 @@
     <version.jquery>2.2.4</version.jquery>
     <version.primefaces>6.1</version.primefaces>
     <version.primefaces-themes>1.0.10</version.primefaces-themes>
+    <version.fontawesome>4.7.0</version.fontawesome>
     <!-- Other -->
     <version.swagger>1.5.17</version.swagger>
     <!--Maven Plugins & co-->
@@ -87,6 +88,11 @@
         <version>${version.primefaces-themes}</version>
       </dependency>
       <dependency>
+        <groupId>org.webjars.bower</groupId>
+        <artifactId>fontawesome</artifactId>
+        <version>${version.fontawesome}</version>
+      </dependency>
+      <dependency>
         <groupId>org.jboss.spec</groupId>
         <artifactId>jboss-javaee-7.0</artifactId>
         <version>${version.jboss-javaee}</version>
@@ -133,6 +139,10 @@
     <dependency>
       <groupId>org.primefaces.themes</groupId>
       <artifactId>all-themes</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars.bower</groupId>
+      <artifactId>fontawesome</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jboss.spec</groupId>

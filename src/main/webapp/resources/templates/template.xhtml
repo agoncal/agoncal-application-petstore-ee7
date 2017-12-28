@@ -21,7 +21,7 @@
 
         <!-- Bootstrap core CSS -->
         <h:outputStylesheet library="webjars" name="bootstrap/3.3.7-1/css/bootstrap.min.css"/>
-
+        <h:outputStylesheet library="webjars" name="fontawesome/4.7.0/css/font-awesome.css"/>
 
         <!-- Custom styles for this template -->
         <h:outputStylesheet name="css/style.css"/>
@@ -79,32 +79,32 @@
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
-                                    <!--<i class="icon-user icon-white"></i>-->
                                     <h:link outcome="/shopping/showaccount"
                                             value="#{i18n.welcome} #{accountBean.loggedinCustomer.firstName}"
                                             rendered="#{accountBean.loggedIn}">
                                         <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
+                                        <i class="fa fa-user" aria-hidden="true"></i>
                                     </h:link>
                                 </li>
                                 <li>
-                                    <!--<i class="icon-off icon-white"></i>-->
                                     <h:commandLink action="#{accountBean.doLogout}"
                                                    rendered="#{accountBean.loggedIn}">
+                                        <i class="fa fa-sign-out" aria-hidden="true"></i>
                                         <h:outputText value="${i18n.logOut}"/>
                                     </h:commandLink>
                                 </li>
                                 <li>
-                                    <!--<i class="icon-eye-open icon-white"></i>-->
                                     <h:link outcome="/shopping/signon" value="#{i18n.logIn}"
                                             rendered="#{!accountBean.loggedIn}">
                                         <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
+                                        <i class="fa fa-sign-in" aria-hidden="true"></i>
                                     </h:link>
                                 </li>
                                 <li>
-                                    <!--<i class="icon-shopping-cart icon-white"></i>-->
                                     <h:link outcome="/shopping/showcart" value="#{i18n.shoppingCart}"
                                             rendered="#{!shoppingCartBean.shoppingCartIsEmpty()}">
                                         <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                     </h:link>
                                 </li>
 
