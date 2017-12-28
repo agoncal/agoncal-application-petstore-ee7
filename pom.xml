@@ -15,16 +15,16 @@
     <version.log4j>2.8.2</version.log4j>
     <!-- Test -->
     <version.junit>4.12</version.junit>
-    <version.arquillian>1.1.13.5</version.arquillian>
+    <version.arquillian>1.1.15.2</version.arquillian>
     <version.arquillian.wildfly>2.0.2.Final</version.arquillian.wildfly>
     <version.shrinkwrap>1.2.6</version.shrinkwrap>
     <version.arquillian.rest>1.0.0.Alpha4</version.arquillian.rest>
-    <version.resteasy>3.1.1.Final</version.resteasy>
+    <version.resteasy>3.1.4.Final</version.resteasy>
     <version.derby>10.10.1.1</version.derby>
     <version.junit>4.12</version.junit>
-    <version.equalsverifier>1.7.3</version.equalsverifier>
+    <version.equalsverifier>1.7.8</version.equalsverifier>
     <!-- App servers -->
-    <version.wildfly>10.1.0.Final</version.wildfly>
+    <version.wildfly>11.0.0.Final</version.wildfly>
     <!-- UI (WebJar, Bootstrap, JQuery...) -->
     <version.bootstrap>3.3.7-1</version.bootstrap>
     <version.jquery>2.2.4</version.jquery>
