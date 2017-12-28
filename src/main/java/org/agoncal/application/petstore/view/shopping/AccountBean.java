@@ -88,7 +88,7 @@ public class AccountBean extends AbstractBean implements Serializable {
         // Login and password are ok
         loggedinCustomer = new Customer();
         loggedinCustomer.setLogin(credentials.getLogin());
-        loggedinCustomer.setPassword(loggedinCustomer.digestPassword(credentials.getPassword()));
+        loggedinCustomer.setPassword(credentials.getPassword());
 
         return "createaccount.faces";
     }
