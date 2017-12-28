@@ -49,7 +49,7 @@ You can also get a JSON representation as follow :
 
 * `curl -X GET -H "accept: application/json" http://localhost:8080/applicationPetstore/rs/catalog/items`
 
-Check the Swagger contract on :
+Check the Swagger contract on : [http://localhost:8080/applicationPetstore/swagger.json]()
 
 ## Test this application on CloudBees
 

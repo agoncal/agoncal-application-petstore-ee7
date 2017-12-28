@@ -51,7 +51,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "type" : "object"
+                "$ref" : "#/definitions/Category"
               }
             }
           }
@@ -149,7 +149,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "type" : "object"
+                "$ref" : "#/definitions/Country"
               }
             }
           }
@@ -247,7 +247,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "type" : "object"
+                "$ref" : "#/definitions/Customer"
               }
             }
           }
@@ -345,7 +345,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "type" : "object"
+                "$ref" : "#/definitions/Item"
               }
             }
           }
@@ -443,7 +443,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "type" : "object"
+                "$ref" : "#/definitions/Product"
               }
             }
           }
@@ -512,6 +512,223 @@
           "default" : {
             "description" : "successful operation"
           }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Address" : {
+      "type" : "object",
+      "required" : [ "city", "street1", "zipcode" ],
+      "properties" : {
+        "street1" : {
+          "type" : "string",
+          "minLength" : 5,
+          "maxLength" : 50
+        },
+        "street2" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 50
+        },
+        "state" : {
+          "type" : "string"
+        },
+        "zipcode" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 10
+        },
+        "country" : {
+          "$ref" : "#/definitions/Country"
+        }
+      }
+    },
+    "Category" : {
+      "type" : "object",
+      "required" : [ "description", "name" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "version" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 30
+        },
+        "description" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 3000
+        }
+      }
+    },
+    "Country" : {
+      "type" : "object",
+      "required" : [ "iso3", "isoCode", "name", "numcode", "printableName" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "version" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "isoCode" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 2
+        },
+        "name" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 80
+        },
+        "printableName" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 80
+        },
+        "iso3" : {
+          "type" : "string",
+          "minLength" : 3,
+          "maxLength" : 3
+        },
+        "numcode" : {
+          "type" : "string",
+          "minLength" : 3,
+          "maxLength" : 3
+        }
+      }
+    },
+    "Customer" : {
+      "type" : "object",
+      "required" : [ "firstName", "lastName", "password" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "version" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "firstName" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 50
+        },
+        "lastName" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 50
+        },
+        "telephone" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "login" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 256
+        },
+        "uuid" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 256
+        },
+        "role" : {
+          "type" : "string",
+          "enum" : [ "USER", "ADMIN" ]
+        },
+        "dateOfBirth" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "age" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "homeAddress" : {
+          "$ref" : "#/definitions/Address"
+        },
+        "fullName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Item" : {
+      "type" : "object",
+      "required" : [ "description", "name", "unitCost" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "version" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 30
+        },
+        "description" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 3000
+        },
+        "imagePath" : {
+          "type" : "string"
+        },
+        "unitCost" : {
+          "type" : "number",
+          "format" : "float"
+        },
+        "product" : {
+          "$ref" : "#/definitions/Product"
+        }
+      }
+    },
+    "Product" : {
+      "type" : "object",
+      "required" : [ "description", "name" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "version" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 30
+        },
+        "description" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 3000
+        },
+        "category" : {
+          "$ref" : "#/definitions/Category"
         }
       }
     }

@@ -31,14 +31,14 @@
     <version.primefaces>6.1</version.primefaces>
     <version.primefaces-themes>1.0.10</version.primefaces-themes>
     <!-- Other -->
-    <version.swagger>1.5.13</version.swagger>
+    <version.swagger>1.5.17</version.swagger>
     <!--Maven Plugins & co-->
     <version.maven.war.plugin>3.1.0</version.maven.war.plugin>
     <version.maven.compiler.plugin>3.1</version.maven.compiler.plugin>
     <version.maven.dependency.plugin>2.10</version.maven.dependency.plugin>
     <version.maven.surefire.plugin>2.19.1</version.maven.surefire.plugin>
     <version.maven.failsafe.plugin>2.19.1</version.maven.failsafe.plugin>
-    <version.swagger.plugin>3.1.4</version.swagger.plugin>
+    <version.swagger.plugin>3.1.6</version.swagger.plugin>
     <!-- Project -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
