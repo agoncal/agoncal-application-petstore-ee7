@@ -65,7 +65,7 @@ public class CustomerService extends AbstractService<Customer> implements Serial
 
    public Customer createCustomer(@NotNull Customer customer)
    {
-      Country country = entityManager.getReference(Country.class, customer.getHomeAddress().getCountry().getId());
+      Country country = entityManager.find(Country.class, customer.getHomeAddress().getCountry().getId());
       customer.getHomeAddress().setCountry(country);
       entityManager.persist(customer);
       return customer;

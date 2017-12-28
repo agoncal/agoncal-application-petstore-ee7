@@ -48,7 +48,7 @@ public class PurchaseOrderService extends AbstractService<PurchaseOrder>implemen
 
       // Creating the order
       Address deliveryAddress = customer.getHomeAddress();
-      Country country = entityManager.getReference(Country.class, customer.getHomeAddress().getCountry().getId());
+      Country country = entityManager.find(Country.class, customer.getHomeAddress().getCountry().getId());
       deliveryAddress.setCountry(country);
       PurchaseOrder order = new PurchaseOrder(entityManager.merge(customer), creditCard, deliveryAddress);
 
