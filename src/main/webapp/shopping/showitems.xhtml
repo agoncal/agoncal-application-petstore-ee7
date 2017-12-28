@@ -40,15 +40,6 @@
                 <h:outputText value="#{oneItem.unitCost}"/> $
             </h:column>
 
-            <h:column>
-                <h:form>
-                    <h:commandLink action="#{shoppingCartBean.addItemToCart}" styleClass="add-to-cart"
-                                   rendered="#{accountBean.loggedIn}">
-                        <h:outputText value="#{i18n.searchResult_addToCart}"/>
-                        <f:param name="itemId" value="#{oneItem.id}"/>
-                    </h:commandLink>
-                </h:form>
-            </h:column>
         </h:dataTable>
 
     </ui:define>
