@@ -58,7 +58,7 @@ public class Item implements Serializable
    @Price
    private Float unitCost;
 
-   @ManyToOne(cascade = CascadeType.PERSIST)
+   @ManyToOne
    @JoinColumn(name = "product_fk", nullable = false)
    @XmlTransient
    private Product product;
