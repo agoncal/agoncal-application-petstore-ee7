@@ -1,10 +1,10 @@
 # Application - Petstore Java EE 7
 
-* *Author* : [Antonio Goncalves](http://www.antoniogoncalves.org)
-* *Level* : Intermediate
-* *Technologies* : Java EE 7 (JPA 2.1, CDI 1.1, Bean Validation 1.1, EJB Lite 3.2, JSF 2.2, JAX-RS 2.0), Java SE 7 (because that's the minimum required by Java EE 7), Twitter Bootstrap (Bootstrap 3.x, JQuery 2.x, PrimeFaces 6.x)
-* *Application Servers* : WildFly 10, WildFly 11
-* *Summary* : A Petstore-like application using Java EE 7
+- _Author_ : [Antonio Goncalves](http://www.antoniogoncalves.org)
+- _Level_ : Intermediate
+- _Technologies_ : Java EE 7 (JPA 2.1, CDI 1.1, Bean Validation 1.1, EJB Lite 3.2, JSF 2.2, JAX-RS 2.0), Java SE 7 (because that's the minimum required by Java EE 7), Twitter Bootstrap (Bootstrap 3.x, JQuery 2.x, PrimeFaces 6.x)
+- _Application Servers_ : WildFly 10, WildFly 11
+- _Summary_ : A Petstore-like application using Java EE 7
 
 [Download the code from GitHub](https://github.com/agoncal/agoncal-application-petstore-ee7)
 
@@ -14,8 +14,8 @@ Do you remember the good old Java [Petstore](http://java.sun.com/developer/relea
 
 What you have here is another Petstore-like application but using [Java EE 7](http://jcp.org/en/jsr/detail?id=342) and all its goodies (CDI, EJB Lite, REST interface). It is based on the Petstore I developed for my [Java EE 5 book](http://www.eyrolles.com/Informatique/Livre/java-ee-5-9782212126587) (sorry, it's written in French). I've updated it based on my [Java EE 6 book](http://www.amazon.com/gp/product/143022889X/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=143022889X&linkCode=as2&tag=antgonblo-20), and now I'm updating it again so it uses some new features of Java EE 7 described on my [Java EE 7 book](http://www.amazon.com/gp/product/143024626X/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=143024626X&linkCode=as2&tag=antgonblo-20). The goals of this sample is to :
 
-* use Java EE 7 and just Java EE 7 : no external framework or dependency (except web frameworks or logging APIs)
-* make it simple : no complex business algorithm, the point is to bring Java EE 7 technologies together to create an eCommerce website
+- use Java EE 7 and just Java EE 7 : no external framework or dependency (except web frameworks or logging APIs)
+- make it simple : no complex business algorithm, the point is to bring Java EE 7 technologies together to create an eCommerce website
 
 If you want to use a different web interface, external frameworks, add some sexy alternative JVM language... feel free to fork the code. But the goal of this EE 7 Petstore is to remain simple and to stick to Java EE 7.
 
@@ -41,15 +41,15 @@ Once deployed go to the following URL and start buying some pets: [http://localh
 
 The admin [REST interface](http://localhost:8080/applicationPetstore/swagger.json) allows you to create/update/remove items in the catalog, orders or customers. You can run the following [curl](http://curl.haxx.se/) commands :
 
-* `curl -X GET http://localhost:8080/applicationPetstore/rest/categories`
-* `curl -X GET http://localhost:8080/applicationPetstore/rest/products`
-* `curl -X GET http://localhost:8080/applicationPetstore/rest/items`
-* `curl -X GET http://localhost:8080/applicationPetstore/rest/countries`
-* `curl -X GET http://localhost:8080/applicationPetstore/rest/customers`
+- `curl -X GET http://localhost:8080/applicationPetstore/rest/categories`
+- `curl -X GET http://localhost:8080/applicationPetstore/rest/products`
+- `curl -X GET http://localhost:8080/applicationPetstore/rest/items`
+- `curl -X GET http://localhost:8080/applicationPetstore/rest/countries`
+- `curl -X GET http://localhost:8080/applicationPetstore/rest/customers`
 
 You can also get a JSON representation as follow :
 
-* `curl -X GET -H "accept: application/json" http://localhost:8080/applicationPetstore/rest/items`
+- `curl -X GET -H "accept: application/json" http://localhost:8080/applicationPetstore/rest/items`
 
 Check the Swagger contract on : [http://localhost:8080/applicationPetstore/swagger.json]()
 
@@ -62,7 +62,7 @@ The `persistence.xml` defines a persistence unit called `applicationPetstorePU` 
 ```
 
 ### H2
- 
+
 By default, the application uses the in-memory H2 database. If you log into the WildFly [Admin Console](http://localhost:9990/), go to [http://localhost:9990/console/App.html#profile/datasources;name=ExampleDS]() and you will see the H2 Driver as well as the Connection URL pointing at the in-memory H2 database `jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE`
 
 ### Postgresql
@@ -71,11 +71,11 @@ If instead a H2 in-memory database you want to use PostgreSQL, you need to do th
 
 #### Install the PostgreSQL driver into Wildfly
 
-This [good article](http://ralph.soika.com/wildfly-install-postgresql-jdbc-driver-as-a-module/) explains you how. 
+This [good article](http://ralph.soika.com/wildfly-install-postgresql-jdbc-driver-as-a-module/) explains you how.
 
-1) Go to `$WILDFLY_HOME/modules/system/layers/base/` and create the folder `org/postgresql/main`
-2) Copy the Postgresql [JDBC driver jar](https://jdbc.postgresql.org/download.html) file (eg. `postgresql-42.1.4.jar`) to the new folder `$WILDFLY_HOME/modules/system/layers/base/org/postgresql/main`
-3) Create the file `$WILDFLY_HOME/modules/system/layers/base/org/postgresql/main/module.xml` with the following content:
+1. Go to `$WILDFLY_HOME/modules/system/layers/base/` and create the folder `org/postgresql/main`
+2. Copy the Postgresql [JDBC driver jar](https://jdbc.postgresql.org/download.html) file (eg. `postgresql-42.1.4.jar`) to the new folder `$WILDFLY_HOME/modules/system/layers/base/org/postgresql/main`
+3. Create the file `$WILDFLY_HOME/modules/system/layers/base/org/postgresql/main/module.xml` with the following content:
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -90,7 +90,7 @@ This [good article](http://ralph.soika.com/wildfly-install-postgresql-jdbc-drive
 </module>
 ```
 
-4) Reference the module as a driver in WildFly configuration
+4. Reference the module as a driver in WildFly configuration
 
 ```
 WILDFLY_HOME/bin $ ./jboss-cli.sh
@@ -104,9 +104,9 @@ You are disconnected at the moment. Type 'connect' to connect to the server or '
 
 In the Wildfly [Admin Console](http://localhost:9990) check the default datasource [ExampleDS](http://localhost:9990/console/App.html#profile/ds-finder/datasources;name=ExampleDS). As you can see, it points to an in-memory H2 database. Make the following changes so it points at Postgres:
 
-1) Attribute Tab: Change the driver to postgresql
-2) Connection Tab: Change the Connection URL to `jdbc:postgresql://localhost:5432/postgres`
-3) Security Tab: Change User name to `postgres` and no password
+1. Attribute Tab: Change the driver to postgresql
+2. Connection Tab: Change the Connection URL to `jdbc:postgresql://localhost:5432/postgres`
+3. Security Tab: Change User name to `postgres` and no password
 
 Once Postgres is up and running, you can hit the button `Test Connection`. It should be ok.
 
@@ -131,9 +131,9 @@ When, like me, you have no web designer skills at all and your web pages look ug
 ## Icons
 
 I use:
- 
-* [Font Awesome](http://fontawesome.io/)
-* [Silk Icons](http://www.famfamfam.com/lab/icons/silk/) which are in Creative Commons
+
+- [Font Awesome](http://fontawesome.io/)
+- [Silk Icons](http://www.famfamfam.com/lab/icons/silk/) which are in Creative Commons
 
 ### Arquillian
 
@@ -143,17 +143,16 @@ I use:
 
 Some people who worked on this project :
 
-* [Antoine Sabot-Durand](https://twitter.com/#!/antoine_sd)
-* [Brice Leporini](https://twitter.com/#!/blep)
-* Hervé Le Morvan
+- [Antoine Sabot-Durand](https://twitter.com/#!/antoine_sd)
+- [Brice Leporini](https://twitter.com/#!/blep)
+- Hervé Le Morvan
 
 ## Bugs & Workaround
-
 
 ## Licensing
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
 
 <div class="footer">
-    <span class="footerTitle"><span class="uc">a</span>ntonio <span class="uc">g</span>oncalves</span>
+    <span class="footerTitle"><span class="uc">K</span>yle <span class="uc">P</span>poland fork!</span>
 </div>
