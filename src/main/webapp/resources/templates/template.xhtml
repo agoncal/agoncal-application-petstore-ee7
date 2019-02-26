@@ -60,7 +60,6 @@
                   outcome="/shopping/main"
                   value="Yaps Petstore EE 7"
                 >
-                  <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
                 </h:link>
               </div>
 
@@ -104,7 +103,6 @@
                       value="#{i18n.welcome} #{accountBean.loggedinCustomer.firstName}"
                       rendered="#{accountBean.loggedIn}"
                     >
-                      <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
                       <i class="fa fa-user" aria-hidden="true"></i>
                     </h:link>
                   </li>
@@ -123,7 +121,6 @@
                       value="#{i18n.logIn}"
                       rendered="#{!accountBean.loggedIn}"
                     >
-                      <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
                       <i class="fa fa-sign-in" aria-hidden="true"></i>
                     </h:link>
                   </li>
@@ -133,7 +130,6 @@
                       value="#{i18n.shoppingCart}"
                       rendered="#{!shoppingCartBean.shoppingCartIsEmpty()}"
                     >
-                      <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
                       <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                     </h:link>
                   </li>
