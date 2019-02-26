@@ -1,182 +1,225 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:p="http://primefaces.org/ui">
-<f:view contentType="text/html" encoding="UTF-8">
-
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://xmlns.jcp.org/jsf/html"
+  xmlns:f="http://xmlns.jcp.org/jsf/core"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+  xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+  xmlns:p="http://primefaces.org/ui"
+>
+  <f:view contentType="text/html" encoding="UTF-8">
     <!--HEAD-->
     <h:head>
-        <meta charset="utf-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <meta name="description" content=""/>
-        <meta name="author" content=""/>
-        <title>#{empty pageTitle ? 'Page Title' : pageTitle}</title>
-        <link rel="icon" href="#{resource['favicon.gif']}"/>
-        <link rel="shortcut icon" href="#{resource['favicon.gif']}"/>
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <title>#{empty pageTitle ? 'Page Title' : pageTitle}</title>
+      <link rel="icon" href="#{resource['favicon.gif']}" />
+      <link rel="shortcut icon" href="#{resource['favicon.gif']}" />
 
-        <!-- Bootstrap core CSS -->
-        <h:outputStylesheet library="webjars" name="bootstrap/3.3.7-1/css/bootstrap.min.css"/>
-        <h:outputStylesheet library="webjars" name="fontawesome/4.7.0/css/font-awesome.css"/>
+      <!-- Bootstrap core CSS -->
+      <h:outputStylesheet
+        library="webjars"
+        name="bootstrap/3.3.7-1/css/bootstrap.min.css"
+      />
+      <h:outputStylesheet
+        library="webjars"
+        name="fontawesome/4.7.0/css/font-awesome.css"
+      />
 
-        <!-- Custom styles for this template -->
-        <h:outputStylesheet name="css/style.css"/>
-        <h:outputStylesheet name="css/sticky-footer-navbar.css"/>
+      <!-- Custom styles for this template -->
+      <h:outputStylesheet name="css/style.css" />
+      <h:outputStylesheet name="css/sticky-footer-navbar.css" />
     </h:head>
 
     <!--BODY-->
     <h:body>
+      <!-- Wrap all page content here -->
+      <div id="wrap">
+        <!-- Fixed navbar -->
+        <h:form>
+          <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+              <div class="navbar-header">
+                <button
+                  type="button"
+                  class="navbar-toggle"
+                  data-toggle="collapse"
+                  data-target=".navbar-collapse"
+                >
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <h:link
+                  class="navbar-brand"
+                  outcome="/shopping/main"
+                  value="Yaps Petstore EE 7"
+                >
+                  <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
+                </h:link>
+              </div>
 
-        <!-- Wrap all page content here -->
-        <div id="wrap">
+              <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                  <li>
+                    <h:link outcome="/admin/category/search" value="Admin" />
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                      >Languages<strong class="caret"></strong
+                    ></a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <h:commandLink
+                          action="#{localeBean.setLanguage('fr')}"
+                          styleClass="menu-fr"
+                          immediate="true"
+                        >
+                          <f:ajax render="@form" />
+                          <h:outputText value="Français" />
+                        </h:commandLink>
+                      </li>
+                      <li>
+                        <h:commandLink
+                          action="#{localeBean.setLanguage('en')}"
+                          styleClass="menu-en"
+                          immediate="true"
+                        >
+                          <f:ajax render="@form" />
+                          <h:outputText value="English" />
+                        </h:commandLink>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <h:link
+                      outcome="/shopping/showaccount"
+                      value="#{i18n.welcome} #{accountBean.loggedinCustomer.firstName}"
+                      rendered="#{accountBean.loggedIn}"
+                    >
+                      <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
+                      <i class="fa fa-user" aria-hidden="true"></i>
+                    </h:link>
+                  </li>
+                  <li>
+                    <h:commandLink
+                      action="#{accountBean.doLogout}"
+                      rendered="#{accountBean.loggedIn}"
+                    >
+                      <i class="fa fa-sign-out" aria-hidden="true"></i>
+                      <h:outputText value="${i18n.logOut}" />
+                    </h:commandLink>
+                  </li>
+                  <li>
+                    <h:link
+                      outcome="/shopping/signon"
+                      value="#{i18n.logIn}"
+                      rendered="#{!accountBean.loggedIn}"
+                    >
+                      <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
+                      <i class="fa fa-sign-in" aria-hidden="true"></i>
+                    </h:link>
+                  </li>
+                  <li>
+                    <h:link
+                      outcome="/shopping/showcart"
+                      value="#{i18n.shoppingCart}"
+                      rendered="#{!shoppingCartBean.shoppingCartIsEmpty()}"
+                    >
+                      <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
+                      <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    </h:link>
+                  </li>
 
-            <!-- Fixed navbar -->
-            <h:form>
-                <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-                    <div class="container">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse"
-                                    data-target=".navbar-collapse">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <h:link class="navbar-brand" outcome="/shopping/main" value="Yaps Petstore EE 7">
-                                <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
-                            </h:link>
-                        </div>
-
-                        <div class="collapse navbar-collapse">
-                            <ul class="nav navbar-nav">
-                                <li>
-                                    <h:link outcome="/admin/category/search" value="Admin"/>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Languages<b
-                                            class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <h:commandLink action="#{localeBean.setLanguage('fr')}" styleClass="menu-fr"
-                                                           immediate="true">
-                                                <f:ajax render="@form"/>
-                                                <h:outputText value="Français"/>
-                                            </h:commandLink>
-                                        </li>
-                                        <li>
-                                            <h:commandLink action="#{localeBean.setLanguage('en')}" styleClass="menu-en"
-                                                           immediate="true">
-                                                <f:ajax render="@form"/>
-                                                <h:outputText value="English"/>
-                                            </h:commandLink>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li>
-                                    <h:link outcome="/shopping/showaccount"
-                                            value="#{i18n.welcome} #{accountBean.loggedinCustomer.firstName}"
-                                            rendered="#{accountBean.loggedIn}">
-                                        <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
-                                        <i class="fa fa-user" aria-hidden="true"></i>
-                                    </h:link>
-                                </li>
-                                <li>
-                                    <h:commandLink action="#{accountBean.doLogout}"
-                                                   rendered="#{accountBean.loggedIn}">
-                                        <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                        <h:outputText value="${i18n.logOut}"/>
-                                    </h:commandLink>
-                                </li>
-                                <li>
-                                    <h:link outcome="/shopping/signon" value="#{i18n.logIn}"
-                                            rendered="#{!accountBean.loggedIn}">
-                                        <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
-                                        <i class="fa fa-sign-in" aria-hidden="true"></i>
-                                    </h:link>
-                                </li>
-                                <li>
-                                    <h:link outcome="/shopping/showcart" value="#{i18n.shoppingCart}"
-                                            rendered="#{!shoppingCartBean.shoppingCartIsEmpty()}">
-                                        <!--<f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>-->
-                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                    </h:link>
-                                </li>
-
-                                <li>
-                                    <div class="navbar-form navbar-left" role="search">
-                                        <div class="form-group">
-                                            <h:inputText class="form-control" value="#{catalogBean.keyword}"/>
-                                        </div>
-                                        <h:commandButton action="#{catalogBean.doSearch}" value="#{i18n.search}"
-                                                         class="btn btn-default"/>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--/.nav-collapse -->
+                  <li>
+                    <div class="navbar-form navbar-left" role="search">
+                      <div class="form-group">
+                        <h:inputText
+                          class="form-control"
+                          value="#{catalogBean.keyword}"
+                        />
+                      </div>
+                      <h:commandButton
+                        action="#{catalogBean.doSearch}"
+                        value="#{i18n.search}"
+                        class="btn btn-default"
+                      />
                     </div>
-                </div>
-            </h:form>
-
-            <!-- Begin page content -->
-            <div class="container">
-                <div class="page-header">
-                    <!-- Error messages-->
-                    <h:messages globalOnly="true" errorClass="alert alert-error" warnClass="alert"
-                                infoClass="alert alert-info"/>
-                </div>
-
-                <ui:insert name="navigation">Default navigation</ui:insert>
-
-                <!-- CONTENT -->
-                <div class="col-md-1"/>
-                <div class="col-md-9 well">
-                    <h2><ui:insert name="header"/></h2>
-
-                    <h3><ui:insert name="subheader"/></h3>
-
-                    <ui:insert name="main"/>
-                </div>
-                <!--/.CONTENT -->
-
+                  </li>
+                </ul>
+              </div>
+              <!--/.nav-collapse -->
             </div>
+          </div>
+        </h:form>
+
+        <!-- Begin page content -->
+        <div class="container">
+          <div class="page-header">
+            <!-- Error messages-->
+            <h:messages
+              globalOnly="true"
+              errorClass="alert alert-error"
+              warnClass="alert"
+              infoClass="alert alert-info"
+            />
+          </div>
+
+          <ui:insert name="navigation">Default navigation</ui:insert>
+
+          <!-- CONTENT -->
+          <div class="col-md-1" />
+          <div class="col-md-9 well">
+            <h2><ui:insert name="header"/></h2>
+
+            <h3><ui:insert name="subheader"/></h3>
+
+            <ui:insert name="main" />
+          </div>
+          <!--/.CONTENT -->
         </div>
+      </div>
 
-        <div id="footer">
-            <div class="container">
-                <div class="col-md-2 centered-text">
-                    <a href="https://github.com/agoncal/agoncal-application-petstore-ee7">Source code on GitHub</a>
-                    <br/>
-                    <a href="http://www.antoniogoncalves.org">Antonio Goncalves</a>
-                </div>
-                <div class="col-md-8"/>
-                <div class="col-md-2 centered-text">
-                    <a href="/applicationPetstore/swagger.json">Swagger Contract</a>
-                    <br/>
-                    <h:outputText value="Conversation [#{shoppingCartBean.conversation.id}]"/>
-                </div>
-            </div>
+      <div id="footer">
+        <div class="container">
+          <div class="col-md-2 centered-text">
+            <a
+              href="https://github.com/agoncal/agoncal-application-petstore-ee7"
+              >Source code on GitHub</a
+            >
+            <br />
+            <a href="http://www.antoniogoncalves.org">Antonio Goncalves</a>
+          </div>
+          <div class="col-md-8" />
+          <div class="col-md-2 centered-text">
+            <a href="/applicationPetstore/swagger.json">Swagger Contract</a>
+            <br />
+            <h:outputText
+              value="Conversation [#{shoppingCartBean.conversation.id}]"
+            />
+          </div>
         </div>
+      </div>
 
-
-        <!-- Bootstrap core JavaScript
+      <!-- Bootstrap core JavaScript
        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <h:outputScript library="webjars" name="jquery/2.2.4/jquery.min.js"/>
-        <h:outputScript library="webjars" name="bootstrap/3.3.7-1/js/bootstrap.min.js"/>
-        <h:outputScript target="head">
-            // Add the $() function
-            $ = jQuery;
-            $(document).ready(function () {
-                jQuery.noConflict();
-            });
-        </h:outputScript>
+      <!-- Placed at the end of the document so the pages load faster -->
+      <h:outputScript library="webjars" name="jquery/2.2.4/jquery.min.js" />
+      <h:outputScript
+        library="webjars"
+        name="bootstrap/3.3.7-1/js/bootstrap.min.js"
+      />
+      <h:outputScript target="head">
+        // Add the $() function $ = jQuery; $(document).ready(function () {
+        jQuery.noConflict(); });
+      </h:outputScript>
     </h:body>
-</f:view>
+  </f:view>
 </html>
