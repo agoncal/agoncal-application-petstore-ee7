@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.agoncal.application.petstore.constraints.Email;
 import org.agoncal.application.petstore.constraints.Login;
 
-import sun.misc.BASE64Encoder;
+import java.util.Base64;
 
 /**
  * @author Antonio Goncalves http://www.antoniogoncalves.org --
@@ -174,7 +174,9 @@ public class Customer implements Serializable
          MessageDigest md = MessageDigest.getInstance("SHA-256");
          md.update(plainTextPassword.getBytes("UTF-8"));
          byte[] passwordDigest = md.digest();
-         return new BASE64Encoder().encode(passwordDigest);
+         Base64.Encoder encoder = Base64.getEncoder();
+         String encodedString = encoder.encodeToString(passwordDigest);
+         return encodedString;
       }
       catch (Exception e)
       {
