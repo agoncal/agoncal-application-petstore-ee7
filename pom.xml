@@ -10,7 +10,7 @@
   <name>Petstore application using Java EE 7</name>
 
   <properties>
-    <version.javaee>7.0</version.javaee>
+    <version.javaee>8.0</version.javaee>
     <version.jboss-javaee>1.1.0.Final</version.jboss-javaee>
     <version.log4j>2.8.2</version.log4j>
     <!-- Test -->
