@@ -2,6 +2,7 @@ package org.agoncal.application.petstore.model;
 
 import java.io.Serializable;
 import java.security.MessageDigest;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -16,8 +17,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.agoncal.application.petstore.constraints.Email;
 import org.agoncal.application.petstore.constraints.Login;
-
-import sun.misc.BASE64Encoder;
 
 /**
  * @author Antonio Goncalves http://www.antoniogoncalves.org --
@@ -174,7 +173,7 @@ public class Customer implements Serializable
          MessageDigest md = MessageDigest.getInstance("SHA-256");
          md.update(plainTextPassword.getBytes("UTF-8"));
          byte[] passwordDigest = md.digest();
-         return new BASE64Encoder().encode(passwordDigest);
+         return Base64.getEncoder().encodeToString(passwordDigest);
       }
       catch (Exception e)
       {
