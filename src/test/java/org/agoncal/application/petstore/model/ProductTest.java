@@ -19,4 +19,4 @@ public class ProductTest {
         // Checks equals and hashCode is valid
         EqualsVerifier.forClass(Product.class).suppress(Warning.NONFINAL_FIELDS).verify();
     }
-}
+} 

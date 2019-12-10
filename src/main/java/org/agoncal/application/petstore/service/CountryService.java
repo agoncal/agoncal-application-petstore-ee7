@@ -65,4 +65,4 @@ public class CountryService extends AbstractService<Country> implements Serializ
 
       return predicatesList.toArray(new Predicate[predicatesList.size()]);
    }
-}
+} 

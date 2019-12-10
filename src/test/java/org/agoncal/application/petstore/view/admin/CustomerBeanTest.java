@@ -97,3 +97,4 @@ public class CustomerBeanTest
       assertTrue((customerbean.getPageItems().size() == customerbean.getPageSize()) || (customerbean.getPageItems().size() == customerbean.getCount()));
    }
 }
+ 

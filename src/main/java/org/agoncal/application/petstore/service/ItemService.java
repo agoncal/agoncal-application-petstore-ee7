@@ -62,4 +62,4 @@ public class ItemService extends AbstractService<Item> implements Serializable
 
       return predicatesList.toArray(new Predicate[predicatesList.size()]);
    }
-}
+} 

@@ -122,3 +122,4 @@ public class PurchaseOrderService extends AbstractService<PurchaseOrder>implemen
       return predicatesList.toArray(new Predicate[predicatesList.size()]);
    }
 }
+ 

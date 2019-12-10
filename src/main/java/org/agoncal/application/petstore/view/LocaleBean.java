@@ -39,4 +39,4 @@ public class LocaleBean implements Serializable {
         locale = new Locale(language);
         FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
     }
-}
+} 

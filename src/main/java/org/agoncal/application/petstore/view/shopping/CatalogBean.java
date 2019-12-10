@@ -133,4 +133,4 @@ public class CatalogBean extends AbstractBean implements Serializable {
     public void setItemId(Long itemId) {
         this.itemId = itemId;
     }
-}
+} 

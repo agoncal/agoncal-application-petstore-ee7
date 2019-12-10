@@ -45,4 +45,4 @@ public class DebugBean extends AbstractBean {
     public String getFreeMemory() {
         return String.valueOf(Runtime.getRuntime().freeMemory());
     }
-}
+} 

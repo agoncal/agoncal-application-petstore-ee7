@@ -16,4 +16,4 @@ public class NumberProducer
    @Discount
    @Named
    private Float discountRate;
-}
+} 

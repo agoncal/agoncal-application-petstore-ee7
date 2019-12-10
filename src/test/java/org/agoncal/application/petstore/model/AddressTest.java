@@ -19,4 +19,4 @@ public class AddressTest {
         // Checks equals and hashCode is valid
         EqualsVerifier.forClass(Address.class).suppress(Warning.NONFINAL_FIELDS).verify();
     }
-}
+} 

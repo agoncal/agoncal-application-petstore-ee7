@@ -30,4 +30,4 @@ public class RestApplication extends Application
 //      classes.add(ProductEndpoint.class);
 //      return classes;
 //   }
-}
+} 

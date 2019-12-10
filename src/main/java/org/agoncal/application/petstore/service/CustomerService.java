@@ -156,3 +156,4 @@ public class CustomerService extends AbstractService<Customer> implements Serial
       return predicatesList.toArray(new Predicate[predicatesList.size()]);
    }
 }
+ 

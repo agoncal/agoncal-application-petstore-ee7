@@ -50,3 +50,4 @@ public class CredentialsBean implements Serializable {
         this.password2 = password2;
     }
 }
+ 

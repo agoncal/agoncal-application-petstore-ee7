@@ -56,4 +56,4 @@ public class ProductService extends AbstractService<Product> implements Serializ
 
       return predicatesList.toArray(new Predicate[predicatesList.size()]);
    }
-}
+} 

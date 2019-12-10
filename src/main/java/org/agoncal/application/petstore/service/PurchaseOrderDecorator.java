@@ -12,4 +12,4 @@ public abstract class PurchaseOrderDecorator implements ComputablePurchaseOrder
    @Inject
    @Delegate
    private ComputablePurchaseOrder delegate;
-}
+} 

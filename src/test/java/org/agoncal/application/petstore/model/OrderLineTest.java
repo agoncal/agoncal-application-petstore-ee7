@@ -19,4 +19,4 @@ public class OrderLineTest {
         // Checks equals and hashCode is valid
         EqualsVerifier.forClass(OrderLine.class).suppress(Warning.NONFINAL_FIELDS).verify();
     }
-}
+} 

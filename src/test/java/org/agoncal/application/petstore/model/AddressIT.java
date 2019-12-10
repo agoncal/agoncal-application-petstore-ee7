@@ -51,4 +51,4 @@ public class AddressIT {
         // Checks the object is valid
         assertEquals("Should have not constraint violation", 0, validator.validate(address).size());
     }
-}
+} 

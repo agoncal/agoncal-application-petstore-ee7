@@ -149,3 +149,4 @@ public class CatalogService implements Serializable {
         removeItem(findItem(itemId));
     }
 }
+ 

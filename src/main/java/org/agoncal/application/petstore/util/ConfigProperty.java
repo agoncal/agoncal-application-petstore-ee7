@@ -16,3 +16,4 @@ import java.lang.annotation.Documented;
 public @interface ConfigProperty {
     @Nonbinding String value() default "";
 }
+ 

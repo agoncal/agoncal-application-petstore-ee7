@@ -66,4 +66,4 @@ public class CategoryIT {
         Marshaller m = context.createMarshaller();
         m.marshal(category, writer);
     }
-}
+} 

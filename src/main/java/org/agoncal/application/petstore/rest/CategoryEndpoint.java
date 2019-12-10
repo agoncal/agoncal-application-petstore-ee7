@@ -120,3 +120,4 @@ public class CategoryEndpoint
       return Response.noContent().build();
    }
 }
+ 

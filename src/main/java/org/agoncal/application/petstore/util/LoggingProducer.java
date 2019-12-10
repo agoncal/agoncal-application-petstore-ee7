@@ -21,3 +21,4 @@ public class LoggingProducer {
         return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
     }
 }
+ 

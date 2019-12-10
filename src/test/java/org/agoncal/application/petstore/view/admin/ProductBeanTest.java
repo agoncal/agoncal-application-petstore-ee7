@@ -88,3 +88,4 @@ public class ProductBeanTest
       assertTrue((productbean.getPageItems().size() == productbean.getPageSize()) || (productbean.getPageItems().size() == productbean.getCount()));
    }
 }
+ 

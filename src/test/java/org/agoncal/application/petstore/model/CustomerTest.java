@@ -19,4 +19,4 @@ public class CustomerTest {
         // Checks equals and hashCode is valid
         EqualsVerifier.forClass(Customer.class).suppress(Warning.NONFINAL_FIELDS).verify();
     }
-}
+} 

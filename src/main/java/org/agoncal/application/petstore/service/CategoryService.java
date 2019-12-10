@@ -51,4 +51,4 @@ public class CategoryService extends AbstractService<Category> implements Serial
 
       return predicatesList.toArray(new Predicate[predicatesList.size()]);
    }
-}
+} 

@@ -19,4 +19,4 @@ public class PurchaseOrderTest {
         // Checks equals and hashCode is valid
         EqualsVerifier.forClass(PurchaseOrder.class).suppress(Warning.NONFINAL_FIELDS).verify();
     }
-}
+} 

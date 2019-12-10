@@ -21,3 +21,4 @@ public class DatabaseProducer
     @PersistenceContext(unitName = "applicationPetstorePU")
     private EntityManager em;
 }
+ 

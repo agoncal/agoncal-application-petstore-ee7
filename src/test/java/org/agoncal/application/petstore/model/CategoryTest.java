@@ -19,4 +19,4 @@ public class CategoryTest {
         // Checks equals and hashCode is valid
         EqualsVerifier.forClass(Category.class).suppress(Warning.NONFINAL_FIELDS).verify();
     }
-}
+} 

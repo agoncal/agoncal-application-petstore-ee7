@@ -91,3 +91,4 @@ public class ItemBeanTest
       assertTrue((itembean.getPageItems().size() == itembean.getPageSize()) || (itembean.getPageItems().size() == itembean.getCount()));
    }
 }
+ 

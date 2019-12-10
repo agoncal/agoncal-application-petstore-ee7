@@ -6,4 +6,4 @@
         <class>org.agoncal.application.petstore.view.ExceptionInterceptor</class>
     </interceptors>
 
-</beans>
+</beans> 

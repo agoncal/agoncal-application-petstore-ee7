@@ -41,3 +41,4 @@ public class ExceptionInterceptor implements Serializable {
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
     }
 }
+ 

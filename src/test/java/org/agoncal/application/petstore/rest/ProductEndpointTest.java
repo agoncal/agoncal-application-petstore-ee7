@@ -78,3 +78,4 @@ public class ProductEndpointTest
       assertEquals(Response.Status.OK.getStatusCode(), target.request(MediaType.APPLICATION_XML).get().getStatus());
    }
 }
+ 

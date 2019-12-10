@@ -63,4 +63,4 @@ public abstract class AbstractBean {
     protected Long getParamId(String param) {
         return Long.valueOf(getParam(param));
     }
-}
+} 

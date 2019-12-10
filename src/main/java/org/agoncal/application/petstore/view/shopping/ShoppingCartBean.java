@@ -163,4 +163,4 @@ public class ShoppingCartBean extends AbstractBean implements Serializable {
     public CreditCardType[] getCreditCardTypes() {
         return CreditCardType.values();
     }
-}
+} 

@@ -19,4 +19,4 @@ public class CountryTest {
         // Checks equals and hashCode is valid
         EqualsVerifier.forClass(Country.class).suppress(Warning.NONFINAL_FIELDS).verify();
     }
-}
+} 

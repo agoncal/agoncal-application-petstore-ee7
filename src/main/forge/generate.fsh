@@ -505,4 +505,4 @@ project-add-dependencies org.jboss.spec:jboss-javaee-7.0:1.0.1.Final:provided:po
 
 #  Adding External repositories
 #  ############################
-project-add-repository --named primefaces --url http://repository.primefaces.org/
+project-add-repository --named primefaces --url http://repository.primefaces.org/ 

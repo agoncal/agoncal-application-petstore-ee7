@@ -127,3 +127,4 @@ public class AccountBean extends AbstractBean implements Serializable {
         this.loggedinCustomer = loggedinCustomer;
     }
 }
+ 

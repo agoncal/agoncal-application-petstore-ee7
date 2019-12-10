@@ -19,4 +19,4 @@ public class CreditCardTest {
         // Checks equals and hashCode is valid
         EqualsVerifier.forClass(CreditCard.class).suppress(Warning.NONFINAL_FIELDS).verify();
     }
-}
+} 

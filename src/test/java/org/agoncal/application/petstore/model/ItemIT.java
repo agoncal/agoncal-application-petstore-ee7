@@ -70,4 +70,4 @@ public class ItemIT {
         Marshaller m = context.createMarshaller();
         m.marshal(item, writer);
     }
-}
+} 

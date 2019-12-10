@@ -342,3 +342,4 @@ public class Customer implements Serializable
       return firstName + ' ' + lastName + " (" + login + ")";
    }
 }
+ 

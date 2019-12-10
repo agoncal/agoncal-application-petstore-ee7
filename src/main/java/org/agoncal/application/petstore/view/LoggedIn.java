@@ -18,3 +18,4 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({FIELD, TYPE, METHOD})
 public @interface LoggedIn {
 }
+ 

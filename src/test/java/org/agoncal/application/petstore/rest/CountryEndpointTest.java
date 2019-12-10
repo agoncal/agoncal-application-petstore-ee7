@@ -76,3 +76,4 @@ public class CountryEndpointTest
       assertEquals(Response.Status.OK.getStatusCode(), target.request(MediaType.APPLICATION_XML).get().getStatus());
    }
 }
+ 

@@ -122,4 +122,4 @@ public abstract class AbstractService<T>
    // ======================================
 
    protected abstract Predicate[] getSearchPredicates(Root<T> root, T example);
-}
+} 

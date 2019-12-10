@@ -154,3 +154,4 @@ public class Product implements Serializable
       return name;
    }
 }
+ 

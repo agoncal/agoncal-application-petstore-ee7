@@ -51,4 +51,4 @@ public class OrderLineService extends AbstractService<OrderLine> implements Seri
 
       return predicatesList.toArray(new Predicate[predicatesList.size()]);
    }
-}
+} 

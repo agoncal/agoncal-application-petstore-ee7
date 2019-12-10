@@ -68,4 +68,4 @@ public class ProductIT {
         Marshaller m = context.createMarshaller();
         m.marshal(product, writer);
     }
-}
+} 

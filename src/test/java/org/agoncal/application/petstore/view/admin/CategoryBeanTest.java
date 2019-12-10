@@ -87,3 +87,4 @@ public class CategoryBeanTest
       assertTrue((categorybean.getPageItems().size() == categorybean.getPageSize()) || (categorybean.getPageItems().size() == categorybean.getCount()));
    }
 }
+ 

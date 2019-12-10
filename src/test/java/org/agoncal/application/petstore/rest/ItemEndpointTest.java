@@ -78,3 +78,4 @@ public class ItemEndpointTest
       assertEquals(Response.Status.OK.getStatusCode(), target.request(MediaType.APPLICATION_XML).get().getStatus());
    }
 }
+ 

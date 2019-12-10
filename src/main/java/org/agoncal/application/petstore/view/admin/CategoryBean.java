@@ -327,3 +327,4 @@ public class CategoryBean implements Serializable
       return added;
    }
 }
+ 
