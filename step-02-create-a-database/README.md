@@ -25,6 +25,4 @@ Create a petstore database using Azure SQL Database.
   
 ⬅️ Previous guide: [01 - Deploy a Java EE application to Azure](../step-01-deploy-java-ee-app-to-azure/README.md)
   
-➡️ Next guide: Create a [02A - PostgreSQL](step-02A-create-a-postgresql-database/README.md),  
-[02B - MySQL](step-02B-create-a-mysql-database/README.md), or
-[02C - SQL Database](step-02C-create-a-sql-database/README.md)
+➡️ Next guide: Create a [02A - PostgreSQL](step-02A-create-a-postgresql-database/README.md), [02B - MySQL](step-02B-create-a-mysql-database/README.md), or [02C - SQL Database](step-02C-create-a-sql-database/README.md)
