@@ -200,6 +200,8 @@ cd ../..
 mvn package -Dmaven.test.skip=true -Ddb=mysql
 ```
 
+Note - the `mysql` Maven profile is available [here](../../pom.xml#L435).
+
 ## Deploy to App Service Linux 
 
 Deploy to JBoss EAP in App Service Linux:
