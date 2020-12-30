@@ -54,7 +54,7 @@ Create a Petstore database using Azure CLI and PostgreSQL CLI:
   postgres=> \q
   ```
   
-Note - you can reinstall `psql` command line tool using `brew reinstall postgresql`.
+>💡 - you can reinstall `psql` command line tool using `brew reinstall postgresql`.
   
 When you migrate Java applications to cloud, you will be considering moving data to cloud. 
 To accelerate your transition to cloud, 
