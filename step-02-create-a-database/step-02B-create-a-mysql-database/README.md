@@ -12,7 +12,7 @@ Create a Petstore database using Azure CLI and MySQL CLI:
 
 ```bash
 az mysql server create --resource-group ${RESOURCE_GROUP} \
- --name ${MYSQL_SERVER_NAME}  --location westus2 \
+ --name ${MYSQL_SERVER_NAME}  --location ${REGION} \
  --admin-user ${MYSQL_SERVER_ADMIN_LOGIN_NAME} \
  --admin-password ${MYSQL_SERVER_ADMIN_PASSWORD} \
  --sku-name GP_Gen5_32 \

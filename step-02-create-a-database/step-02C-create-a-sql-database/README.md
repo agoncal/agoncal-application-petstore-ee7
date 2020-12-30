@@ -14,7 +14,7 @@ Create a Petstore database using Azure CLI:
 az sql server create --admin-user ${SQL_SERVER_ADMIN_LOGIN_NAME} \
      --admin-password ${SQL_SERVER_ADMIN_PASSWORD} \
      --name ${SQL_SERVER_NAME} \
-     --resource-group ${RESOURCE_GROUP}
+     --resource-group ${RESOURCE_GROUP} --location ${REGION}
      
 az sql server firewall-rule create --server ${SQL_SERVER_NAME} \
  --name allAzureIPs \

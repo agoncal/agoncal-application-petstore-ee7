@@ -49,23 +49,23 @@ JBoss EAP on App Service is in preview.
 
 >💡 - __Frustration Avoidance Tip__. These will help you avoid potential pitfalls.
 
-## [00 - Prerequisites and Setup](step-00-setup-your-environment/README.md)
+## [00 - Prerequisites and Setup](step-00-setup-your-environment/README.md) (15 minutes)
 
 Prerequisites and environment setup.
  
-## [01 - Deploy a Java EE application to Azure](step-01-deploy-java-ee-app-to-azure/README.md)
+## [01 - Deploy a Java EE application to Azure](step-01-deploy-java-ee-app-to-azure/README.md) (15 minutes)
 
 Deploy a Java EE application to Azure.
 
-## [02 - Create a database](step-02-create-a-database/README.md)
+## [02 - Create a database](step-02-create-a-database/README.md) (10 minutes)
 
 Create a database - PostgreSQL or MySQL or SQL Database.
 
-## [03 - Bind Java EE application to the database](step-03-bind-java-ee-app-to-database/README.md)
+## [03 - Bind Java EE application to the database](step-03-bind-java-ee-app-to-database/README.md) (15 minutes)
 
 Bind the Java EE application to the database.
 
-## [Conclusion](step-99-conclusion/README.md)
+## [Conclusion](step-99-conclusion/README.md) (5 minutes)
 
 ---
 
