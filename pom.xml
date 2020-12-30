@@ -245,6 +245,40 @@
           </dependency>
         </dependencies>
       </plugin>
+
+      <!--*************************************************-->
+      <!-- Deploy to JBoss EAP in App Service Linux           -->
+      <!--*************************************************-->
+
+      <plugin>
+        <groupId>com.microsoft.azure</groupId>
+        <artifactId>azure-webapp-maven-plugin</artifactId>
+        <version>1.12.0</version>
+        <configuration>
+          <schemaVersion>v2</schemaVersion>
+          <subscriptionId>${SUBSCRIPTION}</subscriptionId>
+          <resourceGroup>${RESOURCE_GROUP}</resourceGroup>
+          <appName>${WEBAPP}</appName>
+          <pricingTier>P1v2</pricingTier>
+          <region>${REGION}</region>
+          <runtime>
+            <os>Linux</os>
+            <javaVersion>Java 8</javaVersion>
+            <webContainer>Jbosseap 7.2</webContainer>
+          </runtime>
+          <deployment>
+            <resources>
+              <resource>
+                <directory>${project.basedir}/target</directory>
+                <includes>
+                  <include>*.war</include>
+                </includes>
+              </resource>
+            </resources>
+          </deployment>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 
@@ -326,6 +360,150 @@
       </dependency>
     </dependencies>
   </profile>
+
+    <profile>
+      <id>h2</id>
+      <activation>
+        <property>
+          <name>db</name>
+          <value>h2</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+
+          <!-- copy the correct persistence.xml file -->
+          <plugin>
+            <groupId>com.coderplus.maven.plugins</groupId>
+            <artifactId>copy-rename-maven-plugin</artifactId>
+            <version>1.0</version>
+            <executions>
+              <execution>
+                <id>copy-file</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>copy</goal>
+                </goals>
+                <configuration>
+                  <sourceFile>${project.basedir}/.scripts/persistence-h2.xml</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/META-INF/persistence.xml</destinationFile>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>postgresql</id>
+      <activation>
+        <property>
+          <name>db</name>
+          <value>postgresql</value>
+        </property>
+      </activation>
+      <build>
+
+        <plugins>
+
+          <!-- copy the correct persistence.xml file -->
+          <plugin>
+            <groupId>com.coderplus.maven.plugins</groupId>
+            <artifactId>copy-rename-maven-plugin</artifactId>
+            <version>1.0</version>
+            <executions>
+              <execution>
+                <id>copy-file</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>copy</goal>
+                </goals>
+                <configuration>
+                  <sourceFile>${project.basedir}/.scripts/persistence-postgresql.xml</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/META-INF/persistence.xml</destinationFile>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>mysql</id>
+      <activation>
+        <property>
+          <name>db</name>
+          <value>mysql</value>
+        </property>
+      </activation>
+      <build>
+
+        <plugins>
+
+          <!-- copy the correct persistence.xml file -->
+          <plugin>
+            <groupId>com.coderplus.maven.plugins</groupId>
+            <artifactId>copy-rename-maven-plugin</artifactId>
+            <version>1.0</version>
+            <executions>
+              <execution>
+                <id>copy-file</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>copy</goal>
+                </goals>
+                <configuration>
+                  <sourceFile>${project.basedir}/.scripts/persistence-mysql.xml</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/META-INF/persistence.xml</destinationFile>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>sql</id>
+      <activation>
+        <property>
+          <name>db</name>
+          <value>sql</value>
+        </property>
+      </activation>
+      <build>
+
+        <plugins>
+
+          <!-- copy the correct persistence.xml file -->
+          <plugin>
+            <groupId>com.coderplus.maven.plugins</groupId>
+            <artifactId>copy-rename-maven-plugin</artifactId>
+            <version>1.0</version>
+            <executions>
+              <execution>
+                <id>copy-file</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>copy</goal>
+                </goals>
+                <configuration>
+                  <sourceFile>${project.basedir}/.scripts/persistence-sql.xml</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/META-INF/persistence.xml</destinationFile>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+
   </profiles>
 
 

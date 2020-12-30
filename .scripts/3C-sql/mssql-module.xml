@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" ?>
+<module xmlns="urn:jboss:module:1.1" name="com.microsoft">
+  <resources>
+	<resource-root path="/home/site/deployments/tools/mssql-jdbc-7.2.1.jre8.jar"/>
+  </resources>
+  <dependencies>
+    <module name="javax.api"/>
+    <module name="javax.transaction.api"/>
+  </dependencies>
+</module>
