@@ -33,8 +33,6 @@ database of your choice, you will require the corresponding database's commandli
 
 The environment variable `JAVA_HOME` should be set to the path of `javac` in the JDK installation.
 
-You can then use Visual Studio Code or an IDE of your choice.
-
 ---
 
 ➡️ Next guide: [01 - Deploy a Java EE application to Azure](../step-01-deploy-java-ee-app-to-azure/README.md)
