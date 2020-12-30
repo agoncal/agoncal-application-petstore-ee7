@@ -88,8 +88,7 @@ mvn package -Dmaven.test.skip=true -Ddb=h2
 ```
 
 `pom.xml` in this repo is pre-configured to use the 
-[Maven Plugin for Azure App Service](https://github.com/Microsoft/azure-maven-plugins/blob/develop/azure-webapp-maven-plugin/README.md) 
-- see XML fragment below. 
+[Maven Plugin for Azure App Service](https://github.com/Microsoft/azure-maven-plugins/blob/develop/azure-webapp-maven-plugin/README.md) - see XML fragment below. 
 
 Note - you can also configure the same by executing 
 `mvn com.microsoft.azure:azure-webapp-maven-plugin:1.12.0:config`.
