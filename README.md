@@ -6,7 +6,7 @@ author: selvasingh, sadigopu
 
 # Migrate Java EE App to Azure
 
-You will find here a full workshop on migrating an existing Java EE application to Azure, 
+You will find here a full training workshop on migrating an existing Java EE application to Azure, 
 including guides and demos. You will migrate:
  
 - Java EE application to App Service Linux and 
@@ -65,7 +65,7 @@ Create a database - PostgreSQL or MySQL or SQL Database.
 
 Bind the Java EE application to the database.
 
-## [Conclusion](99-conclusion/README.md)
+## [Conclusion](step-99-conclusion/README.md)
 
 ---
 
