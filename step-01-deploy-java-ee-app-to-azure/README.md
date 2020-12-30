@@ -65,9 +65,7 @@ Build a Java EE application using Maven:
 
 ```bash
 mvn package -Dmaven.test.skip=true -Ddb=h2
-```
 
-```text
 ---------------------------------------------------------------------
 [INFO] Building Petstore application using Java EE 7 7.0
 [INFO] ------------------------------------------------------------------------
@@ -86,7 +84,8 @@ mvn package -Dmaven.test.skip=true -Ddb=h2
 [INFO] Total time: 3.736 s
 [INFO] Finished at: 2020-12-29T20:54:07-08:00
 [INFO] Final Memory: 20M/339M
-[INFO] ------------------------------------------------------------------------```
+[INFO] ------------------------------------------------------------------------
+```
 
 `pom.xml` in this repo is pre-configured to use the 
 [Maven Plugin for Azure App Service](https://github.com/Microsoft/azure-maven-plugins/blob/develop/azure-webapp-maven-plugin/README.md) 
