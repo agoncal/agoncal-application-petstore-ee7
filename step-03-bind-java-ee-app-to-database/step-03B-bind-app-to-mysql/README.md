@@ -124,6 +124,10 @@ local: mysql-connector-java-8.0.13.jar remote: mysql-connector-java-8.0.13.jar
 ftp> bye
 221 Goodbye.
 ```
+>🚧 - __Preview-specific__. Using FTP file transfer to upload drivers, modules, CLI commands and 
+startup batch file is only necessary while JBoss EAP on App Service is in preview. Soon, the 
+[Maven Plugin for Azure App Service](https://github.com/Microsoft/azure-maven-plugins/blob/develop/azure-webapp-maven-plugin/README.md)
+will integrate these file transfer into the popular one-step deploy, `mvn azure-webapp:deploy`.
 
 ### Step 3: Set MySQL database connection info in the Web app environment
 
@@ -166,6 +170,11 @@ az webapp config appsettings set \
 az webapp config set --startup-file /home/startup.sh \
     --resource-group ${RESOURCE_GROUP} --name ${WEBAPP}
 ```
+
+>🚧 - __Preview-specific__. Using Azure CLI to set App Settings and startup batch file
+ is only necessary while JBoss EAP on App Service is in preview. Soon, the 
+[Maven Plugin for Azure App Service](https://github.com/Microsoft/azure-maven-plugins/blob/develop/azure-webapp-maven-plugin/README.md)
+will integrate these operations into the popular one-step deploy, `mvn azure-webapp:deploy`.
 
 ### Step 4: Restart the remote JBoss EAP app server
 
