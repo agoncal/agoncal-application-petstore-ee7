@@ -52,6 +52,4 @@ Bind the application to the petstore database in Azure SQL Database.
   
 ⬅️ Previous guide: [02 - Deploy a Java EE application to Azure](../step-02-create-a-database/README.md)
   
-➡️ Next guide: Bind app to [03A - PostgreSQL](step-03A-bind-app-to-postgresql/README.md),  
-[03B - MySQL](step-03B-bind-app-to-mysql/README.md), or
-[03C - SQL Database](step-03C-bind-app-to-sql-database/README.md)
+➡️ Next guide: Bind app to [03A - PostgreSQL](step-03A-bind-app-to-postgresql/README.md), [03B - MySQL](step-03B-bind-app-to-mysql/README.md), or [03C - SQL Database](step-03C-bind-app-to-sql-database/README.md)
