@@ -202,6 +202,8 @@ cd ../..
 mvn package -Dmaven.test.skip=true -Ddb=postgresql
 ```
 
+Note - the `postgresql` Maven profile is available [here](../../pom.xml#L399).
+
 ## Deploy to App Service Linux 
 
 Deploy to JBoss EAP in App Service Linux:
