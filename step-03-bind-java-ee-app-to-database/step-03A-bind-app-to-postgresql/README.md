@@ -272,4 +272,4 @@ az webapp log tail --name ${WEBAPP} --resource-group ${RESOURCE_GROUP}
   
 ⬅️ Previous guide: [02 - Create a database](../../step-02-create-a-database/README.md)
   
-➡️ Next guide: [Conclusion](../../step-99-conclusion/README.md)
+➡️ Next guide: [04 - Monitor Java EE application](../../step-04-monitor-java-ee-app/README.md)

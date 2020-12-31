@@ -65,6 +65,10 @@ Create a database - PostgreSQL or MySQL or SQL Database.
 
 Bind the Java EE application to the database.
 
+## [04 - Monitor Java EE application](step-04-monitor-java-ee-app/README.md) (30 minutes)
+
+Configure and monitor Java EE application and its dependencies using Azure Monitor.
+
 ## [Conclusion](step-99-conclusion/README.md) (5 minutes)
 
 ---

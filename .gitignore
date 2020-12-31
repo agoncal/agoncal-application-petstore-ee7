@@ -32,3 +32,4 @@ projectFilesBackup*
 *.gzprojectFilesBackup*
 
 .scripts/setup-env-variables.sh
+apm/
