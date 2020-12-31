@@ -170,7 +170,7 @@ az webapp stop -g ${RESOURCE_GROUP} -n ${WEBAPP}
 az webapp start -g ${RESOURCE_GROUP} -n ${WEBAPP}
 ```
 
->🚧 - __Preview-specific__ downloading, installing and engaging the Application Insights Java
+>🚧 - __Preview-specific__. Downloading, installing and engaging the Application Insights Java
 in-process agent is only necessary while JBoss EAP on App Service is in preview. Soon, the agent
 will be pre-installed and auto-engaged as part of code-less attach feature.
 
