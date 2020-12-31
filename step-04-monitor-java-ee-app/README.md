@@ -220,11 +220,11 @@ AppServiceConsoleLogs
 ```
 ![](./media/seattle-petstore-app-logs-in-log-analytics.jpg)
 
-Go to Application Insights and navigate to the 'Performance' blade. You can
+Go to Application Insights and navigate to the `Performance` blade. You can
 see application operation performance:
 ![](./media/seattle-petstore-performance.jpg)
 
-Click on dependencies to view performance of SQL dependencies:
+Click on `Dependencies` to view performance of SQL dependencies:
 ![](./media/seattle-petstore-sql-dependencies.jpg)
 
 Click on one of the SQL dependencies and drill into it for end-to-end transaction details:
@@ -233,7 +233,7 @@ Click on one of the SQL dependencies and drill into it for end-to-end transactio
 Click on `Application Map` blade to graphically visualize the call path and dependencies:
 ![](./media/seattle-petstore-application-map.jpg)
 
-Click on 'Live Metrics' blade to see metrics and insights with latencies less than 1 second:
+Click on `Live Metrics` blade to see metrics and insights with latencies less than 1 second:
 ![](./media/seattle-petstore-live-metrics.jpg)
 
 ---
