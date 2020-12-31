@@ -167,6 +167,7 @@ mvn azure-webapp:deploy
 
 ## Open Java EE application running on JBoss EAP in App Service Linux
 
+Open the Java EE application running on JBoss EAP in App Service Linux:
 ```bash
 open https://${WEBAPP}.azurewebsites.net
 ```

@@ -117,8 +117,8 @@ az monitor app-insights component create --app ${APPLICATION_INSIGHTS} \
 
 >🛑 -  __Manual Modification Required__ - looks like the `application-insights` Azure CLI extension 
 is missing in action. You have to create Application Insights using the Azure Portal and using the 
-same ${SUBSCRIPTION}, ${WEBAPP} as Application Insights Name, ${REGION} as Region,
-Log Analytics Workspace ${LOG_ANALYTICS} in the same subscription, see:
+same `${SUBSCRIPTION}`, `${WEBAPP}` as Application Insights Name, `${REGION}` as Region,
+Log Analytics Workspace `${LOG_ANALYTICS}` in the same subscription, see:
 ![](./media/Create-Application-Insights.jpg)
 
 Go to the Azure Portal, locate the Application Insights that you just created, get it's
@@ -168,6 +168,35 @@ az webapp config appsettings set \
  
 az webapp stop -g ${RESOURCE_GROUP} -n ${WEBAPP}
 az webapp start -g ${RESOURCE_GROUP} -n ${WEBAPP}
+```
+
+## Use Java EE application and make few REST API calls
+
+Open the Java EE application running on JBoss EAP in App Service Linux:
+```bash
+open https://${WEBAPP}.azurewebsites.net
+```
+![](../step-01-deploy-java-ee-app-to-azure/media/YAPS-PetStore-H2.jpg)
+
+You can also `curl` the REST API exposed by the Java EE application. The admin REST 
+API allows you to create/update/remove items in the catalog, orders or customers. 
+You can run the following curl commands:
+```bash
+curl -X GET https://${WEBAPP}.azurewebsites.net/rest/categories
+curl -X GET https://${WEBAPP}.azurewebsites.net/rest/products
+curl -X GET https://${WEBAPP}.azurewebsites.net/rest/items
+curl -X GET https://${WEBAPP}.azurewebsites.net/rest/countries
+curl -X GET https://${WEBAPP}.azurewebsites.net/rest/customers
+```
+
+You can also get a JSON representation:
+```bash
+curl -X GET -H "accept: application/json" https://${WEBAPP}.azurewebsites.net/rest/items
+```
+
+Check the Java EE application's Swagger contract:
+```bash
+curl -X GET https://${WEBAPP}.azurewebsites.net/swagger.json
 ```
 
 ## Monitor Java EE application
