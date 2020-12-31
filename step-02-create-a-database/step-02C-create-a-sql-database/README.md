@@ -12,19 +12,19 @@ Create a Petstore database using Azure CLI:
 ```bash
 
 az sql server create --admin-user ${SQL_SERVER_ADMIN_LOGIN_NAME} \
-     --admin-password ${SQL_SERVER_ADMIN_PASSWORD} \
-     --name ${SQL_SERVER_NAME} \
-     --resource-group ${RESOURCE_GROUP} --location ${REGION}
+    --admin-password ${SQL_SERVER_ADMIN_PASSWORD} \
+    --name ${SQL_SERVER_NAME} \
+    --resource-group ${RESOURCE_GROUP} --location ${REGION}
      
 az sql server firewall-rule create --server ${SQL_SERVER_NAME} \
- --name allAzureIPs \
- --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0 \
- --resource-group ${RESOURCE_GROUP}
+    --name allAzureIPs \
+    --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0 \
+    --resource-group ${RESOURCE_GROUP}
 
 az sql server firewall-rule create --server ${SQL_SERVER_NAME} \
- --name myDevBox \
- --start-ip-address ${DEVBOX_IP_ADDRESS} --end-ip-address ${DEVBOX_IP_ADDRESS} \
- --resource-group ${RESOURCE_GROUP}
+    --name myDevBox \
+    --start-ip-address ${DEVBOX_IP_ADDRESS} --end-ip-address ${DEVBOX_IP_ADDRESS} \
+    --resource-group ${RESOURCE_GROUP}
 
 az sql db create --name ${SQL_DATABASE_NAME} \
     --server ${SQL_SERVER_NAME} \

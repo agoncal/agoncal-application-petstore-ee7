@@ -277,8 +277,7 @@ Bye
 Open Java Web app remote log stream from a local machine:
 
 ```bash
-az webapp log tail --name ${WEBAPP} \
- --resource-group ${RESOURCE_GROUP}
+az webapp log tail --name ${WEBAPP} --resource-group ${RESOURCE_GROUP}
 ```
 
 ---

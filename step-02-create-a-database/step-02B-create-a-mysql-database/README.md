@@ -12,29 +12,29 @@ Create a Petstore database using Azure CLI and MySQL CLI:
 
 ```bash
 az mysql server create --resource-group ${RESOURCE_GROUP} \
- --name ${MYSQL_SERVER_NAME}  --location ${REGION} \
- --admin-user ${MYSQL_SERVER_ADMIN_LOGIN_NAME} \
- --admin-password ${MYSQL_SERVER_ADMIN_PASSWORD} \
- --sku-name GP_Gen5_32 \
- --ssl-enforcement Disabled \
- --version 5.7
+    --name ${MYSQL_SERVER_NAME}  --location ${REGION} \
+    --admin-user ${MYSQL_SERVER_ADMIN_LOGIN_NAME} \
+    --admin-password ${MYSQL_SERVER_ADMIN_PASSWORD} \
+    --sku-name GP_Gen5_32 \
+    --ssl-enforcement Disabled \
+    --version 5.7
 
 // allow access from Azure resources
 az mysql server firewall-rule create --name allAzureIPs \
- --server ${MYSQL_SERVER_NAME} \
- --resource-group ${RESOURCE_GROUP} \
- --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
+    --server ${MYSQL_SERVER_NAME} \
+    --resource-group ${RESOURCE_GROUP} \
+    --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
 
 // allow access from your dev machine for testing
 az mysql server firewall-rule create --name myDevBox \
- --server ${MYSQL_SERVER_NAME} \
- --resource-group ${RESOURCE_GROUP} \
- --start-ip-address ${DEVBOX_IP_ADDRESS} --end-ip-address ${DEVBOX_IP_ADDRESS}
+    --server ${MYSQL_SERVER_NAME} \
+    --resource-group ${RESOURCE_GROUP} \
+    --start-ip-address ${DEVBOX_IP_ADDRESS} --end-ip-address ${DEVBOX_IP_ADDRESS}
 
 // increase connection timeout
 az mysql server configuration set --name wait_timeout \
- --resource-group ${RESOURCE_GROUP} \
- --server ${MYSQL_SERVER_NAME} --value 2147483
+    --resource-group ${RESOURCE_GROUP} \
+    --server ${MYSQL_SERVER_NAME} --value 2147483
 
 // log into mysql
 mysql -u ${MYSQL_SERVER_ADMIN_FULL_NAME}  -h ${MYSQL_SERVER_FULL_NAME} -P 3306 -p
@@ -73,8 +73,8 @@ Bye
 ```
 ```bash
 az mysql server configuration set --name time_zone \
-     --resource-group ${RESOURCE_GROUP} \
-     --server ${MYSQL_SERVER_NAME} --value "US/Pacific"
+    --resource-group ${RESOURCE_GROUP} \
+    --server ${MYSQL_SERVER_NAME} --value "US/Pacific"
 ```
 
 When you migrate Java applications to cloud, you will be considering moving data to cloud. 

@@ -224,8 +224,8 @@ open https://${WEBAPP}.azurewebsites.net
 
 ```bash
 psql --host=${POSTGRES_SERVER_FULL_NAME} --port=5432 \
-     --username=${POSTGRES_SERVER_ADMIN_FULL_NAME} \
-     --dbname=${POSTGRES_DATABASE_NAME} --set=sslmode=require
+    --username=${POSTGRES_SERVER_ADMIN_FULL_NAME} \
+    --dbname=${POSTGRES_DATABASE_NAME} --set=sslmode=require
 
 Password for user postgres@petstore-db: 
 psql (11.1, server 9.6.10)
