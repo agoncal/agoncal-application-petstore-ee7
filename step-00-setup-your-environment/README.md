@@ -30,7 +30,7 @@ database of your choice, you will require the corresponding database's commandli
   * [PostgreSQL CLI](https://www.postgresql.org/docs/current/app-psql.html)
   * [MySQL CLI](https://dev.mysql.com/downloads/shell/)
   * [SQLCMD CLI](https://cloudblogs.microsoft.com/sqlserver/2017/05/16/sql-server-command-line-tools-for-macos-released/).
-* The `jq` utility. On Windows, download [this Windows port of JQ](https://github.com/stedolan/jq/releases) and add the following to the `~/.bashrc` file: 
+* The [`jq` utility](https://stedolan.github.io/jq/download/). On Windows, download [this Windows port of JQ](https://github.com/stedolan/jq/releases) and add the following to the `~/.bashrc` file: 
    ```bash
    alias jq=<JQ Download location>/jq-win64.exe
    ```
