@@ -103,28 +103,20 @@ az monitor diagnostic-settings create --name "send-logs-and-metrics-to-log-analy
 
 Add Azure CLI extension for Application Insights:
 ```bash
-az extension add --name app-insights 
 az extension add --name application-insights
 ```
 
-Create Application Insights using Azure CLI:
+Create Application Insights using Azure CLI and retrieve the `InstrumentationKey`:
 ```bash
 az monitor app-insights component create --app ${APPLICATION_INSIGHTS} \
     --workspace ${LOG_ANALYTICS_RESOURCE_ID} \
     --location ${REGION} \
     --resource-group ${RESOURCE_GROUP}
-```
 
->🛑 -  __Manual Modification Required__ - looks like the `application-insights` Azure CLI extension 
-is missing in action. You have to create Application Insights using the Azure Portal and using the 
-same `${SUBSCRIPTION}`, `${WEBAPP}` as Application Insights Name, `${REGION}` as Region,
-Log Analytics Workspace `${LOG_ANALYTICS}` in the same subscription, see:
-![](./media/Create-Application-Insights.jpg)
 
-Go to the Azure Portal, locate the Application Insights that you just created, get it's
-`Instrumentation Key` and set it to the environment:
-```bash
-export APPLICATIONINSIGHTS_CONNECTION_STRING=InstrumentationKey=your-application-insights-instrumentation-key
+export APPLICATIONINSIGHTS_CONNECTION_STRING=InstrumentationKey=$(az monitor \
+    app-insights component show --app ${APPLICATION_INSIGHTS} \
+    --resource-group ${RESOURCE_GROUP} | jq -r '.instrumentationKey')
 ```
 
 Download Application Insights Java in-process agent:
