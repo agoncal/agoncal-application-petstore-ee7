@@ -9,6 +9,4 @@ echo "Installing MSSQL driver"
 echo "Installing MSSQL datasource"
 data-source add --name=sqlDS --jndi-name=java:jboss/datasources/sqlDS --driver-name=sqlserver --connection-url=${SQL_CONNECTION_URL,env.SQL_CONNECTION_URL:example} --validate-on-match=true --background-validation=false --valid-connection-checker-class-name=org.jboss.jca.adapters.jdbc.extensions.mssql.MSSQLValidConnectionChecker --exception-sorter-class-name=org.jboss.jca.adapters.jdbc.extensions.mssql.MSSQLExceptionSorter
 run-batch
-reload --use-current-server-config=true
 echo "Installed MSSQL datasource"
-/subsystem=datasources/data-source=sqlDS:test-connection-in-pool()
