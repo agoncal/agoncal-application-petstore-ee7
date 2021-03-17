@@ -236,4 +236,4 @@ Click on `Live Metrics` blade to see metrics and insights with latencies less th
   
 ⬅️ Previous guide:  [03 - Bind Java EE application to database](../step-03-bind-java-ee-app-to-database/README.md)
 
-➡️ Next guide: [Conclusion](../step-99-conclusion/README.md)
+➡️ Next guide: [Step 05 - Set up GitHub Actions](../step-05-setup-github-actions/README.md)
