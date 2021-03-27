@@ -77,7 +77,7 @@ Create a GitHub Actions workflow file to continuously deploy a Java EE applicati
 
 ---
 
-## Credits
+## Petstore is back!
 
 This Java EE Petstore sample is forked from 
 [agoncal/agoncal-application-petstore-ee7](https://github.com/agoncal/agoncal-application-petstore-ee7) - see [Petstore README](./README-petstoreee7.md). 
