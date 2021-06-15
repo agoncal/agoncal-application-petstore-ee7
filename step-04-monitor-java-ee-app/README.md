@@ -101,6 +101,8 @@ az monitor diagnostic-settings create --name "send-logs-and-metrics-to-log-analy
 
 ## Create and configure Application Insights
 
+### Create an Application Insights resource using CLI
+
 Add Azure CLI extension for Application Insights:
 ```bash
 az extension add --name application-insights
@@ -119,52 +121,48 @@ export APPLICATIONINSIGHTS_CONNECTION_STRING=InstrumentationKey=$(az monitor \
     --resource-group ${RESOURCE_GROUP} | jq -r '.instrumentationKey')
 ```
 
-Download Application Insights Java in-process agent:
-```bash
-mkdir apm
-cd apm
-wget https://github.com/microsoft/ApplicationInsights-Java/releases/download/3.0.0/applicationinsights-agent-3.0.0.jar
+### Enable and configure monitoring with Application Insights in Azure Portal
+Open the App Service resource in Azure portal. Click Application Insigths.
+
+![](./media/app-service-ai-menu-sh.png)
+
+Click 'Turn on Application Insights'
+
+![](./media/app-service-enable-ai-sh.png)
+
+
+Under 'Java' tab, you can [configure](https://docs.microsoft.com/azure/azure-monitor/app/java-standalone-config) your Application Insights - just paste the whole configuration file into the text box, leave out the configuration string though. The example below configures your telemetry to be sampled at 100% (all of the telemetry will appear in Application Insights), logging to be at INFO level and above, self diagnostics to be written to both file and console, at INFO level and above.
+
+```json
+{
+  "sampling": {
+    "percentage": 100
+  },
+  "instrumentation": {
+    "logging": {
+      "level": "INFO"
+    }
+  },
+  "selfDiagnostics": {
+    "destination": "file+console",
+    "level": "INFO",
+    "file": {
+      "path": "applicationinsights.log",
+      "maxSizeMb": 5,
+      "maxHistory": 1
+    }
+  }
+}
 ```
 
-Upload Application Insights Java in-process agent to App Service Linux instance:
-```text
-ftp
-ftp> open waws-prod-bay-139.ftp.azurewebsites.windows.net
-Connected to waws-prod-bay-139.drip.azurewebsites.windows.net.
-220 Microsoft FTP Service
-Name (waws-prod-bay-139.ftp.azurewebsites.windows.net:selvasingh): seattle-petstore\\$seattle-petstore
-331 Password required
-Password: 
-230 User logged in.
-ftp> cd site/deployments/tools
-250 CWD command successful.
-ftp> bin
-200 Type set to I.
-ftp> put applicationinsights-agent-3.0.0.jar 
-200 PORT command successful.
-125 Data connection already open; Transfer starting.
-226 Transfer complete.
-17857000 bytes sent in 9.86 seconds (1.73 Mbytes/s)
-ftp> quit
-221 Goodbye.
-```
+![](./media/app-service-configure-ai-sh.png)
 
-Configure the Java EE application to start the Application Insights Java in-process agent:
-```bash
-az webapp config appsettings set \
-    --resource-group ${RESOURCE_GROUP} --name ${WEBAPP} \
-    --settings \
-    JAVA_OPTS="-javaagent:/home/site/deployments/tools/applicationinsights-agent-3.0.0.jar" \
-    APPLICATIONINSIGHTS_CONNECTION_STRING=${APPLICATIONINSIGHTS_CONNECTION_STRING} \
-    APPLICATIONINSIGHTS_ROLE_NAME=${WEBAPP}
- 
-az webapp stop -g ${RESOURCE_GROUP} -n ${WEBAPP}
-az webapp start -g ${RESOURCE_GROUP} -n ${WEBAPP}
-```
+After clicking 'Apply' you can go to your Application Insights resource and see your telemetry starting to show up.
 
->🚧 - __Preview-specific__. Downloading, installing and engaging the Application Insights Java
-in-process agent is only necessary while JBoss EAP on App Service is in preview. Soon, the agent
-will be pre-installed and auto-engaged as part of code-less attach feature.
+![](./media/app-service-view-ai-sh.png)
+
+Live metrics is the best place to start, you will see your telemetry in real time. For other useful views - performance, transactions, and more, give it a few minutes before everything falls into the right places.
+
 
 ## Use Java EE application and make few REST API calls
 
@@ -197,8 +195,7 @@ curl -X GET https://${WEBAPP}.azurewebsites.net/swagger.json
 
 ## Monitor Java EE application
 
-Go to Log Analytics and navigate to the `Logs` blade. 
-Type and run the following Kusto query to see application performance by operations:
+Navigate to the `Logs` blade. Type and run the following Kusto query to see application performance by operations:
 ```sql
 // Operations performance 
 // Calculate request count and duration by operations. 
