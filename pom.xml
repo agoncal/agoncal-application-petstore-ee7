@@ -259,7 +259,7 @@
           <subscriptionId>${SUBSCRIPTION}</subscriptionId>
           <resourceGroup>${RESOURCE_GROUP}</resourceGroup>
           <appName>${WEBAPP}</appName>
-          <pricingTier>P1v2</pricingTier>
+          <pricingTier>P1v3</pricingTier>
           <region>${REGION}</region>
           <runtime>
             <os>Linux</os>
