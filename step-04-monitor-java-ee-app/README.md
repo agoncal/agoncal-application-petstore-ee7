@@ -154,6 +154,7 @@ Under 'Java' tab, you can [configure](https://docs.microsoft.com/azure/azure-mon
     }
   }
 }
+```
 
 ![](./media/app-service-configure-ai-sh.png)
 
