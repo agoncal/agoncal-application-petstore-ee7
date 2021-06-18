@@ -147,16 +147,6 @@ az webapp config appsettings set \
 ]
 ```
 
-```bash
-az webapp config set --startup-file /home/site/scripts/startup.sh \
-    --resource-group ${RESOURCE_GROUP} --name ${WEBAPP}
-```
-
->🚧 - __Preview-specific__. Using Azure CLI to set App Settings and startup batch file
- is only necessary while JBoss EAP on App Service is in preview. Soon, the
-[Maven Plugin for Azure App Service](https://github.com/Microsoft/azure-maven-plugins/blob/develop/azure-webapp-maven-plugin/README.md)
-will integrate these operations into the popular one-step deploy, `mvn azure-webapp:deploy`.
-
 ### Step 4: Restart the remote JBoss EAP app server
 
 Use Azure CLI to restart the remote JBoss EAP app server:
