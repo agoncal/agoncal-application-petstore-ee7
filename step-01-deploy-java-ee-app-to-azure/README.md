@@ -91,7 +91,7 @@ mvn package -Dmaven.test.skip=true -Ddb=h2
 [Maven Plugin for Azure App Service](https://github.com/Microsoft/azure-maven-plugins/blob/develop/azure-webapp-maven-plugin/README.md) - see XML fragment below. 
 
 Note - you can also configure the same by executing 
-`mvn com.microsoft.azure:azure-webapp-maven-plugin:1.12.0:config`.
+`mvn com.microsoft.azure:azure-webapp-maven-plugin:1.16.1:config`.
 
 ```xml    
 <plugins> 
@@ -103,7 +103,7 @@ Note - you can also configure the same by executing
   <plugin>
     <groupId>com.microsoft.azure</groupId>
     <artifactId>azure-webapp-maven-plugin</artifactId>
-    <version>1.12.0</version>
+    <version>1.16.1</version>
     <configuration>
       <schemaVersion>v2</schemaVersion>
       <subscriptionId>${SUBSCRIPTION}</subscriptionId>
@@ -145,7 +145,7 @@ mvn azure-webapp:deploy
 [INFO] Building Petstore application using Java EE 7 7.0
 [INFO] ------------------------------------------------------------------------
 [INFO] 
-[INFO] --- azure-webapp-maven-plugin:1.12.0:deploy (default-cli) @ petstoreee7 ---
+[INFO] --- azure-webapp-maven-plugin:1.16.1:deploy (default-cli) @ petstoreee7 ---
 ...
 [INFO] Target Web App doesn't exist. Creating a new one...
 [INFO] Creating App Service Plan 'ServicePlan96b599bb-a053-4ea6'...

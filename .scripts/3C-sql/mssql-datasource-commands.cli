@@ -3,7 +3,7 @@ batch
 # ***** IMPORTANT : PATH should point to SQL Java driver and module XML file on App Service Linux *******
 echo "Configuring sqlDS ==================="
 echo "Installing MSSQL module"
-module add --name=com.microsoft --resources=/home/site/deployments/tools/mssql-jdbc-7.2.1.jre8.jar --module-xml=/home/site/deployments/tools/mssql-module.xml
+module add --name=com.microsoft --resources=/home/site/libs/mssql-jdbc-7.2.1.jre8.jar --module-xml=/home/site/scripts/mssql-module.xml
 echo "Installing MSSQL driver"
 /subsystem=datasources/jdbc-driver=sqlserver:add(driver-name="sqlserver",driver-module-name="com.microsoft",driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver,driver-datasource-class-name=com.microsoft.sqlserver.jdbc.SQLServerDataSource)
 echo "Installing MSSQL datasource"
