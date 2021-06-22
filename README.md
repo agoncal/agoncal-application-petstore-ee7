@@ -69,14 +69,32 @@ Bind the Java EE application to the database.
 
 Configure and monitor Java EE application and its dependencies using Azure Monitor.
 
+## [05 - Continuously Deploy using GitHub Actions](step-05-setup-github-actions/README.md) (15 minutes)
+
+Create a GitHub Actions workflow file to continuously deploy a Java EE application.
+
 ## [Conclusion](step-99-conclusion/README.md) (5 minutes)
 
 ---
 
-## Credits
+## Petstore is back!
 
 This Java EE Petstore sample is forked from 
 [agoncal/agoncal-application-petstore-ee7](https://github.com/agoncal/agoncal-application-petstore-ee7) - see [Petstore README](./README-petstoreee7.md). 
+
+> When you create something and give it away, you lose control of what you've created and then, anything can happen.
+> 
+> I created this Petstore application years ago to show how Java EE components would work all together. 
+> I used this application in many talks, workshops, demos... and then, time passed, I forgot about it and never updated it.
+> I've written this code when monoliths were a thing, when the cloud was just starting, and when the only CI/CD tool we had was called Hudson.
+> 
+> Today, thanks to the Azure team, my Petstore application is built with GitHub actions and deployed to the cloud.
+> Without changing the original code, and with only a few commands and some configuration, you can deploy the application to Azure.
+> What a journey!
+> 
+> Thank you,
+> 
+> [Antonio Goncalves](http://www.antoniogoncalves.org)
 
 ## Contributing
 

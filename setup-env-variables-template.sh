@@ -10,15 +10,6 @@ export DATABASE_SERVER=your-database-server-name # customize this
 export DATABASE_ADMIN=selvasingh # customize this
 export DATABASE_ADMIN_PASSWORD=SuperS3cr3t # customize this
 
-# ======== Manually Set as part of Step 03 ==========
-
-# FTP Secrets
-# Use Azure CLI to get them
-
-export FTP_HOST=
-export FTP_USERNAME=
-export FTP_PASSWORD=
-
 # ======== DERIVED Environment Variable Values ===========
 
 # Composed secrets for PostgreSQL
