@@ -253,13 +253,13 @@
       <plugin>
         <groupId>com.microsoft.azure</groupId>
         <artifactId>azure-webapp-maven-plugin</artifactId>
-        <version>1.12.0</version>
+        <version>1.16.1</version>
         <configuration>
           <schemaVersion>v2</schemaVersion>
           <subscriptionId>${SUBSCRIPTION}</subscriptionId>
           <resourceGroup>${RESOURCE_GROUP}</resourceGroup>
           <appName>${WEBAPP}</appName>
-          <pricingTier>P1v2</pricingTier>
+          <pricingTier>P1v3</pricingTier>
           <region>${REGION}</region>
           <runtime>
             <os>Linux</os>
@@ -269,6 +269,7 @@
           <deployment>
             <resources>
               <resource>
+                <type>war</type>
                 <directory>${project.basedir}/target</directory>
                 <includes>
                   <include>*.war</include>
@@ -507,11 +508,10 @@
   </profiles>
 
 
-  <repositories>
-    <repository>
-      <id>primefaces</id>
-      <url>http://repository.primefaces.org/</url>
-    </repository>
-  </repositories>
-
+ <repositories>
+        <repository>
+            <id>primefaces</id>
+            <url>https://repository.primefaces.org/</url>
+        </repository>
+    </repositories>
 </project>

@@ -8,24 +8,24 @@ Bind the application to the petstore database in Azure Database for MySQL.
 
 ## Configure MySQL Data Source
 
-There are 4 steps to configure a data source. These steps are similar to configuring data sources 
+There are 4 steps to configure a data source. These steps are similar to configuring data sources
 in any on premise Java EE app servers:
 
 ### Step 1: Understand How to configure JBoss EAP
 
-In App Service, each instance of an app server is stateless. Therefore, each instance must be 
-configured on startup to support a JBoss EAP configuration needed by your application. You can configure at 
-startup by supplying a startup Bash script that calls [JBoss/WildFly CLI commands](https://docs.jboss.org/author/display/WFLY/Command+Line+Interface) to setup data sources, messaging 
- providers and any other dependencies. We will create a startup.sh script and place it in the `/home` 
+In App Service, each instance of an app server is stateless. Therefore, each instance must be
+configured on startup to support a JBoss EAP configuration needed by your application. You can configure at
+startup by supplying a startup Bash script that calls [JBoss/WildFly CLI commands](https://docs.jboss.org/author/display/WFLY/Command+Line+Interface) to setup data sources, messaging
+ providers and any other dependencies. We will create a startup.sh script and place it in the `/home`
  directory of the Web app. The script will:
- 
+
 Install a JBoss EAP module:
 
 ```text
 # where resources point to JDBC driver for MySQL
 # and module xml points to module description, see below
 
-module add --name=com.mysql --resources=/home/site/deployments/tools/mysql-connector-java-8.0.13.jar --module-xml=/home/site/deployments/tools/mysql-module.xml
+module add --name=com.mysql --resources=/home/site/libs/mysql-connector-java-8.0.13.jar --module-xml=/home/site/scripts/mysql-module.xml
 ```
 Where `mysql-module.xml` describes the module:
 
@@ -34,7 +34,7 @@ Where `mysql-module.xml` describes the module:
 <module xmlns="urn:jboss:module:1.1" name="com.mysql">
     <resources>
      <!-- ***** IMPORTANT : REPLACE THIS PLACEHOLDER *******-->
-       <resource-root path="/home/site/deployments/tools/mysql-connector-java-8.0.13.jar" />
+       <resource-root path="/home/site/libs/mysql-connector-java-8.0.13.jar" />
     </resources>
     <dependencies>
         <module name="javax.api"/>
@@ -42,7 +42,7 @@ Where `mysql-module.xml` describes the module:
     </dependencies>
 </module>
 ```
- 
+
 Add a JDBC driver for MySQL:
 
 ```text
@@ -61,8 +61,8 @@ A server reload may be required for the changes to take effect:
 reload --use-current-server-config=true
 ```
 
-These JBoss CLI commands, JDBC driver for MySQL and module XML are available in 
-[initial-mysql/agoncal-application-petstore-ee7/.scripts](https://github.com/Azure-Samples/migrate-Java-EE-app-to-azure/tree/master/initial-mysql/agoncal-application-petstore-ee7/.scripts) 
+These JBoss CLI commands, JDBC driver for MySQL and module XML are available in
+[initial-mysql/agoncal-application-petstore-ee7/.scripts](https://github.com/Azure-Samples/migrate-Java-EE-app-to-azure/tree/master/initial-mysql/agoncal-application-petstore-ee7/.scripts)
 
 Also, you can directly download [JDBC driver for MySQL](https://dev.mysql.com/downloads/connector/j/). For example:
 
@@ -70,69 +70,50 @@ Also, you can directly download [JDBC driver for MySQL](https://dev.mysql.com/do
 wget -q "http://search.maven.org/remotecontent?filepath=mysql/mysql-connector-java/8.0.13/mysql-connector-java-8.0.13.jar" -O mysql-connector-java-8.0.13.jar
 ```
 
-### Step 2: Upload data source artifacts to App Service linux
+### Step 2: Deploy multiple artifacts to App Service linux
 
-Open an FTP connection to App Service Linux to upload data source artifacts:
+Open `pom.xml` and update the `deployment` with the following configuration and run `mvn azure-webapp:deploy` to deploy.
 
-```bash
-cd .scripts/3B-mysql
-
-ftp
-ftp> open waws-prod-bay-063.drip.azurewebsites.windows.net
-Trying 23.99.84.148...
-Connected to waws-prod-bay-063.drip.azurewebsites.windows.net.
-220 Microsoft FTP Service
-Name (waws-prod-bay-063.drip.azurewebsites.windows.net:selvasingh): petstore-java-ee\\$petstore-java-ee
-331 Password required
-Password:
-230 User logged in.
-Remote system type is Windows_NT.
-ftp> ascii
-200 Type set to A.
-ftp> put startup.sh
-local: startup.sh remote: startup.sh
-229 Entering Extended Passive Mode (|||10208|)
-125 Data connection already open; Transfer starting.
-100% |************************************************|   236       40.58 KiB/s    --:-- ETA
-226 Transfer complete.
-236 bytes sent in 00:00 (5.18 KiB/s)
-ftp> cd site/deployments/tools
-250 CWD command successful.
-ftp> put mysql-datasource-commands.cli
-local: mysql-datasource-commands.cli remote: mysql-datasource-commands.cli
-229 Entering Extended Passive Mode (|||10209|)
-125 Data connection already open; Transfer starting.
-100% |************************************************|  1375      226.39 KiB/s    --:-- ETA
-226 Transfer complete.
-1375 bytes sent in 00:00 (30.81 KiB/s)
-ftp> put mysql-module.xml
-local: mysql-module.xml remote: mysql-module.xml
-229 Entering Extended Passive Mode (|||10210|)
-125 Data connection already open; Transfer starting.
-100% |************************************************|   411        1.29 MiB/s    --:-- ETA
-226 Transfer complete.
-411 bytes sent in 00:00 (9.34 KiB/s)
-ftp> binary
-200 Type set to I.
-ftp> put mysql-connector-java-8.0.13.jar
-local: mysql-connector-java-8.0.13.jar remote: mysql-connector-java-8.0.13.jar
-229 Entering Extended Passive Mode (|||10211|)
-125 Data connection already open; Transfer starting.
-100% |************************************************|  2082 KiB  622.64 KiB/s    00:00 ETA
-226 Transfer complete.
-2132635 bytes sent in 00:03 (597.54 KiB/s)
-ftp> bye
-221 Goodbye.
+```xml
+<deployment>
+  <resources>
+    <resource>
+      <type>war</type>
+      <directory>${project.basedir}/target</directory>
+      <includes>
+        <include>*.war</include>
+      </includes>
+    </resource>
+    <resource>
+      <type>lib</type>
+      <directory>${project.basedir}/.scripts/3B-mysql</directory>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+    </resource>
+    <resource>
+      <type>startup</type>
+      <directory>${project.basedir}/.scripts/3B-mysql</directory>
+      <includes>
+        <include>*.sh</include>
+      </includes>
+    </resource>
+    <resource>
+      <type>script</type>
+      <directory>${project.basedir}/.scripts/3B-mysql</directory>
+      <includes>
+        <include>*.cli</include>
+        <include>*.xml</include>
+      </includes>
+    </resource>
+  </resources>
+</deployment>
 ```
->🚧 - __Preview-specific__. Using FTP file transfer to upload drivers, modules, CLI commands and 
-startup batch file is only necessary while JBoss EAP on App Service is in preview. Soon, the 
-[Maven Plugin for Azure App Service](https://github.com/Microsoft/azure-maven-plugins/blob/develop/azure-webapp-maven-plugin/README.md)
-will integrate these file transfer into the popular one-step deploy, `mvn azure-webapp:deploy`.
 
 ### Step 3: Set MySQL database connection info in the Web app environment
 
 Use Azure CLI to set database connection info:
-   
+
 ```bash
 az webapp config appsettings set \
     --resource-group ${RESOURCE_GROUP} --name ${WEBAPP} \
@@ -163,29 +144,19 @@ az webapp config appsettings set \
    "slotSetting": false,
    "value": "selvasingh@petstore-db1221"
  }
-] 
+]
 ```
-
-```bash
-az webapp config set --startup-file /home/startup.sh \
-    --resource-group ${RESOURCE_GROUP} --name ${WEBAPP}
-```
-
->🚧 - __Preview-specific__. Using Azure CLI to set App Settings and startup batch file
- is only necessary while JBoss EAP on App Service is in preview. Soon, the 
-[Maven Plugin for Azure App Service](https://github.com/Microsoft/azure-maven-plugins/blob/develop/azure-webapp-maven-plugin/README.md)
-will integrate these operations into the popular one-step deploy, `mvn azure-webapp:deploy`.
 
 ### Step 4: Restart the remote JBoss EAP app server
 
 Use Azure CLI to restart the remote JBoss EAP app server:
-   
+
 ```bash
 az webapp stop -g ${RESOURCE_GROUP} -n ${WEBAPP}
 az webapp start -g ${RESOURCE_GROUP} -n ${WEBAPP}
 ```
 
-For additional info, please refer to: 
+For additional info, please refer to:
 
 - [JBoss Data Source Management](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.0/html/configuration_guide/datasource_management).
 - [JBoss/WildFly CLI Guide](https://docs.jboss.org/author/display/WFLY/Command+Line+Interface)
@@ -202,7 +173,7 @@ mvn package -Dmaven.test.skip=true -Ddb=mysql
 
 Note - the `mysql` Maven profile is available [here](../../pom.xml#L435).
 
-## Deploy to App Service Linux 
+## Deploy to App Service Linux
 
 Deploy to JBoss EAP in App Service Linux:
 
@@ -281,7 +252,7 @@ az webapp log tail --name ${WEBAPP} --resource-group ${RESOURCE_GROUP}
 ```
 
 ---
-  
+
 ⬅️ Previous guide: [02 - Create a database](../../step-02-create-a-database/README.md)
-  
+
 ➡️ Next guide: [04 - Monitor Java EE application](../../step-04-monitor-java-ee-app/README.md)

@@ -2,7 +2,7 @@
 <module xmlns="urn:jboss:module:1.1" name="com.mysql">
     <resources>
      <!-- ***** IMPORTANT : REPLACE THIS PLACEHOLDER *******-->
-       <resource-root path="/home/site/deployments/tools/mysql-connector-java-8.0.13.jar" />
+       <resource-root path="/home/site/libs/mysql-connector-java-8.0.13.jar" />
     </resources>
     <dependencies>
         <module name="javax.api"/>
