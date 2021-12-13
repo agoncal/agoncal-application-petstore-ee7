@@ -12,7 +12,7 @@
   <properties>
     <version.javaee>7.0</version.javaee>
     <version.jboss-javaee>1.1.0.Final</version.jboss-javaee>
-    <version.log4j>2.8.2</version.log4j>
+    <version.log4j>2.15.0/version.log4j>
     <!-- Test -->
     <version.junit>4.12</version.junit>
     <version.arquillian>1.1.15.2</version.arquillian>
