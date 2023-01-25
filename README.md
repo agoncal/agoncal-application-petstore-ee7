@@ -3,7 +3,7 @@
 * *Author* : [Antonio Goncalves](http://www.antoniogoncalves.org)
 * *Level* : Intermediate
 * *Technologies* : Java EE 7 (JPA 2.1, CDI 1.1, Bean Validation 1.1, EJB Lite 3.2, JSF 2.2, JAX-RS 2.0), Java SE 7 (because that's the minimum required by Java EE 7), Twitter Bootstrap (Bootstrap 3.x, JQuery 2.x, PrimeFaces 6.x)
-* *Application Servers* : WildFly 10, WildFly 11
+* *Application Servers* : From WildFly 10 to WildFly 26 (does not work on Wildfly 27 because it is based on Jakarta EE 10)
 * *Summary* : A Petstore-like application using Java EE 7
 
 [Download the code from GitHub](https://github.com/agoncal/agoncal-application-petstore-ee7)
@@ -36,6 +36,29 @@ Or if you prefer the managed mode :
     mvn clean test -Parquillian-wildfly-managed
 
 ## Execute the sample
+
+To execute the application, you can either use the WildFly admin console or the Maven WildFly plugin.
+
+### Setup WildFly
+
+Before starting Wildfly we need to create a new user. In the `$WILDFLY_HOME/bin` directory, run the following command `./add-user.sh` to create a new _Management User_. Choose a username and password.
+
+### Start WildFly
+
+In the `$WILDFLY_HOME/bin` directory, run the following command `./standalone.sh` to start WildFly. Then go to the 
+WildFly admin console on http://localhost:9990 and enter your usename and password.
+
+### Build and Deploy the application using the WildFly admin console
+
+Build the application with `mvn clean package -Dmaven.test.skip=true`. You get the `applicationPetstore.war` war file in the `target` directory.
+
+In the WildFly admin console, deploy the `applicationPetstore.war` file. For that, go to the _Deployments_ tab and click on _Add_.
+
+### Build and Deploy the application using the WildFly Maven Plugin
+
+With WildFly up and running, deploy the application using the Maven plugin `mvn clean wildfly:deploy`
+
+### Run the application
 
 Once deployed go to the following URL and start buying some pets: [http://localhost:8080/applicationPetstore](http://localhost:8080/applicationPetstore).
 

@@ -17,6 +17,6 @@ public class CountryTest {
     public void shouldCheckEqualsAndHashCode() {
 
         // Checks equals and hashCode is valid
-        EqualsVerifier.forClass(Country.class).suppress(Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(Country.class).suppress(Warning.NONFINAL_FIELDS).withIgnoredFields("version","name", "printableName", "iso3", "numcode").usingGetClass().verify();
     }
 }

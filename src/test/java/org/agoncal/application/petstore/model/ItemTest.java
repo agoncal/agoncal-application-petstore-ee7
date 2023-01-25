@@ -17,6 +17,6 @@ public class ItemTest {
     public void shouldCheckEqualsAndHashCode() {
 
         // Checks equals and hashCode is valid
-        EqualsVerifier.forClass(Item.class).suppress(Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(Item.class).suppress(Warning.NONFINAL_FIELDS).withIgnoredFields("version", "imagePath", "unitCost", "product").usingGetClass().verify();
     }
 }

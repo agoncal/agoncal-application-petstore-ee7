@@ -1,6 +1,9 @@
 package org.agoncal.application.petstore.service;
 
 import org.agoncal.application.petstore.model.Category;
+import org.agoncal.application.petstore.model.Item;
+import org.agoncal.application.petstore.model.OrderLine;
+import org.agoncal.application.petstore.model.Product;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -16,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(Arquillian.class)
-public class CategoryServiceTest
+public class OrderLineServiceIT
 {
 
    // ======================================
@@ -24,7 +27,7 @@ public class CategoryServiceTest
    // ======================================
 
    @Inject
-   private CategoryService categoryservice;
+   private OrderLineService orderlineservice;
 
    // ======================================
    // =             Deployment             =
@@ -35,8 +38,11 @@ public class CategoryServiceTest
    {
       return ShrinkWrap.create(JavaArchive.class)
             .addClass(AbstractService.class)
-            .addClass(CategoryService.class)
+            .addClass(OrderLineService.class)
+            .addClass(OrderLine.class)
             .addClass(Category.class)
+            .addClass(Product.class)
+            .addClass(Item.class)
             .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
    }
@@ -48,39 +54,40 @@ public class CategoryServiceTest
    @Test
    public void should_be_deployed()
    {
-      Assert.assertNotNull(categoryservice);
+      Assert.assertNotNull(orderlineservice);
    }
 
    @Test
    public void should_crud()
    {
       // Gets all the objects
-      int initialSize = categoryservice.listAll().size();
+      int initialSize = orderlineservice.listAll().size();
 
       // Creates an object
-      Category category = new Category();
-      category.setName("Dummy value");
-      category.setDescription("Dummy value");
+      Category category = new Category("Dummy value", "Dummy value");
+      Product product = new Product("Dummy value", "Dummy value", category);
+      Item item = new Item("Dummy value", 10f, "Dummy value", "Dummy value", product);
+      OrderLine orderLine = new OrderLine(77, item);
 
       // Inserts the object into the database
-      category = categoryservice.persist(category);
-      assertNotNull(category.getId());
-      assertEquals(initialSize + 1, categoryservice.listAll().size());
+      orderLine = orderlineservice.persist(orderLine);
+      assertNotNull(orderLine.getId());
+      assertEquals(initialSize + 1, orderlineservice.listAll().size());
 
       // Finds the object from the database and checks it's the right one
-      category = categoryservice.findById(category.getId());
-      assertEquals("Dummy value", category.getName());
+      orderLine = orderlineservice.findById(orderLine.getId());
+      assertEquals(new Integer(77), orderLine.getQuantity());
 
       // Updates the object
-      category.setName("A new value");
-      category = categoryservice.merge(category);
+      orderLine.setQuantity(88);
+      orderLine = orderlineservice.merge(orderLine);
 
       // Finds the object from the database and checks it has been updated
-      category = categoryservice.findById(category.getId());
-      assertEquals("A new value", category.getName());
+      orderLine = orderlineservice.findById(orderLine.getId());
+      assertEquals(new Integer(88), orderLine.getQuantity());
 
       // Deletes the object from the database and checks it's not there anymore
-      categoryservice.remove(category);
-      assertEquals(initialSize, categoryservice.listAll().size());
+      orderlineservice.remove(orderLine);
+      assertEquals(initialSize, orderlineservice.listAll().size());
    }
 }

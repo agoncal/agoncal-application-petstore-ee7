@@ -1,12 +1,7 @@
 package org.agoncal.application.petstore.model;
 
-import java.io.Serializable;
-import java.security.MessageDigest;
-import java.util.Base64;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Objects;
+import org.agoncal.application.petstore.constraints.Email;
+import org.agoncal.application.petstore.constraints.Login;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -14,9 +9,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.agoncal.application.petstore.constraints.Email;
-import org.agoncal.application.petstore.constraints.Login;
+import java.io.Serializable;
+import java.security.MessageDigest;
+import java.util.*;
 
 /**
  * @author Antonio Goncalves http://www.antoniogoncalves.org --
@@ -319,24 +314,20 @@ public class Customer implements Serializable
    // = Methods hash, equals, toString =
    // ======================================
 
-   @Override
-   public final boolean equals(Object o)
-   {
-      if (this == o)
-         return true;
-      if (!(o instanceof Customer))
-         return false;
-      Customer customer = (Customer) o;
-      return Objects.equals(login, customer.login);
-   }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return login.equals(customer.login);
+    }
 
-   @Override
-   public final int hashCode()
-   {
-      return Objects.hash(login);
-   }
+    @Override
+    public int hashCode() {
+        return Objects.hash(login);
+    }
 
-   @Override
+    @Override
    public String toString()
    {
       return firstName + ' ' + lastName + " (" + login + ")";

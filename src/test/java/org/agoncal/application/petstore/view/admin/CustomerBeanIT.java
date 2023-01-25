@@ -19,7 +19,7 @@ import javax.inject.Inject;
 import static org.junit.Assert.*;
 
 @RunWith(Arquillian.class)
-public class CustomerBeanTest
+public class CustomerBeanIT
 {
 
    // ======================================

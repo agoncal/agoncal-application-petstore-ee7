@@ -17,6 +17,6 @@ public class CategoryTest {
     public void shouldCheckEqualsAndHashCode() {
 
         // Checks equals and hashCode is valid
-        EqualsVerifier.forClass(Category.class).suppress(Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(Category.class).suppress(Warning.NONFINAL_FIELDS).withIgnoredFields("version", "description").usingGetClass().verify();
     }
 }

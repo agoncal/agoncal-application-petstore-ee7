@@ -10,21 +10,19 @@
   <name>Petstore application using Java EE 7</name>
 
   <properties>
+    <!-- Java EE and App servers -->
     <version.javaee>7.0</version.javaee>
-    <version.jboss-javaee>1.1.0.Final</version.jboss-javaee>
-    <version.log4j>2.16.0</version.log4j>
+    <version.jboss-javaee>1.1.1.Final</version.jboss-javaee>
+    <version.wildfly>26.1.3.Final</version.wildfly>
     <!-- Test -->
-    <version.junit>4.12</version.junit>
-    <version.arquillian>1.1.15.2</version.arquillian>
+    <version.junit>4.13.2</version.junit>
+    <version.arquillian>1.5.0.0</version.arquillian>
     <version.arquillian.wildfly>2.0.2.Final</version.arquillian.wildfly>
     <version.shrinkwrap>1.2.6</version.shrinkwrap>
     <version.arquillian.rest>1.0.0.Alpha4</version.arquillian.rest>
     <version.resteasy>3.1.4.Final</version.resteasy>
     <version.derby>10.10.1.1</version.derby>
-    <version.junit>4.12</version.junit>
-    <version.equalsverifier>1.7.8</version.equalsverifier>
-    <!-- App servers -->
-    <version.wildfly>11.0.0.Final</version.wildfly>
+    <version.equalsverifier>3.12.3</version.equalsverifier>
     <!-- UI (WebJar, Bootstrap, JQuery...) -->
     <version.bootstrap>3.3.7-1</version.bootstrap>
     <version.jquery>2.2.4</version.jquery>
@@ -33,12 +31,15 @@
     <version.fontawesome>4.7.0</version.fontawesome>
     <!-- Other -->
     <version.swagger>1.5.17</version.swagger>
+    <version.log4j>2.19.0</version.log4j>
     <!--Maven Plugins & co-->
+    <version.maven.wildfly.plugin>4.0.0.Final</version.maven.wildfly.plugin>
     <version.maven.war.plugin>3.1.0</version.maven.war.plugin>
     <version.maven.compiler.plugin>3.1</version.maven.compiler.plugin>
     <version.maven.dependency.plugin>2.10</version.maven.dependency.plugin>
-    <version.maven.surefire.plugin>2.19.1</version.maven.surefire.plugin>
-    <version.maven.failsafe.plugin>2.19.1</version.maven.failsafe.plugin>
+    <skipITs>true</skipITs>
+    <version.maven.surefire.plugin>3.0.0-M8</version.maven.surefire.plugin>
+    <version.maven.failsafe.plugin>3.0.0-M8</version.maven.failsafe.plugin>
     <version.swagger.plugin>3.1.6</version.swagger.plugin>
     <!-- Project -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -49,6 +50,15 @@
 
   <dependencyManagement>
     <dependencies>
+      <!-- App servers -->
+      <dependency>
+        <groupId>org.jboss.spec</groupId>
+        <artifactId>jboss-javaee-7.0</artifactId>
+        <version>${version.jboss-javaee}</version>
+        <type>pom</type>
+        <scope>provided</scope>
+      </dependency>
+      <!-- Test -->
       <dependency>
         <groupId>org.arquillian</groupId>
         <artifactId>arquillian-universe</artifactId>
@@ -63,10 +73,18 @@
         <scope>test</scope>
       </dependency>
       <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-core</artifactId>
-        <version>${version.log4j}</version>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>resteasy-client</artifactId>
+        <version>${version.resteasy}</version>
+        <scope>test</scope>
       </dependency>
+      <dependency>
+        <groupId>nl.jqno.equalsverifier</groupId>
+        <artifactId>equalsverifier</artifactId>
+        <version>${version.equalsverifier}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- UI (WebJar, Bootstrap, JQuery...) -->
       <dependency>
         <groupId>org.webjars</groupId>
         <artifactId>bootstrap</artifactId>
@@ -92,24 +110,11 @@
         <artifactId>fontawesome</artifactId>
         <version>${version.fontawesome}</version>
       </dependency>
+      <!-- Other -->
       <dependency>
-        <groupId>org.jboss.spec</groupId>
-        <artifactId>jboss-javaee-7.0</artifactId>
-        <version>${version.jboss-javaee}</version>
-        <type>pom</type>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.resteasy</groupId>
-        <artifactId>resteasy-client</artifactId>
-        <version>${version.resteasy}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>nl.jqno.equalsverifier</groupId>
-        <artifactId>equalsverifier</artifactId>
-        <version>${version.equalsverifier}</version>
-        <scope>test</scope>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>${version.log4j}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -195,11 +200,32 @@
     <finalName>applicationPetstore</finalName>
     <plugins>
       <plugin>
+        <groupId>org.wildfly.plugins</groupId>
+        <artifactId>wildfly-maven-plugin</artifactId>
+        <version>${version.maven.wildfly.plugin}</version>
+      </plugin>
+      <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <version>${version.maven.war.plugin}</version>
         <configuration>
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${version.maven.surefire.plugin}</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>${version.maven.failsafe.plugin}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>com.github.kongchen</groupId>
@@ -274,58 +300,58 @@
       </dependencies>
     </profile>
 
-  <profile>
-    <id>arquillian-wildfly-managed</id>
-    <build>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <version>${version.maven.dependency.plugin}</version>
-          <executions>
-            <execution>
-              <id>unpack</id>
-              <phase>process-test-classes</phase>
-              <goals>
-                <goal>unpack</goal>
-              </goals>
-              <configuration>
-                <artifactItems>
-                  <artifactItem>
-                    <groupId>org.wildfly</groupId>
-                    <artifactId>wildfly-dist</artifactId>
-                    <version>${version.wildfly}</version>
-                    <type>zip</type>
-                    <overWrite>false</overWrite>
-                    <outputDirectory>${project.build.directory}</outputDirectory>
-                  </artifactItem>
-                </artifactItems>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${version.maven.surefire.plugin}</version>
-          <configuration>
-            <skipTests>false</skipTests>
-            <systemPropertyVariables>
-              <arquillian.launch>arquillian-wildfly-managed</arquillian.launch>
-            </systemPropertyVariables>
-          </configuration>
-        </plugin>
-      </plugins>
-    </build>
-    <dependencies>
-      <dependency>
-        <groupId>org.wildfly.arquillian</groupId>
-        <artifactId>wildfly-arquillian-container-managed</artifactId>
-        <version>${version.arquillian.wildfly}</version>
-        <scope>test</scope>
-      </dependency>
-    </dependencies>
-  </profile>
+    <profile>
+      <id>arquillian-wildfly-managed</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>${version.maven.dependency.plugin}</version>
+            <executions>
+              <execution>
+                <id>unpack</id>
+                <phase>process-test-classes</phase>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>org.wildfly</groupId>
+                      <artifactId>wildfly-dist</artifactId>
+                      <version>${version.wildfly}</version>
+                      <type>zip</type>
+                      <overWrite>false</overWrite>
+                      <outputDirectory>${project.build.directory}</outputDirectory>
+                    </artifactItem>
+                  </artifactItems>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${version.maven.surefire.plugin}</version>
+            <configuration>
+              <skipTests>false</skipTests>
+              <systemPropertyVariables>
+                <arquillian.launch>arquillian-wildfly-managed</arquillian.launch>
+              </systemPropertyVariables>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+      <dependencies>
+        <dependency>
+          <groupId>org.wildfly.arquillian</groupId>
+          <artifactId>wildfly-arquillian-container-managed</artifactId>
+          <version>${version.arquillian.wildfly}</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
   </profiles>
 
 

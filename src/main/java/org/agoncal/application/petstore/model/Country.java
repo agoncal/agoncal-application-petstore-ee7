@@ -1,12 +1,11 @@
 package org.agoncal.application.petstore.model;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Cacheable
@@ -146,24 +145,20 @@ public class Country implements Serializable
    // = Methods hash, equals, toString =
    // ======================================
 
-   @Override
-   public final boolean equals(Object o)
-   {
-      if (this == o)
-         return true;
-      if (!(o instanceof Country))
-         return false;
-      Country country = (Country) o;
-      return Objects.equals(isoCode, country.isoCode);
-   }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Country country = (Country) o;
+        return isoCode.equals(country.isoCode);
+    }
 
-   @Override
-   public final int hashCode()
-   {
-      return Objects.hash(isoCode);
-   }
+    @Override
+    public int hashCode() {
+        return Objects.hash(isoCode);
+    }
 
-   @Override
+    @Override
    public String toString()
    {
       return name;

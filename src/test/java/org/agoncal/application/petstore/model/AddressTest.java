@@ -17,6 +17,6 @@ public class AddressTest {
     public void shouldCheckEqualsAndHashCode() {
 
         // Checks equals and hashCode is valid
-        EqualsVerifier.forClass(Address.class).suppress(Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(Address.class).suppress(Warning.NONFINAL_FIELDS).withIgnoredFields("street2","state","country").usingGetClass().verify();
     }
 }

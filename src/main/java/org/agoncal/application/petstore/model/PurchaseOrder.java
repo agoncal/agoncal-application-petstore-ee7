@@ -1,14 +1,13 @@
 package org.agoncal.application.petstore.model;
 
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "purchase_order")
@@ -252,25 +251,21 @@ public class PurchaseOrder implements Serializable
    // = Methods hash, equals, toString =
    // ======================================
 
-   @Override
-   public final boolean equals(Object o)
-   {
-      if (this == o)
-         return true;
-       if (!(o instanceof PurchaseOrder))
-           return false;
-      PurchaseOrder that = (PurchaseOrder) o;
-      return Objects.equals(orderDate, that.orderDate) &&
-               Objects.equals(customer, that.customer);
-   }
 
-   @Override
-   public final int hashCode()
-   {
-      return Objects.hash(orderDate, customer);
-   }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PurchaseOrder that = (PurchaseOrder) o;
+        return orderDate.equals(that.orderDate) && customer.equals(that.customer);
+    }
 
-   @Override
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderDate, customer);
+    }
+
+    @Override
    public String toString()
    {
       return "PurchaseOrder{" +

@@ -1,10 +1,9 @@
 package org.agoncal.application.petstore.model;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "order_line")
@@ -102,25 +101,20 @@ public class OrderLine implements Serializable
    // = Methods hash, equals, toString =
    // ======================================
 
-   @Override
-   public final boolean equals(Object o)
-   {
-      if (this == o)
-         return true;
-      if (!(o instanceof OrderLine))
-         return false;
-      OrderLine orderLine = (OrderLine) o;
-      return Objects.equals(quantity, orderLine.quantity) &&
-               Objects.equals(item, orderLine.item);
-   }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderLine orderLine = (OrderLine) o;
+        return quantity.equals(orderLine.quantity) && item.equals(orderLine.item);
+    }
 
-   @Override
-   public final int hashCode()
-   {
-      return Objects.hash(quantity, item);
-   }
+    @Override
+    public int hashCode() {
+        return Objects.hash(quantity, item);
+    }
 
-   @Override
+    @Override
    public String toString()
    {
       return "OrderLine{" +

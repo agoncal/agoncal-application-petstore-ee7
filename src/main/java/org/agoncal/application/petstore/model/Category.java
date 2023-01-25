@@ -1,12 +1,11 @@
 package org.agoncal.application.petstore.model;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @author Antonio Goncalves http://www.antoniogoncalves.org --
@@ -116,24 +115,20 @@ public class Category implements Serializable
    // = Methods hash, equals, toString =
    // ======================================
 
-   @Override
-   public final boolean equals(Object o)
-   {
-      if (this == o)
-         return true;
-      if (!(o instanceof Category))
-         return false;
-      Category category = (Category) o;
-      return Objects.equals(name, category.name);
-   }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return name.equals(category.name);
+    }
 
-   @Override
-   public final int hashCode()
-   {
-      return Objects.hash(name);
-   }
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 
-   @Override
+    @Override
    public String toString() {
       return name;
    }

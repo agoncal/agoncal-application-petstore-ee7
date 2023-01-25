@@ -1,4 +1,4 @@
-package org.agoncal.application.petstore.view.admin;
+package org.agoncal.application.petstore.service;
 
 import org.agoncal.application.petstore.exceptions.ValidationException;
 import org.agoncal.application.petstore.model.*;
@@ -17,10 +17,11 @@ import javax.inject.Inject;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(Arquillian.class)
-public class PurchaseOrderBeanTest
+public class PurchaseOrderServiceIT
 {
 
    // ======================================
@@ -28,7 +29,7 @@ public class PurchaseOrderBeanTest
    // ======================================
 
    @Inject
-   private PurchaseOrderBean purchaseorderbean;
+   private PurchaseOrderService purchaseorderservice;
 
    // ======================================
    // =             Deployment             =
@@ -38,7 +39,8 @@ public class PurchaseOrderBeanTest
    public static JavaArchive createDeployment()
    {
       return ShrinkWrap.create(JavaArchive.class)
-            .addClass(PurchaseOrderBean.class)
+            .addClass(AbstractService.class)
+            .addClass(PurchaseOrderService.class)
             .addClass(PurchaseOrder.class)
             .addClass(Country.class)
             .addClass(Address.class)
@@ -63,12 +65,15 @@ public class PurchaseOrderBeanTest
    @Test
    public void should_be_deployed()
    {
-      Assert.assertNotNull(purchaseorderbean);
+      Assert.assertNotNull(purchaseorderservice);
    }
 
    @Test @Ignore
    public void should_crud()
    {
+      // Gets all the objects
+      int initialSize = purchaseorderservice.listAll().size();
+
       // Creates an object
       Country country = new Country("DV", "Dummy value", "Dummy value", "DMV", "DMV");
       Address address = new Address("78 Gnu Rd", "Texas", "666", country);
@@ -80,33 +85,24 @@ public class PurchaseOrderBeanTest
       purchaseOrder.setDiscount(12.5F);
 
       // Inserts the object into the database
-      purchaseorderbean.setPurchaseOrder(purchaseOrder);
-      purchaseorderbean.create();
-      purchaseorderbean.update();
-      purchaseOrder = purchaseorderbean.getPurchaseOrder();
+      purchaseOrder = purchaseorderservice.persist(purchaseOrder);
       assertNotNull(purchaseOrder.getId());
+      assertEquals(initialSize + 1, purchaseorderservice.listAll().size());
 
       // Finds the object from the database and checks it's the right one
-      purchaseOrder = purchaseorderbean.findById(purchaseOrder.getId());
+      purchaseOrder = purchaseorderservice.findById(purchaseOrder.getId());
       assertEquals(new Float(12.5F), purchaseOrder.getDiscountRate());
 
+      // Updates the object
+      purchaseOrder.setDiscount(43.25F);
+      purchaseOrder = purchaseorderservice.merge(purchaseOrder);
+
+      // Finds the object from the database and checks it has been updated
+      purchaseOrder = purchaseorderservice.findById(purchaseOrder.getId());
+      assertEquals(new Float(43.25F), purchaseOrder.getDiscountRate());
+
       // Deletes the object from the database and checks it's not there anymore
-      purchaseorderbean.setId(purchaseOrder.getId());
-      purchaseorderbean.create();
-      purchaseorderbean.delete();
-      purchaseOrder = purchaseorderbean.findById(purchaseOrder.getId());
-      assertNull(purchaseOrder);
-   }
-
-   @Test
-   public void should_paginate()
-   {
-      // Creates an empty example
-      PurchaseOrder example = new PurchaseOrder();
-
-      // Paginates through the example
-      purchaseorderbean.setExample(example);
-      purchaseorderbean.paginate();
-      assertTrue((purchaseorderbean.getPageItems().size() == purchaseorderbean.getPageSize()) || (purchaseorderbean.getPageItems().size() == purchaseorderbean.getCount()));
+      purchaseorderservice.remove(purchaseOrder);
+      assertEquals(initialSize, purchaseorderservice.listAll().size());
    }
 }

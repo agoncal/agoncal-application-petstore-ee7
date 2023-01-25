@@ -17,6 +17,6 @@ public class ProductTest {
     public void shouldCheckEqualsAndHashCode() {
 
         // Checks equals and hashCode is valid
-        EqualsVerifier.forClass(Product.class).suppress(Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(Product.class).suppress(Warning.NONFINAL_FIELDS).withIgnoredFields("version", "category").usingGetClass().verify();
     }
 }

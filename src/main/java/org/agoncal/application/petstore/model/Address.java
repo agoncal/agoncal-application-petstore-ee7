@@ -1,14 +1,13 @@
 package org.agoncal.application.petstore.model;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @author Antonio Goncalves http://www.antoniogoncalves.org --
@@ -130,28 +129,20 @@ public class Address implements Serializable
    // = Methods hash, equals, toString =
    // ======================================
 
-   @Override
-   public final boolean equals(Object o)
-   {
-      if (this == o)
-         return true;
-      if (!(o instanceof Address))
-         return false;
-      Address address = (Address) o;
-      return Objects.equals(street1, address.street1) &&
-               Objects.equals(city, address.city) &&
-               Objects.equals(state, address.state) &&
-               Objects.equals(zipcode, address.zipcode) &&
-               Objects.equals(country, address.country);
-   }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return street1.equals(address.street1) && city.equals(address.city) && zipcode.equals(address.zipcode);
+    }
 
-   @Override
-   public final int hashCode()
-   {
-      return Objects.hash(street1, city, state, zipcode, country);
-   }
+    @Override
+    public int hashCode() {
+        return Objects.hash(street1, city, zipcode);
+    }
 
-   @Override
+    @Override
    public String toString()
    {
       return "Address{" +
