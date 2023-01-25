@@ -25,15 +25,20 @@ The only external framework used are [Arquillian](http://arquillian.org/), [Twit
 
 Being Maven centric, you can compile and package it without tests using `mvn clean compile -Dmaven.test.skip=true`, `mvn clean package -Dmaven.test.skip=true` or `mvn clean install -Dmaven.test.skip=true`. Once you have your war file, you can deploy it.
 
-### Test with Arquillian
+### Unit Testing
 
-Launching tests under [WildFly](http://www.wildfly.org/) is straight forward. You only have to launch WidlFly and execute the tests using the Maven profile :
+The application has a few unit tests. You can run them using `mvn clean test`. These tests do not do much, they just test the equals and hashcode methods of the entities.
 
-    mvn clean test -Parquillian-wildfly-remote
+### Integration testing with Arquillian
 
-Or if you prefer the managed mode :
+Launching tests under [WildFly](http://www.wildfly.org/) is straight forward. You must have a WidlFly up and running, and execute the tests using the 
+following Maven profile :
 
-    mvn clean test -Parquillian-wildfly-managed
+    mvn clean verify -Parquillian-wildfly-remote
+
+Or if you prefer the managed mode (it downloads and starts WildFly for you) :
+
+    mvn clean verify -Parquillian-wildfly-managed
 
 ## Execute the sample
 

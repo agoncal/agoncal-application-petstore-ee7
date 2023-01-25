@@ -33,7 +33,7 @@ public class AddressIT {
     @Deployment
     public static JavaArchive jar() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addClass(Address.class)
+                .addClasses(Address.class, Country.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 

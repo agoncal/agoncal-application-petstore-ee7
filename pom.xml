@@ -17,10 +17,10 @@
     <!-- Test -->
     <version.junit>4.13.2</version.junit>
     <version.arquillian>1.5.0.0</version.arquillian>
-    <version.arquillian.wildfly>2.0.2.Final</version.arquillian.wildfly>
+    <version.arquillian.wildfly>3.0.1.Final</version.arquillian.wildfly>
     <version.shrinkwrap>1.2.6</version.shrinkwrap>
     <version.arquillian.rest>1.0.0.Alpha4</version.arquillian.rest>
-    <version.resteasy>3.1.4.Final</version.resteasy>
+    <version.resteasy>3.15.3.Final</version.resteasy>
     <version.derby>10.10.1.1</version.derby>
     <version.equalsverifier>3.12.3</version.equalsverifier>
     <!-- UI (WebJar, Bootstrap, JQuery...) -->
@@ -30,7 +30,7 @@
     <version.primefaces-themes>1.0.10</version.primefaces-themes>
     <version.fontawesome>4.7.0</version.fontawesome>
     <!-- Other -->
-    <version.swagger>1.5.17</version.swagger>
+    <version.swagger>1.6.9</version.swagger>
     <version.log4j>2.19.0</version.log4j>
     <!--Maven Plugins & co-->
     <version.maven.wildfly.plugin>4.0.0.Final</version.maven.wildfly.plugin>
@@ -40,7 +40,7 @@
     <skipITs>true</skipITs>
     <version.maven.surefire.plugin>3.0.0-M8</version.maven.surefire.plugin>
     <version.maven.failsafe.plugin>3.0.0-M8</version.maven.failsafe.plugin>
-    <version.swagger.plugin>3.1.6</version.swagger.plugin>
+    <version.swagger.plugin>3.1.8</version.swagger.plugin>
     <!-- Project -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -277,11 +277,14 @@
   <profiles>
     <profile>
       <id>arquillian-wildfly-remote</id>
+      <properties>
+        <skipITs>false</skipITs>
+      </properties>
       <build>
         <plugins>
           <plugin>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>${version.maven.surefire.plugin}</version>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>${version.maven.failsafe.plugin}</version>
             <configuration>
               <systemPropertyVariables>
                 <arquillian.launch>arquillian-wildfly-remote</arquillian.launch>
@@ -302,6 +305,9 @@
 
     <profile>
       <id>arquillian-wildfly-managed</id>
+      <properties>
+        <skipITs>false</skipITs>
+      </properties>
       <build>
         <plugins>
           <plugin>
@@ -323,7 +329,8 @@
                       <version>${version.wildfly}</version>
                       <type>zip</type>
                       <overWrite>false</overWrite>
-                      <outputDirectory>${project.build.directory}</outputDirectory>
+                      <!-- TODO don't know why but the plugin looks for a directory called wildfly-11.0.0.Final and not wildfly-${version.wildfly} -->
+                      <outputDirectory>${project.build.directory}/wildfly-11.0.0.Final</outputDirectory>
                     </artifactItem>
                   </artifactItems>
                 </configuration>
@@ -332,12 +339,13 @@
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>${version.maven.surefire.plugin}</version>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>${version.maven.failsafe.plugin}</version>
             <configuration>
               <skipTests>false</skipTests>
               <systemPropertyVariables>
                 <arquillian.launch>arquillian-wildfly-managed</arquillian.launch>
+                <jboss.home>${project.build.directory}/wildfly-${version.wildfly}</jboss.home>
               </systemPropertyVariables>
             </configuration>
           </plugin>
