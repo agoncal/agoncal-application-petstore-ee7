@@ -42,7 +42,7 @@ public class Address implements Serializable
    @NotNull
    private String zipcode;
 
-   @ManyToOne(cascade = CascadeType.PERSIST)
+   @ManyToOne
    private Country country = new Country();
 
    // ======================================

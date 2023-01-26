@@ -235,8 +235,12 @@
           <apiSources>
             <apiSource>
               <springmvc>false</springmvc>
-              <locations>org.agoncal.application.petstore.rest</locations>
-              <schemes>http,https</schemes>
+              <locations>
+                <location>org.agoncal.application.petstore.rest</location>
+              </locations>
+              <schemes>
+                <scheme>http,https</scheme>
+              </schemes>
               <host>localhost:8080</host>
               <basePath>/applicationPetstore/rest</basePath>
               <outputFormats>json</outputFormats>
@@ -270,6 +274,11 @@
             <version>${version.swagger}</version>
           </dependency>
         </dependencies>
+      </plugin>
+      <plugin>
+          <groupId>org.wildfly.plugins</groupId>
+          <artifactId>wildfly-maven-plugin</artifactId>
+          <version>1.2.1.Final</version>
       </plugin>
     </plugins>
   </build>
